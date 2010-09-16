@@ -1,0 +1,117 @@
+# depslib dependency file v1.0
+1274774507 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
+	"cBlock.h"
+
+1274774261 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
+	<cstdlib>
+	<cassert>
+	"global.h"
+	"cData.h"
+	"cStatus.h"
+	"cConstants.h"
+
+1274385450 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
+	<iostream>
+	"global.h"
+	"cBlock.h"
+
+1271177676 /home/xytis/Documents/Programing/Projects/DoI/include/cStatus.h
+
+1274771791 source:/home/xytis/Documents/Programing/Projects/DoI/main.cpp
+	<iostream>
+	"include/cMaterial.h"
+	"include/cConstants.h"
+	"include/cData.h"
+
+1274383939 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
+	<cassert>
+	<cstdlib>
+	<vector>
+	<iostream>
+	<fstream>
+	"global.h"
+	"cBlock.h"
+	"cData.h"
+	"CExeptions.h"
+
+1274773698 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
+	"cMaterial.h"
+
+1274774845 /home/xytis/Documents/Programing/Projects/DoI/include/cConstants.h
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<string>
+	"global.h"
+	"CExeptions.h"
+
+1273515866 /home/xytis/Documents/Programing/Projects/DoI/include/CExeptions.h
+	<exception>
+	<string>
+
+1274262871 /home/xytis/Documents/Programing/Projects/DoI/include/global.h
+
+1274262218 source:/home/xytis/Documents/Programing/Projects/DoI/include/cConstants.cpp
+	"cConstants.h"
+
+1284637681 source:c:\users\xytis\documents\programing\doi good\main.cpp
+	<iostream>
+	"include/cMaterial.h"
+	"include/cConstants.h"
+	"include/cData.h"
+
+1284637524 c:\users\xytis\documents\programing\doi good\include\cmaterial.h
+	<cassert>
+	<cstdlib>
+	<vector>
+	<iostream>
+	<fstream>
+	"global.h"
+	"cBlock.h"
+	"cData.h"
+	"CExeptions.h"
+
+1274252070 c:\users\xytis\documents\programing\doi good\include\global.h
+
+1274763460 c:\users\xytis\documents\programing\doi good\include\cblock.h
+	<cstdlib>
+	<cassert>
+	"global.h"
+	"cData.h"
+	"cStatus.h"
+	"cConstants.h"
+
+1284632123 c:\users\xytis\documents\programing\doi good\include\cdata.h
+	<iostream>
+	"global.h"
+	"cBlock.h"
+
+1271166876 c:\users\xytis\documents\programing\doi good\include\cstatus.h
+
+1284637634 c:\users\xytis\documents\programing\doi good\include\cconstants.h
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<string>
+	"global.h"
+	"CExeptions.h"
+
+1273505066 c:\users\xytis\documents\programing\doi good\include\cexeptions.h
+	<exception>
+	<string>
+
+1274763706 source:c:\users\xytis\documents\programing\doi good\include\cblock.cpp
+	"cBlock.h"
+
+1284637478 source:c:\users\xytis\documents\programing\doi good\include\cconstants.cpp
+	"cConstants.h"
+
+1284632337 source:c:\users\xytis\documents\programing\doi good\include\cmaterial.cpp
+	"cMaterial.h"
+
+1284636212 source:c:\users\xytis\documents\programing\doi good\include\cinterface.cpp
+	"cInterface.h"
+
+1284636206 c:\users\xytis\documents\programing\doi good\include\cinterface.h
+	"cMaterial.h"
+

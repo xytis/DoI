@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="include\CExeptions.h" open="1" top="0" tabpos="1">
+		<Cursor position="616" topLine="56" />
+	</File>
+	<File name="include\cBlock.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="0" topLine="2" />
+	</File>
+	<File name="include\cBlock.h" open="1" top="0" tabpos="2">
+		<Cursor position="1717" topLine="15" />
+	</File>
+	<File name="include\cConstants.cpp" open="1" top="0" tabpos="10">
+		<Cursor position="502" topLine="7" />
+	</File>
+	<File name="include\cConstants.h" open="1" top="1" tabpos="11">
+		<Cursor position="1172" topLine="35" />
+	</File>
+	<File name="include\cData.h" open="1" top="0" tabpos="3">
+		<Cursor position="1826" topLine="46" />
+	</File>
+	<File name="include\cInterface.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="360" topLine="9" />
+	</File>
+	<File name="include\cInterface.h" open="1" top="0" tabpos="8">
+		<Cursor position="913" topLine="17" />
+	</File>
+	<File name="include\cMaterial.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="7554" topLine="264" />
+	</File>
+	<File name="include\cMaterial.h" open="1" top="0" tabpos="4">
+		<Cursor position="1475" topLine="55" />
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="1045" topLine="23" />
+	</File>
+</CodeBlocks_layout_file>
