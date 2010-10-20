@@ -1,45 +1,79 @@
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 #include "include/cMaterial.h"
 #include "include/cConstants.h"
 #include "include/cData.h"
 
+
+//#include "include/cInterface.h"
+
 using namespace DoI;
 
-int main()
+int main(int argc, char * argv[])
 {
-    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),200);
-    //cMaterial * test = new cMaterial(readConstants("/home/xytis/DoIconst.txt"), 100, cData(100000,0,0,0,0,1e-6),cData(0,0,0,0,0,1e-6),cData(0,100000,0,0,0,1e-6));
-
+/*
+    cInterface * interface = new cInterface();
+    interface->init(&argc, &argv);
+    interface->connect(new cMaterial(readConstants("DoIconst.txt"),200));
+    return interface->lounch();
+*/
+    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),2000);
+/*
+    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"), 200,
+    cData(1e10,0,0,0,0,5e-09),
+    cData(0,0,0,0,0,5e-09),
+    cData(0,1e10,0,0,0,5e-09));
+*/
     uint64_t count = 0;
     uint64_t done = 0;
 
     //Current file
     std::ofstream fcurrent ("current.dat");
 
-    while (test->time() < 5*test->m_constants->transitTime())
+    /*
+    test->run();
+    test->dump("dump1.dat");
+    test->run();
+    test->dump("dump2.dat");
+    test->fstats();
+    */
+    while (count < 10)//(test->time() < 5*test->m_constants->transitTime())
     {
         count ++;
         test->run();
         test->fcurrent(fcurrent);
-        if ((test->time() > test->m_constants->transitTime()) && (done == 0))
+
+        std::ostringstream temp;
+        temp << "dumps/material" << std::setfill('0') << std::setw(3) << count << ".dat";
+        test->write_material(temp.str());
+        temp.str("");
+        temp << "dumps/field" << std::setfill('0') << std::setw(3) << count << ".dat";
+        test->write_field(temp.str());
+/*
+        if ((test->time() > done*test->m_constants->transitTime()/10))
         {
-            test->dump("dump1.dat");
+            std::ostringstream temp;
+            temp << "dumps/material" << done << ".dat";
+            test->write_material(temp.str());
+            temp.str("");
+            temp << "dumps/field" << done << ".dat";
+            test->write_field(temp.str());
             done ++;
         }
 
-        if ((test->time() > 4*test->m_constants->transitTime()) && (done == 1))
+        if (count % 100 == 0)
         {
-            test->dump("dump2.dat");
-            done ++;
-        }
+            //test->report();
+            std::cout << "PERCENT: " << (test->time() / (5*test->m_constants->transitTime()))*100 << std::endl;
+            //test->fstats();
 
-        if (count % 1000 == 0)
-        {
-            test->fstats();
         }
+*/
 
     }
+
     /*
     test->dump("dump.txt");
     test->check_run();
@@ -51,7 +85,6 @@ int main()
     test->check_backup();
     test->check_run();
     */
-
 
     return 0;
 }

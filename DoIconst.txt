@@ -1,1 +1,17 @@
-6e-4 1 0.25 1.6e-19 4.5 1.18e-8
+beta    none
+S       4e-6
+MIN     1e-12
+q       1.6e-19
+eps     3.5
+eps0    8.85e-12
+k       none
+T       273
+n_miu   1e-6
+p_miu   1e-7
+n_D     none
+p_D     none
+U       8
+dt      1e-12
+width   1e-6
+timeout -1
+size    0

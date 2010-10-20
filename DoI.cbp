@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Debug\DoI" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="bin/Debug/DoI" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -16,8 +16,8 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin\Release\DoI" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Release\" />
+				<Option output="bin/Release/DoI" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -31,18 +31,27 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="/usr/lib64/qt4/include" />
+			<Add directory="/usr/lib64/qt4/include/QtGui" />
 		</Compiler>
-		<Unit filename="include\CExeptions.h" />
-		<Unit filename="include\cBlock.cpp" />
-		<Unit filename="include\cBlock.h" />
-		<Unit filename="include\cConstants.cpp" />
-		<Unit filename="include\cConstants.h" />
-		<Unit filename="include\cData.h" />
-		<Unit filename="include\cInterface.cpp" />
-		<Unit filename="include\cInterface.h" />
-		<Unit filename="include\cMaterial.cpp" />
-		<Unit filename="include\cMaterial.h" />
-		<Unit filename="include\global.h" />
+		<Linker>
+			<Add library="QtGui" />
+			<Add library="QtCore" />
+			<Add directory="/usr/lib64/qt4/lib" />
+		</Linker>
+		<Unit filename="include/CExeptions.h" />
+		<Unit filename="include/cBlock.cpp" />
+		<Unit filename="include/cBlock.h" />
+		<Unit filename="include/cConstants.cpp" />
+		<Unit filename="include/cConstants.h" />
+		<Unit filename="include/cData.h" />
+		<Unit filename="include/cMaterial.cpp" />
+		<Unit filename="include/cMaterial.h" />
+		<Unit filename="include/global.h" />
+		<Unit filename="include/gui/cInterface.cpp" />
+		<Unit filename="include/gui/cInterface.h" />
+		<Unit filename="include/gui/gui.ui" />
+		<Unit filename="include/gui/moc_cInterface.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

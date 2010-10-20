@@ -21,13 +21,13 @@
 #include "../cMaterial.h"
 
 #include "ui_gui.h"
-#include <QtGui>
-#include <QApplication>
+#include <QtGui/QtGui>
+#include <QtGui/QApplication>
 
 
 namespace DoI
 {
-    class cInterface : public QWidget, private Ui::Form
+    class cInterface : public QMainWindow, private Ui::MainWindow
     {
         Q_OBJECT
 

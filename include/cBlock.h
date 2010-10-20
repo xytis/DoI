@@ -35,6 +35,37 @@ namespace DoI
     };
 
     class cData;
+    class IBlock;
+
+    class cField
+    {
+        private:
+            cField * m_next;
+            cField * m_prev;
+            IBlock * m_left;
+            IBlock * m_right;
+        public:
+            cField();
+
+            cField * next();
+            cField * prev();
+
+            void set_next(cField *);
+            void set_prev(cField *);
+            void attach_left(IBlock *);
+            void attach_right(IBlock *);
+
+
+            friend std::ostream & operator << (std::ostream &, cField &);
+            void iprint(std::ostream &); //Saviiteruojantis metodas.
+
+            double calculate(double); //Saviiteruojantis metodas
+            double integrate();
+            void force_raise(double);
+
+            //Kintamasis laukui saugoti
+            double E;
+    };
 
     class IBlock
     {
@@ -43,26 +74,38 @@ namespace DoI
         public:
             virtual     IBlock *        next() = 0;
             virtual     IBlock *        prev() = 0;
+            virtual     cField *        E_next() = 0;
+            virtual     cField *        E_prev() = 0;
             virtual     void            set_next(IBlock *) = 0;
             virtual     void            set_prev(IBlock *) = 0;
+            virtual     void            set_E_next(cField *) = 0;
+            virtual     void            set_E_prev(cField *) = 0;
             virtual     void            relax() = 0;
-            virtual     void            field(double &, double &) = 0;
-            virtual     void            applyVoltage(double) = 0;
+            virtual     void            field_create() = 0;
             virtual     void            emit() = 0;
             virtual     void            flush() = 0;
             virtual     void            receive(const double &, const double &) = 0;
             virtual const cData &       read() = 0;
             virtual const cData &       write(const cData &) = 0;
             virtual const eStatus       check() = 0;
-            virtual const double       current() = 0;
+            virtual const double        current() = 0;
 
     };
+
+    // Formulaes
+    double drift(const double &, const double &, const double &,
+                 const cConstants *, const cData &, std::string);
+    double diffusion(const double &, const double &, const double &,
+                     const cConstants *, const cData &, std::string);
+    double recombine(const cConstants *, const cData &, std::string);
 
     class cBlock : public IBlock
     {
         private:
             cBlock * m_next;
             cBlock * m_prev;
+            cField * m_E_next;
+            cField * m_E_prev;
             cData    m_data;
             double   m_n_buffer;
             double   m_p_buffer;
@@ -74,18 +117,20 @@ namespace DoI
             void recombination();
             void glue_unglue();
 
-            double drift(const double &, const double &, const double &, std::string);
-            double diffusion(const double &, const double &, const double &, std::string);
+
 
         public:
             cBlock(const cData &, cConstants *);
             virtual     IBlock *        next();
             virtual     IBlock *        prev();
+            virtual     cField *        E_next();
+            virtual     cField *        E_prev();
             virtual     void            set_next(IBlock *);
             virtual     void            set_prev(IBlock *);
+            virtual     void            set_E_next(cField *);
+            virtual     void            set_E_prev(cField *);
             virtual     void            relax();
-            virtual     void            field(double &,double &);
-            virtual     void            applyVoltage(double);
+            virtual     void            field_create();
             virtual     void            emit();
             virtual     void            flush();
             virtual     void            receive(const double &, const double &);
@@ -105,6 +150,8 @@ namespace DoI
     {
         private:
             cBlock * m_block;
+            cField * m_E_next;
+            cField * m_E_prev;
             const eContactType m_type;
             cData    m_data;
             double   m_n_buffer;
@@ -116,18 +163,18 @@ namespace DoI
             void recombination();
             void glue_unglue();
 
-            double drift(const double &, const double &, const double &, std::string);
-            double diffusion(const double &, const double &, const double &, std::string);
-
         public:
             cContact(eContactType, const cData &, cConstants *);
             virtual     IBlock *        next();
             virtual     IBlock *        prev();
+            virtual     cField *        E_next();
+            virtual     cField *        E_prev();
             virtual     void            set_next(IBlock *);
             virtual     void            set_prev(IBlock *);
+            virtual     void            set_E_next(cField *);
+            virtual     void            set_E_prev(cField *);
             virtual     void            relax();
-            virtual     void            field(double &,double &);
-            virtual     void            applyVoltage(double);
+            virtual     void            field_create();
             virtual     void            emit();
             virtual     void            flush();
             virtual     void            receive(const double &, const double &);

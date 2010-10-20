@@ -48,6 +48,7 @@ namespace DoI
     {
         private:
             std::vector<IBlock *>  m_blockArray;
+            std::vector<cField *>  m_fieldArray;
 
             std::vector<cData> m_backupArray;
 
@@ -59,6 +60,7 @@ namespace DoI
             void init(const uint64_t &);
 
             void link(IBlock *, IBlock *);
+            void surround(cField *, IBlock *, cField *);
 
             void clock_tick();
 
@@ -88,7 +90,8 @@ namespace DoI
             double current();
 
             //Pasiunčia visą duomenų masyvą lauk į failą (id::string)
-            void dump(std::string);
+            void write_material(std::string);
+            void write_field(std::string);
             //Parsigabeną visą duomenų masyvą iš formatuoto failo.
             void load(std::string);
 

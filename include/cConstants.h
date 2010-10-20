@@ -33,34 +33,41 @@ namespace DoI
             int           m_timeout;
             uint64_t      m_size;
 
-            cConstants(double beta, double S, double min, double q, double eps, double eps0):
-                c_S(4e-6),
-                c_MIN(0.0001),
-                c_q(1.6e-19),
-                c_eps(3.5),
-                c_eps0(8.85e-12),
-                c_k(1/(c_eps * c_eps0 * c_S)),
-                c_T(273),
-                c_n_miu(1e-6),
-                c_p_miu(1e-7),
-                c_n_D(1.38e-23 * c_T * c_n_miu / c_q),
-                c_p_D(1.38e-23 * c_T * c_p_miu / c_q),
-                c_beta(c_q * (c_n_miu + c_p_miu) / c_eps /c_eps0),//5.165e-11), //Landþeveno rekombinacija
-                m_U(8),
-                m_dt(1e-11),
-                m_width(1e-6),
-                m_timeout(-1),
-                m_size(0)
+            cConstants(double beta, double S, double MIN, double q, double eps, double eps0,
+                       double k, double T, double n_miu, double p_miu, double n_D, double p_D,
+                       double U, double dt, double width, int timeout, uint64_t size):
+                c_beta(beta),
+                c_S(S),
+                c_MIN(MIN),
+                c_q(q),
+                c_eps(eps),
+                c_eps0(eps0),
+                c_k(k),
+                c_T(T),
+                c_n_miu(n_miu),
+                c_p_miu(p_miu),
+                c_n_D(n_D),
+                c_p_D(p_D),
+                m_U(U),
+                m_dt(dt),
+                m_width(width),
+                m_timeout(timeout),
+                m_size(size)
             {
-
 
             }
 
+            friend std::ostream & operator << (std::ostream & out, const cConstants & C);
+
             double transitTime();
             double currentMax();
+
     };
 
     cConstants * readConstants(std::string file);
+    double diffusionConst(double T, double miu, double q);
+    double recombinationConst(double q, double n_miu, double p_miu, double eps, double eps0);
+    double driftConst(double eps, double eps0, double S);
 };
 
 #endif // CCONSTANTS_H_INCLUDED
