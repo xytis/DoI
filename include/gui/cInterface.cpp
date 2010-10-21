@@ -23,9 +23,11 @@ namespace DoI
     }
 
 
+    void cInterface::
+    init(int *, char ***)
+    {
 
-
-
+    }
 
 
     QString cInterface::

@@ -31,8 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="/usr/lib64/qt4/include" />
-			<Add directory="/usr/lib64/qt4/include/QtGui" />
+			<Add directory="/usr/include/qt4/" />
+			<Add directory="/usr/include/qt4/QtGui" />
 		</Compiler>
 		<Linker>
 			<Add library="QtGui" />

@@ -7,18 +7,18 @@
 #include "include/cData.h"
 
 
-//#include "include/cInterface.h"
+#include "include/gui/cInterface.h"
 
 using namespace DoI;
 
 int main(int argc, char * argv[])
 {
-/*
+
     cInterface * interface = new cInterface();
     interface->init(&argc, &argv);
     interface->connect(new cMaterial(readConstants("DoIconst.txt"),200));
     return interface->lounch();
-*/
+
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),2000);
 /*
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"), 200,
