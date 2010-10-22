@@ -517,15 +517,16 @@ namespace DoI
                     (m_data.m_n + m_data.m_n_stuck));
 
         //Laukas priklausomai nuo pusės kurion skaičiuoja =]
+        //Skirtumas kad kairys kontaktas "nusinulina" lauko vertę
         if (m_type == LEFT)
         {
-            m_E_prev->E = dE;
+            m_E_prev->E = dE/2;
             m_E_next->E = dE/2;
         }
         if (m_type == RIGHT)
         {
             m_E_prev->E += dE/2;
-            m_E_next->E = dE;
+            m_E_next->E = dE/2;
         }
     }
 
