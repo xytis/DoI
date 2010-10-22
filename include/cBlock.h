@@ -63,6 +63,9 @@ namespace DoI
             double integrate();
             void force_raise(double);
 
+            //Tarpinis kintamasis dE
+            double dE;
+
             //Kintamasis laukui saugoti
             double E;
     };

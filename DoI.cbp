@@ -31,14 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="/usr/lib64/qt4/include" />
-			<Add directory="/usr/lib64/qt4/include/QtGui" />
 		</Compiler>
-		<Linker>
-			<Add library="QtGui" />
-			<Add library="QtCore" />
-			<Add directory="/usr/lib64/qt4/lib" />
-		</Linker>
 		<Unit filename="include/CExeptions.h" />
 		<Unit filename="include/cBlock.cpp" />
 		<Unit filename="include/cBlock.h" />
@@ -48,10 +41,7 @@
 		<Unit filename="include/cMaterial.cpp" />
 		<Unit filename="include/cMaterial.h" />
 		<Unit filename="include/global.h" />
-		<Unit filename="include/gui/cInterface.cpp" />
-		<Unit filename="include/gui/cInterface.h" />
 		<Unit filename="include/gui/gui.ui" />
-		<Unit filename="include/gui/moc_cInterface.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -203,6 +203,19 @@ namespace DoI
         }
     }
 
+    void
+    field_integral(cField * left, cField * right)
+    {
+        while ((left != NULL) && (right != NULL))
+        {
+            //TODO:
+            //Prasukti integravimą.
+
+            left = left->next();
+            right = right->prev();
+        }
+    }
+
     void cMaterial::
     calc()
     //Commands all blocks to make calculations
@@ -212,14 +225,18 @@ namespace DoI
         {
             //Čia įvyksta lauko skaičiavimas, pirma dalis
             //Kartu nunulinama sena reikšmė
-            //Ai tik, pirmo elemento pirma vertė lieka neišvalyta. Tam reikalingas sakinys virš for.
-            //Va, pirmo elemento vertę nuvalo cContact LEFT.
-            //Ir pirmas bei paskutinis laukeliai yra sudaromi VISO langelio. žr. cContact
+            //Pirmo elemento vertę nuvalo cContact LEFT.
+            //Akivaizdu, dE užpildymas eina iš kairės į dešine,
+            //o kadangi i-1 su i nekoreliuoja, tai reikšmės neturi.
             m_blockArray.at(i)->field_create();
             //Dabar laukas yra dE verčių kratinys, be integravimo ir saugomas kitame masyve.
         }
+        //Dabar tą kratinį reikia apdoroti.
+        //Suintegruojame iš abiejų pusių...
+        //m_fieldArray.at(0)->calculate(0);
+        field_integral(m_blockArray.at(0), m_blockArray.at(m_blockArray.size()-1));
         //Čia suintegruojame lauką:
-        m_fieldArray.at(0)->calculate(0);
+
         //Dabar laukas suintegruotas, tačiau vis dar nenormuotas.
         //Reikia jį sunormuoti.
         //Tam reikia susiskaičiuoti lauko integralą, palyginti jį su išorinio lauko integralu,
@@ -400,8 +417,9 @@ namespace DoI
         std::ofstream fout(name.c_str());
         if (!fout)
             throw exception::FileMisingExeption(name);
+
         //Writing time
-        fout << m_time << std::endl;
+        //fout << m_time << std::endl;
         //Writing data
         for (uint64_t i = 0; i < m_constants->m_size; i++)
         {
@@ -417,7 +435,7 @@ namespace DoI
         if (!fout)
             throw exception::FileMisingExeption(name);
         //Writing time
-        fout << m_time << std::endl;
+        //fout << m_time << std::endl;
         //Writing data
         for (uint64_t i = 0; i < m_constants->m_size + 1; i++)
         {

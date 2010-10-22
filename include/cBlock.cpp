@@ -28,6 +28,7 @@ namespace DoI
         m_prev(NULL),
         m_left(NULL),
         m_right(NULL),
+        dE(0),
         E(0)
     {
 
@@ -132,6 +133,7 @@ namespace DoI
     double drift(const double & interest, const double & field, const double & miu,
                   const cConstants * C, const cData & data, std::string place)
     {
+
         double dc;
         dc = miu * field * C->m_dt / data.m_width * interest;
         if (dc > interest/5)
@@ -139,6 +141,8 @@ namespace DoI
         if (dc < C->c_MIN)
             dc = 0;
         return dc;
+
+        //return 0;   //no drift
     }
 
     double recombine(const cConstants * C, const cData & data, std::string place)
@@ -254,8 +258,8 @@ namespace DoI
 
         //Dabar dE turime padalinti per du kaimyninius E masyvo narius.
         //Tariame kad laukelis dešinėj turi būti nunulintas =]
-        m_E_prev->E += dE/2;
-        m_E_next->E = dE/2;
+        m_E_prev->dE += dE/2;
+        m_E_next->dE = dE/2;
         //Integravimas turi įvykti pats =]
     }
 
@@ -424,26 +428,8 @@ namespace DoI
     void cContact::
     injection()
     {
-        //PASTABA: Injekcija nėra įtraukiama į srovės skaičiavimą. Kodėl?
-
-        //Gerai, dabar injekcija tarp kairės ir dešinės pusės atsilieka per vieną ciklą. t.y. :
-        //Normaliai laukas atrodo taip: x1 x2 ... xn-1 0
-        //Kai injektuojame, kairėj atsiranda krūvininkų x1 laukui atsverti, dešinėj
-        //krūvininkų neatsiranda.
-        //Dabar laukas toks: y1 y2 ... yn-1 x1
-        //Na, dabar injektuojant vėl dešinėj atsiras atsvara x1 krūviui.
-        //Tai galima apeiti forsuojant injekciją palei kairį kraštą.
-        //Arba nekreipiant į tai dėmesio.
-
-        //Ai, ir pirmą ciklą, kai laukas lygus išoriniam laukui, ir yra lygus visame bandinyje,
-        //injektuojasi abiejuose galuose gerai.
-
-        //Iš to toks apėjimas gaunas -- galima imti kitoje vietoje esantį lauką, kad vienoda injekcija būtų.
-        //IR JIS NEVEIKIA >[, mat susidaro lauko kamštis =] (0 laukas, kurio dalelės nepereina)
-
-        //Ir gal dar pabandom, kad jei išeina per daug elektronų(skylių) dalis grįžtų į kontaktą?
-
-        //Po injekcijos, el. laukas tame langelyje tampa 0. Šventa.
+        //INJEKCIJA
+        //Dabar vyksta nevaldomai ir neaiškiai.
 
         double dc;
         //Sąlyga: kairėje elektronai, dešinėje skylės
@@ -520,13 +506,13 @@ namespace DoI
         //Skirtumas kad kairys kontaktas "nusinulina" lauko vertę
         if (m_type == LEFT)
         {
-            m_E_prev->E = dE/2;
-            m_E_next->E = dE/2;
+            m_E_prev->dE = dE/2;
+            m_E_next->dE = dE/2;
         }
         if (m_type == RIGHT)
         {
-            m_E_prev->E += dE/2;
-            m_E_next->E = dE/2;
+            m_E_prev->dE += dE/2;
+            m_E_next->dE = dE/2;
         }
     }
 
