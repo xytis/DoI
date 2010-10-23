@@ -2,30 +2,30 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="include/CExeptions.h" open="1" top="0" tabpos="1">
-		<Cursor position="616" topLine="56" />
+		<Cursor position="1286" topLine="62" />
 	</File>
 	<File name="include/cBlock.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="11607" topLine="493" />
+		<Cursor position="3099" topLine="109" />
 	</File>
 	<File name="include/cBlock.h" open="1" top="0" tabpos="2">
-		<Cursor position="1599" topLine="36" />
+		<Cursor position="1650" topLine="42" />
 	</File>
 	<File name="include/cConstants.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="502" topLine="7" />
+		<Cursor position="502" topLine="19" />
 	</File>
 	<File name="include/cConstants.h" open="1" top="0" tabpos="8">
-		<Cursor position="1172" topLine="35" />
+		<Cursor position="1663" topLine="20" />
 	</File>
 	<File name="include/cData.h" open="1" top="0" tabpos="3">
 		<Cursor position="1771" topLine="41" />
 	</File>
 	<File name="include/cMaterial.cpp" open="1" top="1" tabpos="6">
-		<Cursor position="6496" topLine="201" />
+		<Cursor position="10071" topLine="297" />
 	</File>
 	<File name="include/cMaterial.h" open="1" top="0" tabpos="4">
-		<Cursor position="1475" topLine="55" />
+		<Cursor position="2890" topLine="77" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="9">
-		<Cursor position="307" topLine="6" />
+		<Cursor position="299" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

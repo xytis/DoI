@@ -66,6 +66,9 @@ namespace DoI
             //Tarpinis kintamasis dE
             double dE;
 
+            double supE;
+            double infE;
+
             //Kintamasis laukui saugoti
             double E;
     };

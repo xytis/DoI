@@ -29,6 +29,8 @@ namespace DoI
         m_left(NULL),
         m_right(NULL),
         dE(0),
+        supE(0),
+        infE(0),
         E(0)
     {
 
@@ -94,6 +96,8 @@ namespace DoI
     force_raise(double dE)
     {
         E += dE;
+        supE += dE;
+        infE += dE;
         if (m_next == NULL)
             return ;
         else
@@ -109,7 +113,7 @@ namespace DoI
 
     std::ostream & operator << (std::ostream & out, cField & F)
     {
-        out << F.E;
+        out << F.E << ' ' << F.supE << ' ' << F.infE << ' ' << F.dE;
         return out;
     }
 
@@ -118,7 +122,7 @@ namespace DoI
     double diffusion(const double & interest,const double & neighbour, const double & D,
                       const cConstants * C, const cData & data, std::string place)
     {
-        /*
+/*
         double dc;
         dc = (interest - neighbour)*D*C->m_dt / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
         if (dc>interest/5)
@@ -126,7 +130,7 @@ namespace DoI
         if (dc < C->c_MIN)
             dc = 0;
         return dc;
-        */
+*/
         return 0; //No diff
     }
 
@@ -436,7 +440,8 @@ namespace DoI
         if (m_type == LEFT)
         {
             //Imame lauką kontakto kairėj, verčiam jį pasidaryti 0.
-            dc = (m_E_prev->E) / m_C->c_k / m_C->c_q;
+            //Imame lauką, kuris buvo skaičiuotas iš dešinės į kairę.
+            dc = (m_E_prev->infE) / m_C->c_k / m_C->c_q;
             //Tikslas padaryti kad el. laukas būtų nulinis
 
             //m_E_prev->E = 0;
@@ -452,7 +457,8 @@ namespace DoI
         if (m_type == RIGHT)
         {
             //Imame lauką kontakto dešinėje, verčiam jį pasidaryti 0.
-            dc = (m_E_next->E) / m_C->c_k / m_C->c_q;
+            //Imame lauką, kuris buvo skaičiuotas iš kairės į dešinę.
+            dc = (m_E_next->supE) / m_C->c_k / m_C->c_q;
 
             //m_E_next->E = 0;
 

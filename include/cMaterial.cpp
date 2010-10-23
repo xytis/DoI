@@ -205,14 +205,37 @@ namespace DoI
 
     void
     field_integral(cField * left, cField * right)
+    /**
+    Kaip mes integruojame:
+    Turime integralo E diferencialą palei x. Jis pas mus yra dE masyvas.
+    Tik dar kad turime tik diskretinę jo išraišką.
+    Dabar pagal Darbu (Darboux) yra du sumavimo būdai, viršutinės ir apatinės vertės.
+    Taigi kaip skaičiuosim? Abu sumavimo būdai neduos tikrosios vertės, kol |dx|>0.
+    Suskaičiuojam abi sumas supE(->) ir infE(<-)
+    Tada sakom kad tikra vertė kažkur per vidurį. Ir įrašom.
+
+    **/
     {
+        double l, r;
+        l = 0;
+        r = 0;
+        cField * tl(left), * tr(right); //užsaugom pradžias
         while ((left != NULL) && (right != NULL))
         {
-            //TODO:
-            //Prasukti integravimą.
+            l += left->dE;
+            left->supE = l;
+
+            r += right->dE;
+            right->infE = -r; //Nes vektorius kitos krypties.
 
             left = left->next();
             right = right->prev();
+        }
+        //Nuo pradžios pereinam ir išsaugom Darbu vidurkį:
+        while (tl != NULL)
+        {
+            tl->E = (tl->supE+tl->infE)/2;
+            tl = tl->next();
         }
     }
 
@@ -231,12 +254,8 @@ namespace DoI
             m_blockArray.at(i)->field_create();
             //Dabar laukas yra dE verčių kratinys, be integravimo ir saugomas kitame masyve.
         }
-        //Dabar tą kratinį reikia apdoroti.
-        //Suintegruojame iš abiejų pusių...
-        //m_fieldArray.at(0)->calculate(0);
-        field_integral(m_blockArray.at(0), m_blockArray.at(m_blockArray.size()-1));
         //Čia suintegruojame lauką:
-
+        field_integral(m_fieldArray.at(0), m_fieldArray.at(m_fieldArray.size()-1));
         //Dabar laukas suintegruotas, tačiau vis dar nenormuotas.
         //Reikia jį sunormuoti.
         //Tam reikia susiskaičiuoti lauko integralą, palyginti jį su išorinio lauko integralu,
@@ -290,22 +309,22 @@ namespace DoI
     //This one makes things happen
     {
         try {
-            backup();
-            clock_tick();
-            flush();
-            calc();
+            backup();   //Saves current state !!!THE BUFFER IS NOT SAVED
+            clock_tick(); //Advances the clock
+            flush();    //Flushes the buffered particles
+            calc();     //Makes the calculations, fills the buffers
         }
         catch (exception::TimeIntervalTooLarge & e)
         {
-            restore();
             changeTimeInterval(-10);
             std::cerr << e.what() << std::endl;
+            restore();
         }
         catch (exception::TimeIntervalTooSmall & e)
         {
-            restore();
             changeTimeInterval(+10);
             std::cerr << e.what() << std::endl;
+            restore();
         }
     }
 
@@ -321,12 +340,14 @@ namespace DoI
         if (by < 0)
         {
             m_constants->m_dt /= 10;
-            m_constants->m_timeout = -1;
+            m_constants->m_timeout += 100;
+            m_constants->m_time_depth += 1;
+
         }
         if (by > 0)
         {
             m_constants->m_dt *= 10;
-            m_constants->m_timeout += 100;
+            m_constants->m_time_depth -= 1;
         }
     }
 
@@ -334,12 +355,15 @@ namespace DoI
     clock_tick()
     {
         m_time += m_constants->m_dt;
-        if (m_constants->m_timeout > 0)
+
+        if (m_constants->m_time_depth > 0)
+        {
             m_constants->m_timeout--;
 
-        if (m_constants->m_timeout == 0)
-        {
-            throw exception::TimeIntervalTooSmall(10, "clock check");
+            if (m_constants->m_timeout == 0)
+            {
+                throw exception::TimeIntervalTooSmall(10, "clock check");
+            }
         }
     }
 
@@ -439,7 +463,7 @@ namespace DoI
         //Writing data
         for (uint64_t i = 0; i < m_constants->m_size + 1; i++)
         {
-            fout << m_fieldArray.at(i)->E << std::endl;
+            fout << *(m_fieldArray.at(i)) << std::endl;
         }
         fout.close();
     }

@@ -6,19 +6,12 @@
 #include "include/cConstants.h"
 #include "include/cData.h"
 
-
-//#include "include/cInterface.h"
+//#define DUMP
 
 using namespace DoI;
 
 int main(int argc, char * argv[])
 {
-/*
-    cInterface * interface = new cInterface();
-    interface->init(&argc, &argv);
-    interface->connect(new cMaterial(readConstants("DoIconst.txt"),200));
-    return interface->lounch();
-*/
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),200);
 /*
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"), 2000,
@@ -32,53 +25,80 @@ int main(int argc, char * argv[])
     //Current file
     std::ofstream fcurrent ("current.dat");
 
-    /*
-    test->run();
-    test->dump("dump1.dat");
-    test->run();
-    test->dump("dump2.dat");
-    test->fstats();
-    */
-    uint64_t loop_count = 10000;
 
-    while (count < loop_count)//(test->time() < 5*test->m_constants->transitTime())
+    /**Diskretus ciklas*/
+/*
+    uint64_t loop_count = 1000000;
+    uint64_t number = 1;
+
+    while (count < loop_count)
     {
-        if (count % 100 == 0)
+        if (count % 10000 == 0)
         {
+            #ifdef DUMP
             std::ostringstream temp;
-            temp << "dumps/material" << std::setfill('0') << std::setw(3) << count/100 << ".dat";
+            temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
             test->write_material(temp.str());
             temp.str("");
-            temp << "dumps/field" << std::setfill('0') << std::setw(3) << count/100 << ".dat";
+            temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
             test->write_field(temp.str());
-
-            std::cout << "PERCENT: " << double(count)/loop_count <<std::endl;
+            #endif //DUMP
+            std::cout << "TIME: " << test->time() << '\t';
+            std::cout << "PERCENT: " << count*100.0/loop_count <<std::endl;
+            number ++;
         }
 
         count ++;
         test->run();
-/*
-        if ((test->time() > done*test->m_constants->transitTime()/10))
+    }
+*/
+    /**Laikinis ciklas*/
+
+    double transit_cycles = 5;
+    double transit_time = test->m_constants->transitTime();
+
+    uint64_t output_file_num = 100;
+
+    double interval = transit_cycles*transit_time/output_file_num;
+    double log_inc = 1; //1 kas kiekvieną ciklą įrašyti.
+
+    double log_cummulative = 1;
+    double last_time = 0;
+
+    uint64_t number = 0;
+
+    std::cout << "BEGIN" << std::endl;
+    std::cout << "T_tr: " << transit_time << std::endl;
+
+    while (test->time() < transit_cycles*transit_time)
+    {
+        if (test->time() > number*interval)
         {
+            #ifdef DUMP
             std::ostringstream temp;
-            temp << "dumps/material" << done << ".dat";
+            temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
             test->write_material(temp.str());
             temp.str("");
-            temp << "dumps/field" << done << ".dat";
+            temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
             test->write_field(temp.str());
-            done ++;
+            #endif //DUMP
+            std::cout << "TIME: " << test->time() << '\t';
+            std::cout << "PERCENT: " << number*100.0/output_file_num << std::endl;
+            number ++;
         }
 
-        if (count % 100 == 0)
+        //Logaritminė srovė
+        if (test->time() > last_time*log_cummulative)
         {
-            //test->report();
-            std::cout << "PERCENT: " << (test->time() / (5*test->m_constants->transitTime()))*100 << std::endl;
-            //test->fstats();
-
+            test->fcurrent(fcurrent);
+            log_cummulative *= log_inc;
+            last_time = test->time();
         }
-*/
 
+        test->run();
     }
+
+    std::cout << "END" << std::endl;
 
     /*
     test->dump("dump.txt");

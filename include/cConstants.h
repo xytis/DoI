@@ -31,6 +31,7 @@ namespace DoI
             double        m_dt;
             double        m_width;
             int           m_timeout;
+            int           m_time_depth;         //Naudojamas nustatyti kiek kartų laikas buvo sumažintas.
             uint64_t      m_size;
 
             cConstants(double beta, double S, double MIN, double q, double eps, double eps0,
@@ -52,6 +53,7 @@ namespace DoI
                 m_dt(dt),
                 m_width(width),
                 m_timeout(timeout),
+                m_time_depth(0),
                 m_size(size)
             {
 
