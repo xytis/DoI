@@ -168,8 +168,6 @@ namespace DoI
     cBlock::
     cBlock(const cData & data, cConstants * C):
         m_data(data),
-        m_n_buffer(0),
-        m_p_buffer(0),
         m_current(0),
         m_C(C)
     {
@@ -287,8 +285,8 @@ namespace DoI
         dn += drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_data, "2");
 
         //Isimam daleles.
-        m_n_buffer -= dn;
-        m_p_buffer -= dp;
+        m_data.m_n_buffer -= dn;
+        m_data.m_p_buffer -= dp;
 
         prev()->receive(dn,dp);
         //srovė kuri sukuriama iš šio bloko:
@@ -304,8 +302,8 @@ namespace DoI
         dp += drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_data, "4");
 
         //Isimam daleles.
-        m_n_buffer -= dn;
-        m_p_buffer -= dp;
+        m_data.m_n_buffer -= dn;
+        m_data.m_p_buffer -= dp;
 
         next()->receive(dn,dp);
         //srovė kuri sukuriama iš šio bloko:
@@ -319,17 +317,17 @@ namespace DoI
     {
         //Čia NETIKRINAMA ar gautas logiškas kiekis krūvininkų.
         //Čia jie tiesiog išsaugomi.
-        m_data.m_n += m_n_buffer;
-        m_data.m_p += m_p_buffer;
-        m_n_buffer = 0;
-        m_p_buffer = 0;
+        m_data.m_n += m_data.m_n_buffer;
+        m_data.m_p += m_data.m_p_buffer;
+        m_data.m_n_buffer = 0;
+        m_data.m_p_buffer = 0;
     }
 
     void cBlock::
     receive(const double & n, const double & p)
     {
-        m_n_buffer += n;
-        m_p_buffer += p;
+        m_data.m_n_buffer += n;
+        m_data.m_p_buffer += p;
     }
 
 
@@ -364,8 +362,6 @@ namespace DoI
     cContact(eContactType type, const cData & data, cConstants * C):
         m_type(type),
         m_data(data),
-        m_n_buffer(0),
-        m_p_buffer(0),
         m_current(0),
         m_C(C)
     {
@@ -452,7 +448,7 @@ namespace DoI
                 dc = 0;
             }
 
-            m_n_buffer += dc;
+            m_data.m_n_buffer += dc;
         }
         if (m_type == RIGHT)
         {
@@ -468,7 +464,7 @@ namespace DoI
                 dc = 0;
             }
 
-            m_p_buffer += dc;
+            m_data.m_p_buffer += dc;
         }
 
 
@@ -547,8 +543,8 @@ namespace DoI
         }
 
         //Isimam daleles.
-        m_n_buffer -= dn;
-        m_p_buffer -= dp;
+        m_data.m_n_buffer -= dn;
+        m_data.m_p_buffer -= dp;
 
         m_block->receive(dn,dp);
         //srovė pagal kontaktą:
@@ -567,17 +563,17 @@ namespace DoI
     void cContact::
     flush()
     {
-        m_data.m_n += m_n_buffer;
-        m_data.m_p += m_p_buffer;
-        m_n_buffer = 0;
-        m_p_buffer = 0;
+        m_data.m_n += m_data.m_n_buffer;
+        m_data.m_p += m_data.m_p_buffer;
+        m_data.m_n_buffer = 0;
+        m_data.m_p_buffer = 0;
     }
 
     void cContact::
     receive(const double & n, const double & p)
     {
-        m_n_buffer += n;
-        m_p_buffer += p;
+        m_data.m_n_buffer += n;
+        m_data.m_p_buffer += p;
     }
 
 

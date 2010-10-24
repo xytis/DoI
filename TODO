@@ -1,1 +1,4 @@
-1. Sutvarkyti clock tick (prie backup)
+*. Pirmame žingsnyje negerai pridedamas laiko žingsnis. (backup time nebūna == 0)?
+1. Sutvarkyti difuziją.
+2. Laiko keitime, įvyksta mažytis lūžis, pažiūrėti ar jis nėra per didelis.
+3. Sukurti linijinį scenarijų apdorojimo mechanizmą.

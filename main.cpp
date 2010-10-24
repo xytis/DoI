@@ -12,7 +12,7 @@ using namespace DoI;
 
 int main(int argc, char * argv[])
 {
-    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),200);
+    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),2000);
 /*
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"), 2000,
     cData(1e10,0,0,0,0,5e-09),
@@ -54,13 +54,14 @@ int main(int argc, char * argv[])
 */
     /**Laikinis ciklas*/
 
-    double transit_cycles = 5;
+    double transit_cycles = 7;
     double transit_time = test->m_constants->transitTime();
 
     uint64_t output_file_num = 100;
 
     double interval = transit_cycles*transit_time/output_file_num;
-    double log_inc = 1; //1 kas kiekvieną ciklą įrašyti.
+    double log_inc = 1.00001; //1 kas kiekvieną ciklą įrašyti.
+    //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didžiuliai.
 
     double log_cummulative = 1;
     double last_time = 0;

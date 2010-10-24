@@ -125,10 +125,10 @@
 1284636206 c:\users\xytis\documents\programing\doi good\include\cinterface.h
 	"cMaterial.h"
 
-1287871640 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
+1287939730 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
 	"cBlock.h"
 
-1287861248 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
+1287939253 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
 	<cstdlib>
 	<cassert>
 	"global.h"
@@ -138,7 +138,7 @@
 
 1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/global.h
 
-1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
+1287939729 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
 	<iostream>
 	"global.h"
 	"cBlock.h"
@@ -168,7 +168,7 @@
 	"../gui/gui.h"
 	<QApplication>
 
-1286825801 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
+1287945644 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
 	<cassert>
 	<cstdlib>
 	<vector>
@@ -179,7 +179,7 @@
 	"cData.h"
 	"CExeptions.h"
 
-1287871291 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
+1287943070 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
 	"cMaterial.h"
 
 1287871586 source:/home/xytis/Documents/Programing/Projects/DoI/main.cpp

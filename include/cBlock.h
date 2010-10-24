@@ -113,8 +113,9 @@ namespace DoI
             cField * m_E_next;
             cField * m_E_prev;
             cData    m_data;
-            double   m_n_buffer;
-            double   m_p_buffer;
+            //MOVED BUFER AREA TO m_data
+            //double   m_n_buffer;
+            //double   m_p_buffer;
 
             double m_current;
 
@@ -160,8 +161,8 @@ namespace DoI
             cField * m_E_prev;
             const eContactType m_type;
             cData    m_data;
-            double   m_n_buffer;
-            double   m_p_buffer;
+            //double   m_n_buffer;
+            //double   m_p_buffer;
             double  m_current;
             cConstants * m_C;
 

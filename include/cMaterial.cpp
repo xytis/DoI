@@ -29,21 +29,21 @@ namespace DoI
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
         //Šiuo atveju svarbu koks storio parametras duotas C.
-        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,0,C->m_width/size) ,C);
+        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,0,0,0,C->m_width/size) ,C);
         m_blockArray.push_back(temp);
 
         for (uint64_t i = 1; i < size-1; i++)
         {
             E_temp = new cField();
             m_fieldArray.push_back(E_temp);
-            temp = new cBlock(cData(0,0,0,0,0,C->m_width/size) ,C);
+            temp = new cBlock(cData(0,0,0,0,0,0,0,C->m_width/size) ,C);
             m_blockArray.push_back(temp);
         }
 
         E_temp = new cField();
         m_fieldArray.push_back(E_temp);
 
-        temp = new cContact(RIGHT, cData(0,0,0,0,0,C->m_width/size) ,C);
+        temp = new cContact(RIGHT, cData(0,0,0,0,0,0,0,C->m_width/size) ,C);
         m_blockArray.push_back(temp);
 
         //Lauko yra 1 daugiau.
@@ -140,7 +140,7 @@ namespace DoI
         //Backup part
         for (uint64_t i = 0; i < size; i++)
         {
-            m_backupArray.push_back(cData(0,0,0,0,0,0));
+            m_backupArray.push_back(cData(0,0,0,0,0,0,0,0));
         }
         //Length part
         m_constants->m_width = 0;
@@ -298,11 +298,7 @@ namespace DoI
         return c*m_constants->c_q/m_constants->m_dt/m_constants->m_size;
     }
 
-    void cMaterial::
-    fcurrent(std::ostream & out)
-    {
-        out << m_time << '\t' << current() << std::endl;
-    }
+
 
     void cMaterial::
     run()
@@ -340,7 +336,7 @@ namespace DoI
         if (by < 0)
         {
             m_constants->m_dt /= 10;
-            m_constants->m_timeout += 100;
+            m_constants->m_timeout += 500;      //FIXME: na, reikia sugalvoti lankstesnį grįžimo mechanizmą.
             m_constants->m_time_depth += 1;
 
         }
@@ -421,19 +417,12 @@ namespace DoI
     }
 
     void cMaterial::
-    stats(sSnapshot & snap)
+    fcurrent(std::ostream & out)
     {
-        snap.cur_time = m_time;
-        snap.array_size = m_constants->m_size;
-        delete[] snap.array;
-        snap.array = new cData[snap.array_size];
-        for (uint64_t i = 0; i < m_constants->m_size; i++)
-        {
-            snap.array[i] = m_blockArray.at(i)->read();
-        }
-        snap.current = current();
-        return ;
+        out << m_time << '\t' << current() << '\t' << m_constants->m_dt << std::endl;
     }
+
+
 
     void cMaterial::
     write_material(std::string name)
@@ -469,6 +458,21 @@ namespace DoI
     }
 
     void cMaterial::
+    stats(sSnapshot & snap)
+    {
+        snap.cur_time = m_time;
+        snap.array_size = m_constants->m_size;
+        delete[] snap.array;
+        snap.array = new cData[snap.array_size];
+        for (uint64_t i = 0; i < m_constants->m_size; i++)
+        {
+            snap.array[i] = m_blockArray.at(i)->read();
+        }
+        snap.current = current();
+        return ;
+    }
+
+    void cMaterial::
     load(std::string name)
     {
         std::ifstream fin(name.c_str());
@@ -477,12 +481,29 @@ namespace DoI
         //Reading time
         fin >> m_time;
         //Reading memory dump
+        cData temp(0,0,0,0,0,0,0,0);
         for (uint64_t i = 0; i < m_constants->m_size; i++)
         {
-            cData temp(0,0,0,0,0,0);
             fin >> temp;
             m_blockArray.at(i)->write(temp);
         }
+        fin.close();
+    }
+
+    void cMaterial::
+    dump(std::string name)
+    {
+        std::ofstream fout(name.c_str());
+        if (!fout)
+            throw exception::FileMisingExeption(name);
+        //Writing time
+        fout << m_time << std::endl;
+        //Writing memory dump
+        for (uint64_t i = 0; i < m_constants->m_size + 1; i++)
+        {
+            fout << m_blockArray.at(i)->read();
+        }
+        fout.close();
     }
 
     #ifdef DEBUG
@@ -518,7 +539,7 @@ namespace DoI
         //Make some changes =]
         for (uint64_t i = 0; i < m_constants->m_size; i++)
         {
-            m_blockArray.at(i)->write(cData(1,1,1,1,1,1));
+            m_blockArray.at(i)->write(cData(1,1,1,1,1,1,1,1));
         }
         report("after messing");
         restore();
