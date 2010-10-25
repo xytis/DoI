@@ -12,7 +12,7 @@ using namespace DoI;
 
 int main(int argc, char * argv[])
 {
-    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),2000);
+    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),500);
 /*
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"), 2000,
     cData(1e10,0,0,0,0,5e-09),

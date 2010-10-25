@@ -1,4 +1,4 @@
 *. Pirmame žingsnyje negerai pridedamas laiko žingsnis. (backup time nebūna == 0)?
 1. Sutvarkyti difuziją.
-2. Laiko keitime, įvyksta mažytis lūžis, pažiūrėti ar jis nėra per didelis.
+2. Įdėti prilipimus
 3. Sukurti linijinį scenarijų apdorojimo mechanizmą.

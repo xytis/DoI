@@ -1,10 +1,17 @@
 # depslib dependency file v1.0
-1274774507 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
+1287939730 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
+	"cBlock.h"
 	"cBlock.h"
 
 1273505066 
 
-1274774261 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
+1287939253 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
+	<cstdlib>
+	<cassert>
+	"global.h"
+	"cData.h"
+	"cStatus.h"
+	"cConstants.h"
 	<cstdlib>
 	<cassert>
 	"global.h"
@@ -14,22 +21,40 @@
 
 1284637478 s.h"
 
-1274385450 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
+1287939729 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
+	<iostream>
+	"global.h"
+	"cBlock.h"
 	<iostream>
 	"global.h"
 	"cBlock.h"
 
-1271177676 /home/xytis/Documents/Programing/Projects/DoI/include/cStatus.h
+1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/cStatus.h
 
-1274771791 source:/home/xytis/Documents/Programing/Projects/DoI/main.cpp
+1287871586 source:/home/xytis/Documents/Programing/Projects/DoI/main.cpp
 	<iostream>
+	"include/cMaterial.h"
+	"include/cConstants.h"
+	"include/cData.h"
+	<iostream>
+	<iomanip>
+	<sstream>
 	"include/cMaterial.h"
 	"include/cConstants.h"
 	"include/cData.h"
 
 1284637681 Data.h"
 
-1274383939 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
+1287945644 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
+	<cassert>
+	<cstdlib>
+	<vector>
+	<iostream>
+	<fstream>
+	"global.h"
+	"cBlock.h"
+	"cData.h"
+	"CExeptions.h"
 	<cassert>
 	<cstdlib>
 	<vector>
@@ -40,12 +65,19 @@
 	"cData.h"
 	"CExeptions.h"
 
-1274773698 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
+1287943070 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
+	"cMaterial.h"
 	"cMaterial.h"
 
 1284636206 .h"
 
-1274774845 /home/xytis/Documents/Programing/Projects/DoI/include/cConstants.h
+1287870872 /home/xytis/Documents/Programing/Projects/DoI/include/cConstants.h
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<string>
+	"global.h"
+	"CExeptions.h"
 	<cstdlib>
 	<iostream>
 	<fstream>
@@ -53,13 +85,16 @@
 	"global.h"
 	"CExeptions.h"
 
-1273515866 /home/xytis/Documents/Programing/Projects/DoI/include/CExeptions.h
+1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/CExeptions.h
+	<exception>
+	<string>
 	<exception>
 	<string>
 
-1274262871 /home/xytis/Documents/Programing/Projects/DoI/include/global.h
+1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/global.h
 
-1274262218 source:/home/xytis/Documents/Programing/Projects/DoI/include/cConstants.cpp
+1285558682 source:/home/xytis/Documents/Programing/Projects/DoI/include/cConstants.cpp
+	"cConstants.h"
 	"cConstants.h"
 
 1284637681 source:c:\users\xytis\documents\programing\doi good\main.cpp
@@ -125,41 +160,6 @@
 1284636206 c:\users\xytis\documents\programing\doi good\include\cinterface.h
 	"cMaterial.h"
 
-1287939730 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
-	"cBlock.h"
-
-1287939253 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
-	<cstdlib>
-	<cassert>
-	"global.h"
-	"cData.h"
-	"cStatus.h"
-	"cConstants.h"
-
-1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/global.h
-
-1287939729 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
-	<iostream>
-	"global.h"
-	"cBlock.h"
-
-1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/cStatus.h
-
-1287870872 /home/xytis/Documents/Programing/Projects/DoI/include/cConstants.h
-	<cstdlib>
-	<iostream>
-	<fstream>
-	<string>
-	"global.h"
-	"CExeptions.h"
-
-1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/CExeptions.h
-	<exception>
-	<string>
-
-1285558682 source:/home/xytis/Documents/Programing/Projects/DoI/include/cConstants.cpp
-	"cConstants.h"
-
 1284887599 source:/home/xytis/Documents/Programing/Projects/DoI/include/cInterface.cpp
 	"cInterface.h"
 
@@ -167,28 +167,6 @@
 	"cMaterial.h"
 	"../gui/gui.h"
 	<QApplication>
-
-1287945644 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
-	<cassert>
-	<cstdlib>
-	<vector>
-	<iostream>
-	<fstream>
-	"global.h"
-	"cBlock.h"
-	"cData.h"
-	"CExeptions.h"
-
-1287943070 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
-	"cMaterial.h"
-
-1287871586 source:/home/xytis/Documents/Programing/Projects/DoI/main.cpp
-	<iostream>
-	<iomanip>
-	<sstream>
-	"include/cMaterial.h"
-	"include/cConstants.h"
-	"include/cData.h"
 
 1278340955 /usr/include/gtk-2.0//gtk/gtk.h
 	<gdk/gdk.h>
@@ -8020,4 +7998,61 @@
 	<QtGui/qpainter.h>
 	<QtGui/qstyle.h>
 	<QtGui/qwidget.h>
+
+1287951014 source:c:\users\xytis\documents\programing\doi\include\cconstants.cpp
+	"cConstants.h"
+
+1287953158 c:\users\xytis\documents\programing\doi\include\cconstants.h
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<string>
+	"global.h"
+	"CExeptions.h"
+
+1287951014 c:\users\xytis\documents\programing\doi\include\global.h
+
+1287951014 c:\users\xytis\documents\programing\doi\include\cexeptions.h
+	<exception>
+	<string>
+
+1287953158 source:c:\users\xytis\documents\programing\doi\include\cmaterial.cpp
+	"cMaterial.h"
+
+1287953158 c:\users\xytis\documents\programing\doi\include\cmaterial.h
+	<cassert>
+	<cstdlib>
+	<vector>
+	<iostream>
+	<fstream>
+	"global.h"
+	"cBlock.h"
+	"cData.h"
+	"CExeptions.h"
+
+1287953158 c:\users\xytis\documents\programing\doi\include\cblock.h
+	<cstdlib>
+	<cassert>
+	"global.h"
+	"cData.h"
+	"cStatus.h"
+	"cConstants.h"
+
+1287953158 c:\users\xytis\documents\programing\doi\include\cdata.h
+	<iostream>
+	"global.h"
+	"cBlock.h"
+
+1287951014 c:\users\xytis\documents\programing\doi\include\cstatus.h
+
+1288000018 source:c:\users\xytis\documents\programing\doi\main.cpp
+	<iostream>
+	<iomanip>
+	<sstream>
+	"include/cMaterial.h"
+	"include/cConstants.h"
+	"include/cData.h"
+
+1288000432 source:c:\users\xytis\documents\programing\doi\include\cblock.cpp
+	"cBlock.h"
 

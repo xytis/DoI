@@ -122,7 +122,7 @@ namespace DoI
     double diffusion(const double & interest,const double & neighbour, const double & D,
                       const cConstants * C, const cData & data, std::string place)
     {
-/*
+
         double dc;
         dc = (interest - neighbour)*D*C->m_dt / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
         if (dc>interest/5)
@@ -130,7 +130,7 @@ namespace DoI
         if (dc < C->c_MIN)
             dc = 0;
         return dc;
-*/
+
         return 0; //No diff
     }
 
