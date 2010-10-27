@@ -52,6 +52,10 @@ namespace DoI
             std::vector<cField *>  m_fieldArray;
             //Pagalbinis duomenų masyvas, be link'ų
             std::vector<cData> m_backupArray;
+
+            cConstants * m_constants;
+            cGlobal * m_global;
+
             //Laiko kintamieji
             double m_time;
             double m_backup_time;
@@ -79,14 +83,10 @@ namespace DoI
 
 
         public:
-            //Kai tik main neliks nieko valdančio, ji pereis į privačią sritį.
-            //Tik cInterface galės valdyti. Ir tik netiesiogiai.
-            cConstants * m_constants;
-
             //Konstruktoriai
-            cMaterial(cConstants *, const uint64_t & size);
-            cMaterial(cConstants *, const uint64_t & size, const cData & first, const cData & other, const cData & last);
-            cMaterial(cConstants *, std::vector<cData> &);
+            cMaterial(cConstants *, cGlobal *);
+            cMaterial(cConstants *, cGlobal *, const uint64_t & size, const cData & first, const cData & other, const cData & last);
+            cMaterial(cConstants *, cGlobal *, std::vector<cData> &);
 
             //Pagrindinio ciklo žingsnis
             void run();

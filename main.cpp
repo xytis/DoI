@@ -6,19 +6,33 @@
 #include "include/cConstants.h"
 #include "include/cData.h"
 
+#include "include\cSimulation.hpp"
+
 //#define DUMP
 
 using namespace DoI;
 
 int main(int argc, char * argv[])
 {
-    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),500);
+    cSimulation sim;
+    try {
+        sim.read_n_execute("scenario.txt");
+    }
+    catch (exception::FileMisingExeption & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+
+    return 0;
+
+//    cMaterial * test = new cMaterial(readConstants("DoIconst.txt"),500);
 /*
     cMaterial * test = new cMaterial(readConstants("DoIconst.txt"), 2000,
     cData(1e10,0,0,0,0,5e-09),
     cData(0,0,0,0,0,5e-09),
     cData(0,1e10,0,0,0,5e-09));
 */
+/*
     uint64_t count = 0;
     uint64_t done = 0;
 
@@ -52,8 +66,9 @@ int main(int argc, char * argv[])
         test->run();
     }
 */
-    /**Laikinis ciklas*/
 
+    /**Laikinis ciklas*/
+/*
     double transit_cycles = 7;
     double transit_time = test->m_constants->transitTime();
 
@@ -112,6 +127,7 @@ int main(int argc, char * argv[])
     test->check_backup();
     test->check_run();
     */
-
+/*
     return 0;
+    */
 }

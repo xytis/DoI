@@ -1,0 +1,4 @@
+U       8
+dt      1e-7
+width   1e-6
+size    2000

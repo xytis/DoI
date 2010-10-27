@@ -2,3 +2,4 @@
 1. Sutvarkyti difuziją.
 2. Įdėti prilipimus
 3. Sukurti linijinį scenarijų apdorojimo mechanizmą.
+4. Perduoti bandymo valdymą iš main į kitą klasę.

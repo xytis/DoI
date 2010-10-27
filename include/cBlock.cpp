@@ -120,11 +120,11 @@ namespace DoI
     // Helpers for formulaes
 
     double diffusion(const double & interest,const double & neighbour, const double & D,
-                      const cConstants * C, const cData & data, std::string place)
+                      const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
 
         double dc;
-        dc = (interest - neighbour)*D*C->m_dt / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
+        dc = (interest - neighbour)* D * G->dt() / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
         if (dc>interest/5)
             throw exception::TimeIntervalTooLarge(10, std::string("Diffusion ") + place);
         if (dc < C->c_MIN)
@@ -135,11 +135,11 @@ namespace DoI
     }
 
     double drift(const double & interest, const double & field, const double & miu,
-                  const cConstants * C, const cData & data, std::string place)
+                  const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
 
         double dc;
-        dc = miu * field * C->m_dt / data.m_width * interest;
+        dc = miu * field * G->dt() / data.m_width * interest;
         if (dc > interest/5)
             throw exception::TimeIntervalTooLarge(10, std::string("Drift ") + place);
         if (dc < C->c_MIN)
@@ -149,10 +149,10 @@ namespace DoI
         //return 0;   //no drift
     }
 
-    double recombine(const cConstants * C, const cData & data, std::string place)
+    double recombine(const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
         double pairs;
-        pairs = data.m_n * data.m_p * C->c_beta * C->m_dt / C->c_S / data.m_width;
+        pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
         if ((pairs > data.m_n)||(pairs > data.m_p))
             throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
         if (pairs < C->c_MIN)
@@ -166,10 +166,11 @@ namespace DoI
 
 
     cBlock::
-    cBlock(const cData & data, cConstants * C):
+    cBlock(const cData & data, cConstants * C, cGlobal * G):
         m_data(data),
         m_current(0),
-        m_C(C)
+        m_C(C),
+        m_G(G)
     {
         //EMPTY
     }
@@ -227,7 +228,7 @@ namespace DoI
     void cBlock::
     recombination()
     {
-        double pairs = recombine(m_C, m_data, "cBlock");
+        double pairs = recombine(m_C, m_G, m_data, "cBlock");
         m_data.m_n -= pairs;
         m_data.m_p -= pairs;
     }
@@ -276,13 +277,13 @@ namespace DoI
 
         double dn, dp;
         //Elektronai einantys á kairæ
-        dn = diffusion(m_data.m_n, prev()->read().m_n, m_C->c_n_D, m_C, m_data, "1");
+        dn = diffusion(m_data.m_n, prev()->read().m_n, m_C->c_n_D, m_C, m_G, m_data, "1");
         //Skylës einanèios á kairæ
-        dp = diffusion(m_data.m_p, prev()->read().m_p, m_C->c_p_D, m_C, m_data, "2");
+        dp = diffusion(m_data.m_p, prev()->read().m_p, m_C->c_p_D, m_C, m_G, m_data, "2");
         //Judėjimas dėl dreifo į kairę
-        dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_data, "1");
+        dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "1");
         //Elektronai juda į kairę kai laukas priešingas
-        dn += drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_data, "2");
+        dn += drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "2");
 
         //Isimam daleles.
         m_data.m_n_buffer -= dn;
@@ -293,13 +294,13 @@ namespace DoI
         m_current += dp-dn; //Ji lokaliai gali būti ir neigiama.
 
         //Elektronai einantys á deðinæ
-        dn = diffusion(m_data.m_n, next()->read().m_n, m_C->c_n_D, m_C, m_data, "3");
+        dn = diffusion(m_data.m_n, next()->read().m_n, m_C->c_n_D, m_C, m_G, m_data, "3");
         //Skylës einanèios á deðinæ
-        dp = diffusion(m_data.m_p, next()->read().m_p, m_C->c_p_D, m_C, m_data, "4");
+        dp = diffusion(m_data.m_p, next()->read().m_p, m_C->c_p_D, m_C, m_G, m_data, "4");
         //Judėjimas dėl dreifo į dešinę
-        dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_data, "3");
+        dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "3");
         //Skylės juda į dešinę kai laukas priešingas
-        dp += drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_data, "4");
+        dp += drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "4");
 
         //Isimam daleles.
         m_data.m_n_buffer -= dn;
@@ -359,11 +360,12 @@ namespace DoI
     /**cContact**/
 
     cContact::
-    cContact(eContactType type, const cData & data, cConstants * C):
+    cContact(eContactType type, const cData & data, cConstants * C, cGlobal * G):
         m_type(type),
         m_data(data),
         m_current(0),
-        m_C(C)
+        m_C(C),
+        m_G(G)
     {
 
     }
@@ -473,7 +475,7 @@ namespace DoI
     void cContact::
     recombination()
     {
-        double pairs = recombine(m_C, m_data, "cContact");
+        double pairs = recombine(m_C, m_G, m_data, "cContact");
         m_data.m_n -= pairs;
         m_data.m_p -= pairs;
     }
@@ -526,20 +528,20 @@ namespace DoI
 
         double  dn, dp;
         //Elektronai einantys į kaimyną
-        dn = diffusion(m_data.m_n, m_block->read().m_n, m_C->c_n_D, m_C, m_data, "1");
+        dn = diffusion(m_data.m_n, m_block->read().m_n, m_C->c_n_D, m_C, m_G, m_data, "1");
         //Skylës einanèios į kaimyną
-        dp = diffusion(m_data.m_p, m_block->read().m_p, m_C->c_p_D, m_C, m_data, "2");
+        dp = diffusion(m_data.m_p, m_block->read().m_p, m_C->c_p_D, m_C, m_G, m_data, "2");
 
         //Dreifas pagal kontaktą:
         if (m_type == LEFT)
         {
             //Juda elektronai
-            dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_data, "1");
+            dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "1");
         }
         if (m_type == RIGHT)
         {
             //Juda skylės
-            dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_data, "2");
+            dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "2");
         }
 
         //Isimam daleles.

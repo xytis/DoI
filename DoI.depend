@@ -7999,10 +7999,10 @@
 	<QtGui/qstyle.h>
 	<QtGui/qwidget.h>
 
-1287951014 source:c:\users\xytis\documents\programing\doi\include\cconstants.cpp
+1288177378 source:c:\users\xytis\documents\programing\doi\include\cconstants.cpp
 	"cConstants.h"
 
-1287953158 c:\users\xytis\documents\programing\doi\include\cconstants.h
+1288177113 c:\users\xytis\documents\programing\doi\include\cconstants.h
 	<cstdlib>
 	<iostream>
 	<fstream>
@@ -8016,10 +8016,10 @@
 	<exception>
 	<string>
 
-1287953158 source:c:\users\xytis\documents\programing\doi\include\cmaterial.cpp
+1288177866 source:c:\users\xytis\documents\programing\doi\include\cmaterial.cpp
 	"cMaterial.h"
 
-1287953158 c:\users\xytis\documents\programing\doi\include\cmaterial.h
+1288177815 c:\users\xytis\documents\programing\doi\include\cmaterial.h
 	<cassert>
 	<cstdlib>
 	<vector>
@@ -8030,7 +8030,7 @@
 	"cData.h"
 	"CExeptions.h"
 
-1287953158 c:\users\xytis\documents\programing\doi\include\cblock.h
+1288175839 c:\users\xytis\documents\programing\doi\include\cblock.h
 	<cstdlib>
 	<cassert>
 	"global.h"
@@ -8045,14 +8045,26 @@
 
 1287951014 c:\users\xytis\documents\programing\doi\include\cstatus.h
 
-1288000018 source:c:\users\xytis\documents\programing\doi\main.cpp
+1288176537 source:c:\users\xytis\documents\programing\doi\main.cpp
 	<iostream>
 	<iomanip>
 	<sstream>
 	"include/cMaterial.h"
 	"include/cConstants.h"
 	"include/cData.h"
+	"include\cSimulation.hpp"
 
-1288000432 source:c:\users\xytis\documents\programing\doi\include\cblock.cpp
+1288175969 source:c:\users\xytis\documents\programing\doi\include\cblock.cpp
 	"cBlock.h"
+
+1288177355 source:c:\users\xytis\documents\programing\doi\include\csimulation.cpp
+	"cSimulation.hpp"
+
+1288177885 c:\users\xytis\documents\programing\doi\include\csimulation.hpp
+	"CExeptions.h"
+	"cConstants.h"
+	"cMaterial.h"
+	<map>
+	<string>
+	<iostream>
 

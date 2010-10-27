@@ -10,8 +10,3 @@ n_miu   1e-6
 p_miu   1e-7
 n_D     none
 p_D     none
-U       8
-dt      1e-7
-width   1e-6
-timeout -1
-size    0

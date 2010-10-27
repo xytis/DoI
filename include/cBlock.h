@@ -100,10 +100,10 @@ namespace DoI
 
     // Formulaes
     double drift(const double &, const double &, const double &,
-                 const cConstants *, const cData &, std::string);
+                 const cConstants *, const cGlobal *, const cData &, std::string);
     double diffusion(const double &, const double &, const double &,
-                     const cConstants *, const cData &, std::string);
-    double recombine(const cConstants *, const cData &, std::string);
+                     const cConstants *, const cGlobal *, const cData &, std::string);
+    double recombine(const cConstants *, const cGlobal *, const cData &, std::string);
 
     class cBlock : public IBlock
     {
@@ -120,6 +120,7 @@ namespace DoI
             double m_current;
 
             cConstants * m_C;
+            cGlobal * m_G;
 
             void recombination();
             void glue_unglue();
@@ -127,7 +128,7 @@ namespace DoI
 
 
         public:
-            cBlock(const cData &, cConstants *);
+            cBlock(const cData &, cConstants *, cGlobal *);
             virtual     IBlock *        next();
             virtual     IBlock *        prev();
             virtual     cField *        E_next();
@@ -165,13 +166,14 @@ namespace DoI
             //double   m_p_buffer;
             double  m_current;
             cConstants * m_C;
+            cGlobal * m_G;
 
             void injection();
             void recombination();
             void glue_unglue();
 
         public:
-            cContact(eContactType, const cData &, cConstants *);
+            cContact(eContactType, const cData &, cConstants *, cGlobal *);
             virtual     IBlock *        next();
             virtual     IBlock *        prev();
             virtual     cField *        E_next();

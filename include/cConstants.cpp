@@ -2,55 +2,6 @@
 
 namespace DoI
 {
-    cConstants * readConstants(std::string filename)
-    {
-
-        std::ifstream fin(filename.c_str());
-        if (!fin)
-            throw exception::FileMisingExeption(filename);
-
-        double beta, S, MIN, q, eps, eps0, k, T, n_miu, p_miu, n_D, p_D,  U, dt, width, timeout, size;
-        std::string id;
-        std::string none;
-
-        fin >> id >> none;
-        fin >> id >> S;
-        fin >> id >> MIN;
-        fin >> id >> q;
-        fin >> id >> eps;
-        fin >> id >> eps0;
-        fin >> id >> none;
-        fin >> id >> T;
-        fin >> id >> n_miu;
-        fin >> id >> p_miu;
-        fin >> id >> none;
-        fin >> id >> none;
-        fin >> id >> U;
-        fin >> id >> dt;
-        fin >> id >> width;
-        fin >> id >> timeout;
-        fin >> id >> size;
-
-        cConstants * C = new cConstants(recombinationConst(q, n_miu, p_miu, eps, eps0),
-                                        S,
-                                        MIN,
-                                        q,
-                                        eps,
-                                        eps0,
-                                        driftConst(eps, eps0, S),
-                                        T,
-                                        n_miu,
-                                        p_miu,
-                                        diffusionConst(T, n_miu, q),
-                                        diffusionConst(T, p_miu, q),
-                                        U,
-                                        dt,
-                                        width,
-                                        timeout,
-                                        size);
-        return C;
-    }
-
     std::ostream & operator << (std::ostream & out, const cConstants & C)
     {
         out << "Plotas\t\t\t:\t" << C.c_S << std::endl;
@@ -65,23 +16,32 @@ namespace DoI
         out << "Diffusion n\t\t:\t" << C.c_n_D << std::endl;
         out << "Diffusion p\t\t:\t" << C.c_p_D << std::endl;
         out << "Recombination Beta\t:\t" << C.c_beta << std::endl;
-        out << "Voltage\t\t\t:\t" << C.m_U << std::endl;
-        out << "Time Step\t\t:\t" << C.m_dt << std::endl;
-        out << "Width\t\t\t:\t" << C.m_width << std::endl;
-        out << "Timeout\t\t\t:\t" << C.m_timeout << std::endl;
-        out << "Size\t\t\t:\t" << C.m_size << std::endl;
+        return out;
     }
 
-    double cConstants::
-    transitTime()
+    std::ostream & operator << (std::ostream & out, cGlobal & G)
     {
-        return 0.78*m_width*m_width/c_n_miu/m_U;
+        out << "Įtampa\t\t\t:\t" << G.U() << std::endl;
+        out << "Laiko žingsnis\t\t:\t" << G.dt() << std::endl;
+        out << "Storis\t\t\t:\t" << G.width() << std::endl;
+        out << "timeout\t\t\t:\t" << G.timeout() << std::endl;
+        out << "time_depth\t\t:\t" << G.time_depth() << std::endl;
+        out << "Padalinimų sk.\t\t:\t" << G.size() << std::endl;
+        return out;
     }
 
-    double cConstants::
-    currentMax()
+
+
+    double
+    transitTime(cConstants & C, cGlobal & G)
     {
-        return 9.0/8.0*c_eps*c_eps0*(c_n_miu +c_p_miu)*m_U*m_U/m_width/m_width/m_width * c_S;
+        return 0.78*G.width()*G.width()/C.c_n_miu/G.U();
+    }
+
+    double
+    currentMax(cConstants & C, cGlobal & G)
+    {
+        return 9.0/8.0*C.c_eps*C.c_eps0*(C.c_n_miu +C.c_p_miu)*G.U()*G.U()/G.width()/G.width()/G.width() * C.c_S;
     }
 
     double

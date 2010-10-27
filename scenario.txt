@@ -1,0 +1,5 @@
+LOAD_CONSTANTS	DoIconst.txt
+LOAD_GLOBAL		global.txt
+SET_OUTPUT		current.dat
+RUN_BY_TIME		7
+END
