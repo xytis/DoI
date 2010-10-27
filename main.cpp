@@ -6,7 +6,7 @@
 #include "include/cConstants.h"
 #include "include/cData.h"
 
-#include "include\cSimulation.hpp"
+#include "include/cSimulation.hpp"
 
 //#define DUMP
 
@@ -19,6 +19,10 @@ int main(int argc, char * argv[])
         sim.read_n_execute("scenario.txt");
     }
     catch (exception::FileMisingExeption & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    catch (exception::FileBadExeption & e)
     {
         std::cout << e.what() << std::endl;
     }

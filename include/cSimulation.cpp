@@ -5,7 +5,9 @@ namespace DoI
     cSimulation::
     cSimulation():
     m_constants(NULL),
-    m_global(NULL)
+    m_global(NULL),
+    m_object(NULL),
+    current_output(NULL)
     {
 
     }
@@ -37,8 +39,14 @@ namespace DoI
         m_controlers["LOAD_CONSTANTS"]  = &cSimulation::load_constants;
         m_controlers["LOAD_GLOBAL"]     = &cSimulation::load_global;
         m_controlers["SET_OUTPUT"]      = &cSimulation::set_output;
-        m_controlers["RUN_BY_TIME"]     = &cSimulation::run_by_time;
+        m_controlers["CREATE_OBJECT"]   = &cSimulation::create_object;
+        m_controlers["LOAD_OBJECT"]     = &cSimulation::load_object;
+        m_controlers["SAVE_OBJECT"]     = &cSimulation::save_object;
+        m_controlers["RUN_BY_TRANSIT"]  = &cSimulation::run_by_transit;
+        m_controlers["RUN_UNTIL"]       = &cSimulation::run_until;
+        m_controlers["RUN_ITER"]        = &cSimulation::run_iter;
         m_controlers["END"]             = &cSimulation::end;
+
     }
 
     void cSimulation::
@@ -51,7 +59,8 @@ namespace DoI
         if (!cfile)
             throw exception::FileMisingExeption(filename);
 
-        double beta, S, MIN, q, eps, eps0, k, T, n_miu, p_miu, n_D, p_D,  U, dt, width, timeout, size;
+        //double beta, S, MIN, q, eps, eps0, k, T, n_miu, p_miu, n_D, p_D,  U, dt, width, timeout, size;
+        double S, MIN, q, eps, eps0, T, n_miu, p_miu;
         std::string id;
         std::string none;
 
@@ -121,24 +130,41 @@ namespace DoI
     void cSimulation::
     set_output(std::ifstream & fin)
     {
-        fin >> current_output;
-        std::cout << ">>SET OUTPUT FILE: " << current_output << std::endl;
+        std::string filename;
+        fin >> filename;
+        if (filename == "cout")
+        {
+            current_output = &(std::cout);
+            std::cout << ">>SET OUTPUT TO STD::COUT" << std::endl;
+        }
+        else
+        {
+            current_output = new std::ofstream(filename.c_str());
+            std::cout << ">>SET OUTPUT FILE: " << current_output << std::endl;
+        }
+        if (!current_output)
+            throw exception::FileMisingExeption(filename);
     }
 
     void cSimulation::
-    run_by_time(std::ifstream & fin)
+    run_by_transit(std::ifstream & fin)
     {
-        double transit_cycles;
+        if (!m_object)
+        {
+            throw exception::BadCommand("Test Object not initialized.");
+        }
 
-        cMaterial * test = new cMaterial(m_constants, m_global);
+        double transit_cycles;
 
         fin >> transit_cycles;
         std::cout << ">>RUNING FOR " << transit_cycles << " TRANSIT CYCLES" << std::endl;
 
-        std::ofstream fcurrent (current_output.c_str());
-        if (!fcurrent)
-            throw exception::FileBadExeption(current_output);
-        std::cout << ">>USING FILE FOR OUTPUT:" << current_output << std::endl;
+        if (!current_output)
+        {
+            std::cout << "W>OUTPUT FILE NOT SET!" << std::endl;
+        }
+
+
 
         double transit_time = transitTime(*m_constants, *m_global);
 
@@ -156,34 +182,172 @@ namespace DoI
         std::cout << "BEGIN" << std::endl;
         std::cout << "T_tr: " << transit_time << std::endl;
 
-        while (test->time() < transit_cycles*transit_time)
+        while (m_object->time() < transit_cycles*transit_time)
         {
-            if (test->time() > number*interval)
+            if (m_object->time() > number*interval)
             {
                 #ifdef DUMP
                 std::ostringstream temp;
                 temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
-                test->write_material(temp.str());
+                m_object->write_material(temp.str());
                 temp.str("");
                 temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
-                test->write_field(temp.str());
+                m_object->write_field(temp.str());
                 #endif //DUMP
-                std::cout << "TIME: " << test->time() << '\t';
+                std::cout << "TIME: " << m_object->time() << '\t';
                 std::cout << "PERCENT: " << number*100.0/output_file_num << std::endl;
                 number ++;
             }
 
             //Logaritminë srovë
-            if (test->time() > last_time*log_cummulative)
+            if (m_object->time() > last_time*log_cummulative)
             {
-                test->fcurrent(fcurrent);
+                m_object->fcurrent(*current_output);
                 log_cummulative *= log_inc;
-                last_time = test->time();
+                last_time = m_object->time();
             }
 
-            test->run();
+            m_object->run();
         }
 
+    }
+
+    void cSimulation::
+    run_until(std::ifstream & fin)
+    {
+        if (!m_object)
+        {
+            throw exception::BadCommand("Test Object not initialized.");
+        }
+
+        double end_time;
+        fin >>end_time;
+        if (end_time < m_object->time())
+        {
+            std::cout << "E>END TIME PASSED" << std::endl;
+            return ;
+        }
+
+        uint64_t output_file_num = 100;
+
+        double interval = (end_time-m_object->time())/output_file_num;
+        double log_inc = 1.00001; //1 kas kiekvienà ciklà áraðyti.
+        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didþiuliai.
+
+        double log_cummulative = 1;
+        double last_time = 0;
+
+        uint64_t number = 0;
+
+        while (m_object->time() < end_time)
+        {
+            if (m_object->time() > number*interval)
+            {
+                #ifdef DUMP
+                std::ostringstream temp;
+                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
+                m_object->write_material(temp.str());
+                temp.str("");
+                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
+                m_object->write_field(temp.str());
+                #endif //DUMP
+                std::cout << "TIME: " << m_object->time() << '\t';
+                std::cout << "PERCENT: " << number*100.0/output_file_num << std::endl;
+                number ++;
+            }
+
+            //Logaritminë srovë
+            if (m_object->time() > last_time*log_cummulative)
+            {
+                m_object->fcurrent(*current_output);
+                log_cummulative *= log_inc;
+                last_time = m_object->time();
+            }
+
+            //Watching for the last step:
+            if (m_object->time() > end_time - m_global->dt())
+            {
+                //Decreasing the dt, to meet the time limit.
+                m_global->s_dt(end_time-m_object->time());
+            }
+
+            m_object->run();
+        }
+
+        //Making the last step:
+        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+
+    }
+
+    void cSimulation::
+    run_iter(std::ifstream & fin)
+    {
+        if (!m_object)
+        {
+            throw exception::BadCommand("Test Object not initialized.");
+        }
+
+        uint64_t loop_count;
+        fin >> loop_count;
+
+        uint64_t count = 0;
+
+        std::cout << ">>RUNING FOR " << loop_count << " LOOPS" << std::endl;
+
+        while (count < loop_count)
+        {
+            if (count % 10000 == 0)
+            {
+                #ifdef DUMP
+                static uint64_t number = 1;
+                std::ostringstream temp;
+                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
+                m_object->write_material(temp.str());
+                temp.str("");
+                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
+                m_object->write_field(temp.str());
+                number ++;
+                #endif //DUMP
+                std::cout << "TIME: " << m_object->time() << '\t';
+                std::cout << "PERCENT: " << count*100.0/loop_count <<std::endl;
+            }
+
+            count ++;
+            m_object->run();
+        }
+    }
+
+    void cSimulation::
+    create_object(std::ifstream & fin)
+    {
+        std::cout << ">>CREATING TEST OBJECT" << std::endl;
+        m_object = new cMaterial(m_constants, m_global);
+        std::cout << "..DONE" << std::endl;
+    }
+
+    void cSimulation::
+    load_object(std::ifstream & fin)
+    {
+        std::cout << ">>LOADING TEST OBJECT" << std::endl;
+        std::string filename;
+        fin >> filename;
+        m_object = new cMaterial(m_constants, m_global);
+        m_object->load(filename);
+        std::cout << "..DONE" << std::endl;
+    }
+
+    void cSimulation::
+    save_object(std::ifstream & fin)
+    {
+        std::cout << ">>SAVING TEST OBJECT" << std::endl;
+        std::string filename;
+        fin >> filename;
+        if (!m_object)
+        {
+            throw exception::BadCommand("Test Object not initialized.");
+        }
+        m_object->dump(filename);
+        std::cout << "..DONE" << std::endl;
     }
 
     void cSimulation::

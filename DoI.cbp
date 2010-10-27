@@ -40,6 +40,8 @@
 		<Unit filename="include/cData.h" />
 		<Unit filename="include/cMaterial.cpp" />
 		<Unit filename="include/cMaterial.h" />
+		<Unit filename="include/cSimulation.cpp" />
+		<Unit filename="include/cSimulation.hpp" />
 		<Unit filename="include/global.h" />
 		<Unit filename="include/gui/gui.ui" />
 		<Unit filename="main.cpp" />

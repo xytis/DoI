@@ -111,6 +111,26 @@ namespace DoI
                 ~FileBadExeption () throw () {}
         };
 
+        class BadCommand: public std::exception
+        {
+            private:
+                std::string m_reason;
+            public:
+                BadCommand(std::string reason) throw()
+                {
+                    m_reason = reason;
+                }
+                const char* reason() const throw()
+                {
+                    return m_reason.c_str();
+                }
+                const char* what() const throw()
+                {
+                    return "Bad Command";
+                }
+                ~BadCommand () throw () {}
+        };
+
         class FileBadVersionExeption: public std::exception
         {
             private:

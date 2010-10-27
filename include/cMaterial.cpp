@@ -24,7 +24,7 @@ namespace DoI
     cMaterial(cConstants * C, cGlobal * G):
         m_constants(C),
         m_global(G),
-        m_time(0)
+        m_time(-G->dt())
     {
         //Kuriam paraleliai ir el. lauko masyvą.
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
@@ -58,7 +58,7 @@ namespace DoI
     cMaterial(cConstants * C, cGlobal * G, const uint64_t & size, const cData & first, const cData & other, const cData & last):
         m_constants(C),
         m_global(G),
-        m_time(0)
+        m_time(-G->dt())
     {
         //Kuriam paraleliai ir el. lauko masyvą.
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
@@ -92,7 +92,7 @@ namespace DoI
     cMaterial(cConstants * C, cGlobal * G, std::vector<cData> & all):
         m_constants(C),
         m_global(G),
-        m_time(0)
+        m_time(-G->dt())
     {
         //Lauko masyvas nėra išsaugomas.
         //Kuriam paraleliai ir el. lauko masyvą.
@@ -222,7 +222,9 @@ namespace DoI
         double l, r;
         l = 0;
         r = 0;
-        cField * tl(left), * tr(right); //užsaugom pradžias
+        //užsaugom pradžias
+        cField * tl(left);
+        //cField * tr(right);
         while ((left != NULL) && (right != NULL))
         {
             l += left->dE;

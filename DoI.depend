@@ -3,7 +3,7 @@
 	"cBlock.h"
 	"cBlock.h"
 
-1273505066 
+1287951014 
 
 1287939253 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
 	<cstdlib>
@@ -19,7 +19,7 @@
 	"cStatus.h"
 	"cConstants.h"
 
-1284637478 s.h"
+1288175839 s.h"
 
 1287939729 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
 	<iostream>
@@ -69,7 +69,7 @@
 	"cMaterial.h"
 	"cMaterial.h"
 
-1284636206 .h"
+1288177866 .h"
 
 1287870872 /home/xytis/Documents/Programing/Projects/DoI/include/cConstants.h
 	<cstdlib>
@@ -155,7 +155,7 @@
 1284636212 source:c:\users\xytis\documents\programing\doi good\include\cinterface.cpp
 	"cInterface.h"
 
-1284636212 e.h"
+1285558682 e.h"
 
 1284636206 c:\users\xytis\documents\programing\doi good\include\cinterface.h
 	"cMaterial.h"
@@ -167,6 +167,8 @@
 	"cMaterial.h"
 	"../gui/gui.h"
 	<QApplication>
+
+1284888697 ion>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtk.h
 	<gdk/gdk.h>
@@ -378,6 +380,8 @@
 	<gtk/gtktipsquery.h>
 	<gtk/gtktooltips.h>
 
+1278340955 oltips.h>
+
 1278340949 /usr/include/gtk-2.0//gdk/gdk.h
 	<gdk/gdkapplaunchcontext.h>
 	<gdk/gdkcairo.h>
@@ -408,19 +412,27 @@
 	<gdk/gdkvisual.h>
 	<gdk/gdkwindow.h>
 
+1278340955 ndow.h>
+
 1278340949 /usr/include/gtk-2.0//gdk/gdkapplaunchcontext.h
 	<gio/gio.h>
 	<gdk/gdkscreen.h>
+
+1278340949 reen.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkscreen.h
 	<cairo.h>
 	"gdk/gdktypes.h"
 	"gdk/gdkdisplay.h"
 
+1278340949 splay.h"
+
 1278338209 /usr/include/cairo/cairo.h
 	"cairo-version.h"
 	"cairo-features.h"
 	"cairo-deprecated.h"
+
+1278338209 recated.h"
 
 1278338209 /usr/include/cairo/cairo-version.h
 
@@ -434,9 +446,13 @@
 	<glib-object.h>
 	<gdkconfig.h>
 
+1284109524 .h>
+
 1278340949 /usr/include/gtk-2.0//gdk/gdkdisplay.h
 	<gdk/gdktypes.h>
 	<gdk/gdkevents.h>
+
+1278340949 ents.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkevents.h
 	<gdk/gdkcolor.h>
@@ -444,9 +460,13 @@
 	<gdk/gdkdnd.h>
 	<gdk/gdkinput.h>
 
+1278340949 put.h>
+
 1278340949 /usr/include/gtk-2.0//gdk/gdkcolor.h
 	<cairo.h>
 	<gdk/gdktypes.h>
+
+1278340949 pes.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkdnd.h
 	<gdk/gdktypes.h>
@@ -459,11 +479,15 @@
 	<gdk/gdkpixbuf.h>
 	<pango/pangocairo.h>
 
+1278340949 gocairo.h>
+
 1278340949 /usr/include/gtk-2.0//gdk/gdkpixbuf.h
 	<cairo.h>
 	<gdk/gdktypes.h>
 	<gdk/gdkrgb.h>
 	<gdk-pixbuf/gdk-pixbuf.h>
+
+1278340949 f/gdk-pixbuf.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkrgb.h
 	<gdk/gdktypes.h>
@@ -480,6 +504,8 @@
 	<gdk-pixbuf/gdk-pixbuf-loader.h>
 	<gdk-pixbuf/gdk-pixbuf-enum-types.h>
 
+1278340943 f/gdk-pixbuf-enum-types.h>
+
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-features.h
 
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-core.h
@@ -487,9 +513,13 @@
 	<glib-object.h>
 	<gio/gio.h>
 
+1284109525 >
+
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-transform.h
 	<glib.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
+
+1278340943 f/gdk-pixbuf-core.h>
 
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-animation.h
 	<glib-object.h>
@@ -497,6 +527,8 @@
 
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-simple-anim.h
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
+
+1278340943 f/gdk-pixbuf-animation.h>
 
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-io.h
 	<stdio.h>
@@ -512,8 +544,12 @@
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 	<gdk-pixbuf/gdk-pixbuf-io.h>
 
+1278340943 f/gdk-pixbuf-io.h>
+
 1278340943 /usr/include/gtk-2.0//gdk-pixbuf/gdk-pixbuf-enum-types.h
 	<glib-object.h>
+
+1278340955 ct.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkcursor.h
 	<gdk/gdktypes.h>
@@ -522,6 +558,8 @@
 1278340949 /usr/include/gtk-2.0//gdk/gdkdisplaymanager.h
 	<gdk/gdktypes.h>
 	<gdk/gdkdisplay.h>
+
+1278340949 splay.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkdrawable.h
 	<gdk/gdktypes.h>
@@ -541,6 +579,8 @@
 	<gdk/gdktypes.h>
 	<pango/pango.h>
 
+1278340949 go.h>
+
 1278340949 /usr/include/gtk-2.0//gdk/gdkimage.h
 	<gdk/gdktypes.h>
 
@@ -553,6 +593,8 @@
 1278340949 /usr/include/gtk-2.0//gdk/gdkpixmap.h
 	<gdk/gdktypes.h>
 	<gdk/gdkdrawable.h>
+
+1278340949 awable.h>
 
 1278340949 /usr/include/gtk-2.0//gdk/gdkproperty.h
 	<gdk/gdktypes.h>
@@ -580,6 +622,8 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkaboutdialog.h
 	<gtk/gtkdialog.h>
 
+1284109524 alog.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkdialog.h
 	<gtk/gtkwindow.h>
 
@@ -587,9 +631,13 @@
 	<gtk/gtkaccelgroup.h>
 	<gtk/gtkbin.h>
 
+1284109524 n.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkaccelgroup.h
 	<gdk/gdk.h>
 	<gtk/gtkenums.h>
+
+1278340955 ums.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkenums.h
 	<glib-object.h>
@@ -597,9 +645,13 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkbin.h
 	<gtk/gtkcontainer.h>
 
+1278340955 ntainer.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkcontainer.h
 	<gtk/gtkwidget.h>
 	<gtk/gtkadjustment.h>
+
+1278340955 justment.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkwidget.h
 	<gdk/gdk.h>
@@ -616,8 +668,12 @@
 	<gtk/gtktypeutils.h>
 	<gtk/gtkdebug.h>
 
+1278340955 bug.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktypeutils.h
 	<gtk/gtktypebuiltins.h>
+
+1278340955 pebuiltins.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktypebuiltins.h
 	<glib-object.h>
@@ -629,6 +685,8 @@
 	<gdk/gdk.h>
 	<gtk/gtkobject.h>
 
+1278340955 ject.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkstyle.h
 	<gdk/gdk.h>
 	<gtk/gtkenums.h>
@@ -639,26 +697,38 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkrc.h
 	<gtk/gtkstyle.h>
 
+1284109525 yle.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkaccellabel.h
 	<gtk/gtklabel.h>
+
+1278340955 bel.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtklabel.h
 	<gtk/gtkmisc.h>
 	<gtk/gtkwindow.h>
 	<gtk/gtkmenu.h>
 
+1286093135 nu.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkmisc.h
 	<gtk/gtkwidget.h>
+
+1284109525 dget.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkmenu.h
 	<gtk/gtkaccelgroup.h>
 	<gtk/gtkmenushell.h>
+
+1278340955 nushell.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkmenushell.h
 	<gtk/gtkcontainer.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkaccelmap.h
 	<gtk/gtkaccelgroup.h>
+
+1278340955 celgroup.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkaccessible.h
 	<atk/atk.h>
@@ -671,6 +741,8 @@
 	<gtk/gtkaction.h>
 	<gtk/gtktypeutils.h>
 
+1278340955 peutils.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkactivatable.h
 	<gtk/gtkaction.h>
 	<gtk/gtktypeutils.h>
@@ -681,8 +753,12 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkarrow.h
 	<gtk/gtkmisc.h>
 
+1278340955 sc.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkaspectframe.h
 	<gtk/gtkframe.h>
+
+1284109525 ame.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkframe.h
 	<gtk/gtkbin.h>
@@ -692,6 +768,8 @@
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkbbox.h
 	<gtk/gtkbox.h>
+
+1278340955 x.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkbox.h
 	<gtk/gtkcontainer.h>
@@ -712,6 +790,8 @@
 	<gtk/gtkbin.h>
 	<gtk/gtkimage.h>
 
+1278340955 age.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkimage.h
 	<gio/gio.h>
 	<gtk/gtkmisc.h>
@@ -720,9 +800,13 @@
 	<gtk/gtkwidget.h>
 	<gtk/gtksignal.h>
 
+1278340955 gnal.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtksignal.h
 	<gtk/gtk.h>
 	<gtk/gtkmarshal.h>
+
+1278340955 rshal.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkmarshal.h
 	<glib-object.h>
@@ -736,8 +820,12 @@
 	<gtk/gtkbuildable.h>
 	<gtk/gtkbuilder.h>
 
+1278340955 ilder.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkcellrenderer.h
 	<gtk/gtkcelleditable.h>
+
+1278340955 lleditable.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktreeviewcolumn.h
 	<gtk/gtkcellrenderer.h>
@@ -756,8 +844,12 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkcellrendereraccel.h
 	<gtk/gtkcellrenderertext.h>
 
+1278340955 llrenderertext.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkcellrenderertext.h
 	<gtk/gtkcellrenderer.h>
+
+1278340955 llrenderer.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkcellrenderercombo.h
 	<gtk/gtktreemodel.h>
@@ -783,17 +875,27 @@
 	<gtk/gtkcellrenderer.h>
 	<gtk/gtktreemodel.h>
 
+1278340955 eemodel.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkcheckbutton.h
 	<gtk/gtktogglebutton.h>
+
+1278340955 gglebutton.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktogglebutton.h
 	<gtk/gtkbutton.h>
 
+1278340955 tton.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkcheckmenuitem.h
 	<gtk/gtkmenuitem.h>
 
+1278340955 nuitem.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkmenuitem.h
 	<gtk/gtkitem.h>
+
+1278340955 em.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkitem.h
 	<gtk/gtkbin.h>
@@ -801,13 +903,19 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkclipboard.h
 	<gtk/gtkselection.h>
 
+1278340955 lection.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkselection.h
 	<gtk/gtkwidget.h>
 	<gtk/gtktextiter.h>
 
+1278340955 xtiter.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktextiter.h
 	<gtk/gtktexttag.h>
 	<gtk/gtktextchild.h>
+
+1278340955 xtchild.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktexttag.h
 	<gdk/gdk.h>
@@ -825,6 +933,8 @@
 	<gtk/gtkdialog.h>
 	<gtk/gtkvbox.h>
 
+1278340955 ox.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkvbox.h
 	<gtk/gtkbox.h>
 
@@ -838,12 +948,16 @@
 	<gtk/gtktreemodel.h>
 	<gtk/gtktreeview.h>
 
+1278340955 eeview.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktreeview.h
 	<gtk/gtkcontainer.h>
 	<gtk/gtktreemodel.h>
 	<gtk/gtktreeviewcolumn.h>
 	<gtk/gtkdnd.h>
 	<gtk/gtkentry.h>
+
+1278340955 try.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkdnd.h
 	<gtk/gtkwidget.h>
@@ -874,10 +988,14 @@
 	<gtk/gtktreeviewcolumn.h>
 	<gtk/gtktreemodelfilter.h>
 
+1278340955 eemodelfilter.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkliststore.h
 	<gdkconfig.h>
 	<gtk/gtktreemodel.h>
 	<gtk/gtktreesortable.h>
+
+1278340955 eesortable.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktreemodelfilter.h
 	<gdkconfig.h>
@@ -910,6 +1028,8 @@
 	<gtk/gtkhbox.h>
 	<gtk/gtkfilechooser.h>
 
+1278340955 lechooser.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkhbox.h
 	<gtk/gtkbox.h>
 
@@ -940,11 +1060,15 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkhpaned.h
 	<gtk/gtkpaned.h>
 
+1278340955 ned.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkpaned.h
 	<gtk/gtkcontainer.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkhruler.h
 	<gtk/gtkruler.h>
+
+1278340955 ler.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkruler.h
 	<gtk/gtkwidget.h>
@@ -952,8 +1076,12 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkhscale.h
 	<gtk/gtkscale.h>
 
+1278340955 ale.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkscale.h
 	<gtk/gtkrange.h>
+
+1278340955 nge.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkrange.h
 	<gtk/gtkadjustment.h>
@@ -962,11 +1090,15 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkhscrollbar.h
 	<gtk/gtkscrollbar.h>
 
+1278340955 rollbar.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkscrollbar.h
 	<gtk/gtkrange.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkhseparator.h
 	<gtk/gtkseparator.h>
+
+1278340955 parator.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkseparator.h
 	<gtk/gtkwidget.h>
@@ -989,6 +1121,8 @@
 	<gtk/gtkselection.h>
 	<gtk/gtktooltip.h>
 
+1278340955 oltip.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktooltip.h
 	<gtk/gtkwindow.h>
 
@@ -997,6 +1131,8 @@
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkimcontextsimple.h
 	<gtk/gtkimcontext.h>
+
+1278340955 context.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkimmulticontext.h
 	<gtk/gtkimcontext.h>
@@ -1029,14 +1165,20 @@
 	<gtk/gtkmenu.h>
 	<gtk/gtktoolbutton.h>
 
+1278340955 olbutton.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktoolbutton.h
 	<gtk/gtktoolitem.h>
+
+1278340955 olitem.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktoolitem.h
 	<gtk/gtkbin.h>
 	<gtk/gtktooltips.h>
 	<gtk/gtkmenuitem.h>
 	<gtk/gtksizegroup.h>
+
+1278340955 zegroup.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktooltips.h
 	<gtk/gtkwidget.h>
@@ -1052,6 +1194,8 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkmodules.h
 	<gtk/gtksettings.h>
 
+1278340955 ttings.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkmountoperation.h
 
 1278340955 /usr/include/gtk-2.0//gtk/gtknotebook.h
@@ -1065,6 +1209,8 @@
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkpagesetup.h
 	<gtk/gtkpapersize.h>
+
+1278340955 persize.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkpapersize.h
 	<gtk/gtkenums.h>
@@ -1080,6 +1226,8 @@
 	<pango/pango.h>
 	<gtk/gtkpagesetup.h>
 
+1278340955 gesetup.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkprintoperation.h
 	<cairo.h>
 	<gtk/gtkmain.h>
@@ -1089,6 +1237,8 @@
 	<gtk/gtkprintcontext.h>
 	<gtk/gtkprintoperationpreview.h>
 
+1278340955 intoperationpreview.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkprintsettings.h
 	<gtk/gtkpapersize.h>
 
@@ -1096,8 +1246,12 @@
 	<cairo.h>
 	<gtk/gtkprintcontext.h>
 
+1278340955 intcontext.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkprogressbar.h
 	<gtk/gtkprogress.h>
+
+1278340955 ogress.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkprogress.h
 	<gtk/gtkwidget.h>
@@ -1106,17 +1260,27 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkradioaction.h
 	<gtk/gtktoggleaction.h>
 
+1278340955 ggleaction.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktoggleaction.h
 	<gtk/gtkaction.h>
+
+1284109525 tion.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkradiobutton.h
 	<gtk/gtkcheckbutton.h>
 
+1278340955 eckbutton.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkradiomenuitem.h
 	<gtk/gtkcheckmenuitem.h>
 
+1278340955 eckmenuitem.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkradiotoolbutton.h
 	<gtk/gtktoggletoolbutton.h>
+
+1278340955 ggletoolbutton.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktoggletoolbutton.h
 	<gtk/gtktoolbutton.h>
@@ -1124,6 +1288,8 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtkrecentaction.h
 	<gtk/gtkaction.h>
 	<gtk/gtkrecentmanager.h>
+
+1278340955 centmanager.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkrecentmanager.h
 	<gdk-pixbuf/gdk-pixbuf.h>
@@ -1135,12 +1301,16 @@
 	<gtk/gtkrecentmanager.h>
 	<gtk/gtkrecentfilter.h>
 
+1278340955 centfilter.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkrecentfilter.h
 	<glib-object.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkrecentchooserdialog.h
 	<gtk/gtkdialog.h>
 	<gtk/gtkrecentchooser.h>
+
+1278340955 centchooser.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkrecentchoosermenu.h
 	<gtk/gtkmenu.h>
@@ -1157,6 +1327,8 @@
 	<gtk/gtkhscrollbar.h>
 	<gtk/gtkvscrollbar.h>
 	<gtk/gtkviewport.h>
+
+1278340955 ewport.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkvscrollbar.h
 	<gtk/gtkscrollbar.h>
@@ -1179,6 +1351,8 @@
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkspinner.h
 	<gtk/gtkdrawingarea.h>
+
+1278340955 awingarea.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkstatusbar.h
 	<gtk/gtkhbox.h>
@@ -1208,10 +1382,14 @@
 1278340955 /usr/include/gtk-2.0//gtk/gtktexttagtable.h
 	<gtk/gtktexttag.h>
 
+1278340955 xttag.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktextmark.h
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktextbufferrichtext.h
 	<gtk/gtktextbuffer.h>
+
+1278340955 xtbuffer.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktextview.h
 	<gtk/gtkcontainer.h>
@@ -1249,6 +1427,8 @@
 	<gtk/gtktreemodel.h>
 	<gtk/gtkdnd.h>
 
+1278340955 d.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtktreemodelsort.h
 	<gdkconfig.h>
 	<gtk/gtktreemodel.h>
@@ -1269,6 +1449,8 @@
 	<gtk/gtkaction.h>
 	<gtk/gtkactiongroup.h>
 
+1284109524 tiongroup.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkvbbox.h
 	<gtk/gtkbbox.h>
 
@@ -1276,6 +1458,8 @@
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkvolumebutton.h
 	<gtk/gtkscalebutton.h>
+
+1278340955 alebutton.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkvpaned.h
 	<gtk/gtkpaned.h>
@@ -1291,6 +1475,8 @@
 
 1278340955 /usr/include/gtk-2.0//gtk/gtktext.h
 	<gtk/gtkoldeditable.h>
+
+1278340955 deditable.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkoldeditable.h
 	<gtk/gtk.h>
@@ -1309,11 +1495,15 @@
 	<gtk/gtkhscrollbar.h>
 	<gtk/gtkvscrollbar.h>
 
+1278340955 crollbar.h>
+
 1278340955 /usr/include/gtk-2.0//gtk/gtkcombo.h
 	<gtk/gtk.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkctree.h
 	<gtk/gtkclist.h>
+
+1284109525 ist.h>
 
 1278340955 /usr/include/gtk-2.0//gtk/gtkcurve.h
 	<gtk/gtkdrawingarea.h>
@@ -1660,6 +1850,8 @@
 	<gio/gzlibcompressor.h>
 	<gio/gzlibdecompressor.h>
 
+1278333439 decompressor.h>
+
 1278333439 /usr/include/glib-2.0/gio/giotypes.h
 	<gio/gioenums.h>
 
@@ -1681,8 +1873,12 @@
 	<gobject/gvaluearray.h>
 	<gobject/gvaluetypes.h>
 
+1278333434 valuetypes.h>
+
 1278333437 /usr/include/glib-2.0/gobject/gboxed.h
 	<gobject/gtype.h>
+
+1278333437 type.h>
 
 1278333437 /usr/include/glib-2.0/gobject/gtype.h
 	<glib.h>
@@ -1749,6 +1945,8 @@
 	<glib/gvariant.h>
 	<glib/gwin32.h>
 
+1278333434 32.h>
+
 1278333434 /usr/include/glib-2.0/glib/galloca.h
 	<glib/gtypes.h>
 	<alloca.h>
@@ -1757,6 +1955,8 @@
 1278333434 /usr/include/glib-2.0/glib/gtypes.h
 	<glibconfig.h>
 	<glib/gmacros.h>
+
+1278333434 ros.h>
 
 1278333433 /usr/lib64/glib-2.0/include/glibconfig.h
 	<glib/gmacros.h>
@@ -1769,8 +1969,12 @@
 1278333434 /usr/include/glib-2.0/glib/garray.h
 	<glib/gtypes.h>
 
+1278333434 es.h>
+
 1278333434 /usr/include/glib-2.0/glib/gasyncqueue.h
 	<glib/gthread.h>
+
+1278333434 ead.h>
 
 1278333434 /usr/include/glib-2.0/glib/gthread.h
 	<glib/gerror.h>
@@ -1778,9 +1982,13 @@
 	<glib/gutils.h>
 	<glib/gatomic.h>
 
+1278333434 mic.h>
+
 1278333434 /usr/include/glib-2.0/glib/gerror.h
 	<stdarg.h>
 	<glib/gquark.h>
+
+1278333434 rk.h>
 
 1278333434 /usr/include/glib-2.0/glib/gquark.h
 	<glib/gtypes.h>
@@ -1809,6 +2017,8 @@
 1278333434 /usr/include/glib-2.0/glib/gcache.h
 	<glib/glist.h>
 
+1278333434 t.h>
+
 1278333434 /usr/include/glib-2.0/glib/glist.h
 	<glib/gmem.h>
 
@@ -1827,6 +2037,8 @@
 
 1278333434 /usr/include/glib-2.0/glib/gconvert.h
 	<glib/gerror.h>
+
+1278333434 or.h>
 
 1278333434 /usr/include/glib-2.0/glib/gdataset.h
 	<glib/gquark.h>
@@ -1857,6 +2069,8 @@
 	<glib/gmain.h>
 	<glib/gstring.h>
 
+1278333434 ing.h>
+
 1278333434 /usr/include/glib-2.0/glib/gmain.h
 	<glib/gpoll.h>
 	<glib/gslist.h>
@@ -1873,6 +2087,8 @@
 	<glib/gunicode.h>
 	<glib/gutils.h>
 
+1278333434 ls.h>
+
 1278333434 /usr/include/glib-2.0/glib/gunicode.h
 	<glib/gerror.h>
 	<glib/gtypes.h>
@@ -1887,6 +2103,8 @@
 	<stdarg.h>
 	<glib/gerror.h>
 	<glib/gslist.h>
+
+1278333434 st.h>
 
 1278333434 /usr/include/glib-2.0/glib/gmessages.h
 	<stdarg.h>
@@ -1926,6 +2144,8 @@
 	<glib/gdataset.h>
 	<glib/ghash.h>
 
+1278333434 h.h>
+
 1278333434 /usr/include/glib-2.0/glib/gsequence.h
 	<glib/gtypes.h>
 
@@ -1956,6 +2176,8 @@
 1278333434 /usr/include/glib-2.0/glib/gtree.h
 	<glib/gnode.h>
 
+1278333434 e.h>
+
 1278333434 /usr/include/glib-2.0/glib/gurifuncs.h
 	<glib/gtypes.h>
 
@@ -1980,11 +2202,15 @@
 	<gobject/gclosure.h>
 	<gobject/gsignal.h>
 
+1278333437 signal.h>
+
 1278333437 /usr/include/glib-2.0/gobject/gvalue.h
 	<gobject/gtype.h>
 
 1278333437 /usr/include/glib-2.0/gobject/gparam.h
 	<gobject/gvalue.h>
+
+1278333437 value.h>
 
 1278333437 /usr/include/glib-2.0/gobject/gclosure.h
 	<gobject/gtype.h>
@@ -1995,6 +2221,8 @@
 	<gobject/gparam.h>
 	<gobject/gmarshal.h>
 
+1278333437 marshal.h>
+
 1278333437 /usr/include/glib-2.0/gobject/gmarshal.h
 
 1278333437 /usr/include/glib-2.0/gobject/gparamspecs.h
@@ -2003,12 +2231,18 @@
 	<gobject/gboxed.h>
 	<gobject/gobject.h>
 
+1278333437 object.h>
+
 1278333437 /usr/include/glib-2.0/gobject/gsourceclosure.h
 	<gobject/gclosure.h>
+
+1278333437 closure.h>
 
 1278333437 /usr/include/glib-2.0/gobject/gtypemodule.h
 	<gobject/gobject.h>
 	<gobject/genums.h>
+
+1278333437 enums.h>
 
 1278333437 /usr/include/glib-2.0/gobject/gtypeplugin.h
 	<gobject/gtype.h>
@@ -2029,14 +2263,20 @@
 	<gio/giotypes.h>
 	<gio/ginitable.h>
 
+1278333439 able.h>
+
 1278333439 /usr/include/glib-2.0/gio/ginitable.h
 	<gio/giotypes.h>
 
 1278333439 /usr/include/glib-2.0/gio/gbufferedinputstream.h
 	<gio/gfilterinputstream.h>
 
+1278333439 erinputstream.h>
+
 1278333439 /usr/include/glib-2.0/gio/gfilterinputstream.h
 	<gio/ginputstream.h>
+
+1278333439 tstream.h>
 
 1278333439 /usr/include/glib-2.0/gio/ginputstream.h
 	<gio/giotypes.h>
@@ -2044,8 +2284,12 @@
 1278333439 /usr/include/glib-2.0/gio/gbufferedoutputstream.h
 	<gio/gfilteroutputstream.h>
 
+1278333439 eroutputstream.h>
+
 1278333439 /usr/include/glib-2.0/gio/gfilteroutputstream.h
 	<gio/goutputstream.h>
+
+1278333439 utstream.h>
 
 1278333439 /usr/include/glib-2.0/gio/goutputstream.h
 	<gio/giotypes.h>
@@ -2063,6 +2307,8 @@
 	<gio/gfilterinputstream.h>
 	<gio/gconverter.h>
 
+1278333439 erter.h>
+
 1278333439 /usr/include/glib-2.0/gio/gconverteroutputstream.h
 	<gio/gfilteroutputstream.h>
 	<gio/gconverter.h>
@@ -2072,6 +2318,8 @@
 
 1278333439 /usr/include/glib-2.0/gio/gdatainputstream.h
 	<gio/gbufferedinputstream.h>
+
+1278333439 eredinputstream.h>
 
 1278333439 /usr/include/glib-2.0/gio/gdataoutputstream.h
 	<gio/gfilteroutputstream.h>
@@ -2122,6 +2370,8 @@
 1278333439 /usr/include/glib-2.0/gio/ginetsocketaddress.h
 	<gio/gsocketaddress.h>
 
+1278333439 etaddress.h>
+
 1278333439 /usr/include/glib-2.0/gio/gsocketaddress.h
 	<gio/giotypes.h>
 
@@ -2148,8 +2398,12 @@
 	<gio/gcancellable.h>
 	<gio/gioerror.h>
 
+1278333439 ror.h>
+
 1278333439 /usr/include/glib-2.0/gio/gfileiostream.h
 	<gio/giostream.h>
+
+1278333439 ream.h>
 
 1278333439 /usr/include/glib-2.0/gio/gloadableicon.h
 	<gio/giotypes.h>
@@ -2168,6 +2422,8 @@
 
 1278333439 /usr/include/glib-2.0/gio/gnativevolumemonitor.h
 	<gio/gvolumemonitor.h>
+
+1278333439 memonitor.h>
 
 1278333439 /usr/include/glib-2.0/gio/gvolumemonitor.h
 	<gio/giotypes.h>
@@ -2213,11 +2469,17 @@
 1278333439 /usr/include/glib-2.0/gio/gsocketservice.h
 	<gio/gsocketlistener.h>
 
+1278333439 etlistener.h>
+
 1278333439 /usr/include/glib-2.0/gio/gtcpconnection.h
 	<gio/gsocketconnection.h>
 
+1278333439 etconnection.h>
+
 1278333439 /usr/include/glib-2.0/gio/gthreadedsocketservice.h
 	<gio/gsocketservice.h>
+
+1278333439 etservice.h>
 
 1278333439 /usr/include/glib-2.0/gio/gsrvtarget.h
 	<gio/giotypes.h>
@@ -2272,6 +2534,8 @@
 	<pango/pango-types.h>
 	<pango/pango-utils.h>
 
+1278339179 go-utils.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-attributes.h
 	<pango/pango-font.h>
 	<glib-object.h>
@@ -2293,19 +2557,27 @@
 	<pango/pango-script.h>
 	<pango/pango-bidi-type.h>
 
+1278339179 go-bidi-type.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-gravity.h
 	<glib.h>
 	<pango/pango-matrix.h>
 	<pango/pango-script.h>
+
+1278339179 go-script.h>
 
 1278339179 /usr/include/pango-1.0/pango/pango-matrix.h
 	<glib.h>
 	<glib-object.h>
 	<pango/pango-types.h>
 
+1278339179 go-types.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-script.h
 	<glib.h>
 	<pango/pango-language.h>
+
+1278339179 go-language.h>
 
 1278339179 /usr/include/pango-1.0/pango/pango-language.h
 	<glib.h>
@@ -2319,6 +2591,8 @@
 	<glib.h>
 	<pango/pango-item.h>
 
+1278339179 go-item.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-item.h
 	<pango/pango-types.h>
 
@@ -2327,9 +2601,13 @@
 	<pango/pango-fontmap.h>
 	<pango/pango-attributes.h>
 
+1278339179 go-attributes.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-fontmap.h
 	<pango/pango-font.h>
 	<pango/pango-fontset.h>
+
+1278339179 go-fontset.h>
 
 1278339179 /usr/include/pango-1.0/pango/pango-fontset.h
 	<pango/pango-coverage.h>
@@ -2359,11 +2637,15 @@
 	<pango/pango-item.h>
 	<pango/pango-glyph.h>
 
+1278339179 go-glyph.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-layout.h
 	<pango/pango-attributes.h>
 	<pango/pango-context.h>
 	<pango/pango-glyph-item.h>
 	<pango/pango-tabs.h>
+
+1278339179 go-tabs.h>
 
 1278339179 /usr/include/pango-1.0/pango/pango-tabs.h
 	<pango/pango-types.h>
@@ -2371,10 +2653,14 @@
 1278339179 /usr/include/pango-1.0/pango/pango-renderer.h
 	<pango/pango-layout.h>
 
+1278339179 go-layout.h>
+
 1278339179 /usr/include/pango-1.0/pango/pango-utils.h
 	<stdio.h>
 	<glib.h>
 	<pango/pango-font.h>
+
+1278339179 go-font.h>
 
 1278340948 /usr/lib64/gtk-2.0/include/gdkconfig.h
 
@@ -2617,10 +2903,14 @@
 	<atk/atkmisc.h>
 	<atk/atkvalue.h>
 
+1278334707 lue.h>
+
 1278334707 /usr/include/atk-1.0/atk/atkobject.h
 	<glib-object.h>
 	<atk/atkstate.h>
 	<atk/atkrelationtype.h>
+
+1278334707 lationtype.h>
 
 1278334707 /usr/include/atk-1.0/atk/atkstate.h
 	<glib-object.h>
@@ -2635,6 +2925,8 @@
 	<atk/atkobject.h>
 	<atk/atkutil.h>
 
+1278334707 il.h>
+
 1278334707 /usr/include/atk-1.0/atk/atkutil.h
 	<atk/atkobject.h>
 
@@ -2645,6 +2937,8 @@
 1278334707 /usr/include/atk-1.0/atk/atkeditabletext.h
 	<atk/atkobject.h>
 	<atk/atktext.h>
+
+1278334707 xt.h>
 
 1278334707 /usr/include/atk-1.0/atk/atktext.h
 	<glib-object.h>
@@ -2661,6 +2955,8 @@
 	<atk/atkobject.h>
 	<atk/atkhyperlink.h>
 
+1278334707 perlink.h>
+
 1278334707 /usr/include/atk-1.0/atk/atkhypertext.h
 	<atk/atkobject.h>
 	<atk/atkhyperlink.h>
@@ -2674,6 +2970,8 @@
 1278334707 /usr/include/atk-1.0/atk/atknoopobjectfactory.h
 	<atk/atkobjectfactory.h>
 
+1278334707 jectfactory.h>
+
 1278334707 /usr/include/atk-1.0/atk/atkobjectfactory.h
 	<glib-object.h>
 	<atk/atkobject.h>
@@ -2684,6 +2982,8 @@
 	<glib-object.h>
 	"atkobjectfactory.h"
 
+1278334707 factory.h"
+
 1278334707 /usr/include/atk-1.0/atk/atkrelation.h
 	<glib-object.h>
 	<atk/atkrelationtype.h>
@@ -2692,6 +2992,8 @@
 	<glib-object.h>
 	<atk/atkobject.h>
 	<atk/atkrelation.h>
+
+1278334707 lation.h>
 
 1278334707 /usr/include/atk-1.0/atk/atkselection.h
 	<atk/atkobject.h>
@@ -2702,6 +3004,8 @@
 	<glib-object.h>
 	<atk/atkobject.h>
 	<atk/atkstate.h>
+
+1278334707 ate.h>
 
 1278334707 /usr/include/atk-1.0/atk/atkstreamablecontent.h
 	<atk/atkobject.h>
@@ -3424,6 +3728,8 @@
 1275444188 /usr/include/QtGui/QApplication
 	"qapplication.h"
 
+1286093149 ion.h"
+
 1275444195 /usr/include/QtGui/qapplication.h
 	<QtCore/qcoreapplication.h>
 	<QtGui/qwindowdefs.h>
@@ -3436,6 +3742,8 @@
 	<QtGui/qrgb.h>
 	<QtGui/qtransportauth_qws.h>
 
+1284109524 ansportauth_qws.h>
+
 1275444188 /usr/include/QtGui/QFont
 	"qfont.h"
 
@@ -3444,11 +3752,17 @@
 	<QtCore/qstring.h>
 	<QtCore/qsharedpointer.h>
 
+1284109525 haredpointer.h>
+
 1275444188 /usr/include/QtGui/QPushButton
 	"qpushbutton.h"
 
+1286093150 on.h"
+
 1275444195 /usr/include/QtGui/qpushbutton.h
 	<QtGui/qabstractbutton.h>
+
+1284109525 stractbutton.h>
 
 1284910605 source:/home/xytis/Documents/Programing/Projects/DoI/gui/gui.cpp
 	<QtGui>
@@ -3684,6 +3998,8 @@
 1275444195 /usr/include/QtGui/qbitmap.h
 	<QtGui/qpixmap.h>
 
+1284109524 xmap.h>
+
 1275444195 /usr/include/QtGui/qicon.h
 	<QtCore/qglobal.h>
 	<QtCore/qsize.h>
@@ -3695,9 +4011,13 @@
 	<QtCore/qlist.h>
 	<QtGui/qicon.h>
 
+1284109525 on.h>
+
 1275444195 /usr/include/QtGui/qiconengineplugin.h
 	<QtCore/qplugin.h>
 	<QtCore/qfactoryinterface.h>
+
+1284109525 actoryinterface.h>
 
 1275444195 /usr/include/QtGui/qimage.h
 	<QtGui/qtransform.h>
@@ -3707,15 +4027,21 @@
 	<QtCore/qrect.h>
 	<QtCore/qstring.h>
 
+1284109525 tring.h>
+
 1275444195 /usr/include/QtGui/qimageiohandler.h
 	<QtCore/qplugin.h>
 	<QtCore/qfactoryinterface.h>
 	<QtCore/qscopedpointer.h>
 
+1284109525 copedpointer.h>
+
 1275444195 /usr/include/QtGui/qimagereader.h
 	<QtCore/qbytearray.h>
 	<QtGui/qimage.h>
 	<QtGui/qimageiohandler.h>
+
+1284109524 ageiohandler.h>
 
 1275444195 /usr/include/QtGui/qimagewriter.h
 	<QtCore/qbytearray.h>
@@ -3736,6 +4062,8 @@
 	<QtCore/qsharedpointer.h>
 	<QtGui/qpaintdevice.h>
 
+1284109525 intdevice.h>
+
 1275444195 /usr/include/QtGui/qpictureformatplugin.h
 	<QtCore/qplugin.h>
 	<QtCore/qfactoryinterface.h>
@@ -3749,6 +4077,8 @@
 	<QtGui/qimage.h>
 	<QtGui/qtransform.h>
 
+1284109524 ansform.h>
+
 1275444195 /usr/include/QtGui/qpixmapcache.h
 	<QtGui/qpixmap.h>
 
@@ -3760,6 +4090,8 @@
 	<QtCore/qglobal.h>
 	<aknappui.h>
 
+1284109524 h>
+
 1275444195 /usr/include/QtGui/qs60maindocument.h
 	<QtCore/qglobal.h>
 	<AknDoc.h>
@@ -3768,6 +4100,8 @@
 	<QtGui/qcolor.h>
 	<QtGui/qwindowdefs.h>
 	<QtCore/qrect.h>
+
+1284109525 ect.h>
 
 1275444195 /usr/include/QtGui/qwsembedwidget.h
 	<QtGui/qwidget.h>
@@ -3787,12 +4121,18 @@
 	<QtGui/qwidget.h>
 	<QtGui/qvalidator.h>
 
+1284109525 lidator.h>
+
 1275444195 /usr/include/QtGui/qbuttongroup.h
 	<QtCore/qobject.h>
+
+1284109525 bject.h>
 
 1275444195 /usr/include/QtGui/qcalendarwidget.h
 	<QtGui/qwidget.h>
 	<QtCore/qdatetime.h>
+
+1284109525 atetime.h>
 
 1275444195 /usr/include/QtGui/qcheckbox.h
 	<QtGui/qabstractbutton.h>
@@ -3803,16 +4143,24 @@
 	<QtCore/qabstractitemmodel.h>
 	<QtCore/qvariant.h>
 
+1284109525 ariant.h>
+
 1275444195 /usr/include/QtGui/qcommandlinkbutton.h
 	<QtGui/qpushbutton.h>
+
+1284109525 shbutton.h>
 
 1275444195 /usr/include/QtGui/qdatetimeedit.h
 	<QtCore/qdatetime.h>
 	<QtCore/qvariant.h>
 	<QtGui/qabstractspinbox.h>
 
+1284109525 stractspinbox.h>
+
 1275444195 /usr/include/QtGui/qdial.h
 	<QtGui/qabstractslider.h>
+
+1284109525 stractslider.h>
 
 1275444195 /usr/include/QtGui/qdialogbuttonbox.h
 	<QtGui/qwidget.h>
@@ -3827,6 +4175,8 @@
 	<QtGui/qcombobox.h>
 	<QtGui/qfontdatabase.h>
 
+1284109525 ntdatabase.h>
+
 1275444195 /usr/include/QtGui/qframe.h
 	<QtGui/qwidget.h>
 
@@ -3840,14 +4190,20 @@
 	<QtGui/qframe.h>
 	<QtCore/qbitarray.h>
 
+1284109525 itarray.h>
+
 1275444195 /usr/include/QtGui/qlineedit.h
 	<QtGui/qframe.h>
 	<QtCore/qstring.h>
 	<QtCore/qmargins.h>
 
+1284109525 argins.h>
+
 1275444195 /usr/include/QtGui/qmainwindow.h
 	<QtGui/qwidget.h>
 	<QtGui/qtabwidget.h>
+
+1284109525 bwidget.h>
 
 1275444195 /usr/include/QtGui/qmdiarea.h
 	<QtGui/qabstractscrollarea.h>
@@ -3879,9 +4235,13 @@
 	<QtGui/qtextformat.h>
 	<QtGui/qabstracttextdocumentlayout.h>
 
+1284109525 stracttextdocumentlayout.h>
+
 1275444195 /usr/include/QtGui/qprintpreviewwidget.h
 	<QtGui/qwidget.h>
 	<QtGui/qprinter.h>
+
+1284109525 inter.h>
 
 1275444195 /usr/include/QtGui/qprogressbar.h
 	<QtGui/qframe.h>
@@ -3894,6 +4254,8 @@
 
 1275444195 /usr/include/QtGui/qscrollarea.h
 	<QtGui/qabstractscrollarea.h>
+
+1284109525 stractscrollarea.h>
 
 1275444195 /usr/include/QtGui/qscrollbar.h
 	<QtGui/qwidget.h>
@@ -3916,6 +4278,8 @@
 	<QtGui/qframe.h>
 	<QtGui/qsizepolicy.h>
 
+1284109525 zepolicy.h>
+
 1275444195 /usr/include/QtGui/qstackedwidget.h
 	<QtGui/qframe.h>
 
@@ -3933,6 +4297,8 @@
 	<QtGui/qtextedit.h>
 	<QtCore/qurl.h>
 
+1284109525 rl.h>
+
 1275444195 /usr/include/QtGui/qtextedit.h
 	<QtGui/qabstractscrollarea.h>
 	<QtGui/qtextdocument.h>
@@ -3941,6 +4307,8 @@
 	<QtGui/qtextformat.h>
 	<QtGui/qtextobject.h>
 	<QtGui/qtextlayout.h>
+
+1284109525 xtlayout.h>
 
 1275444195 /usr/include/QtGui/qtoolbar.h
 	<QtGui/qwidget.h>
@@ -3958,6 +4326,8 @@
 	<QtCore/qregexp.h>
 	<QtCore/qlocale.h>
 
+1284109525 ocale.h>
+
 1275444195 /usr/include/QtGui/qworkspace.h
 	<QtGui/qwidget.h>
 
@@ -3972,6 +4342,8 @@
 1275444195 /usr/include/QtGui/qinputcontextfactory.h
 	<QtCore/qstringlist.h>
 
+1284109525 tringlist.h>
+
 1275444195 /usr/include/QtGui/qinputcontextplugin.h
 	<QtCore/qplugin.h>
 	<QtCore/qfactoryinterface.h>
@@ -3980,6 +4352,8 @@
 1275444195 /usr/include/QtGui/qgraphicsanchorlayout.h
 	<QtGui/qgraphicsitem.h>
 	<QtGui/qgraphicslayout.h>
+
+1284109524 aphicslayout.h>
 
 1275444195 /usr/include/QtGui/qgraphicsgridlayout.h
 	<QtGui/qgraphicsitem.h>
@@ -4000,10 +4374,14 @@
 1275444195 /usr/include/QtGui/qgraphicslayout.h
 	<QtGui/qgraphicslayoutitem.h>
 
+1284109524 aphicslayoutitem.h>
+
 1275444195 /usr/include/QtGui/qgraphicslayoutitem.h
 	<QtCore/qscopedpointer.h>
 	<QtGui/qsizepolicy.h>
 	<QtGui/qevent.h>
+
+1284109525 ent.h>
 
 1275444195 /usr/include/QtGui/qgraphicslinearlayout.h
 	<QtGui/qgraphicsitem.h>
@@ -4011,6 +4389,8 @@
 
 1275444195 /usr/include/QtGui/qgraphicsproxywidget.h
 	<QtGui/qgraphicswidget.h>
+
+1284109524 aphicswidget.h>
 
 1275444195 /usr/include/QtGui/qgraphicsscene.h
 	<QtCore/qobject.h>
@@ -4031,11 +4411,15 @@
 	<QtCore/qset.h>
 	<QtCore/qhash.h>
 
+1284109524 ash.h>
+
 1275444195 /usr/include/QtGui/qgraphicstransform.h
 	<QtCore/QObject>
 	<QtGui/QVector3D>
 	<QtGui/QTransform>
 	<QtGui/QMatrix4x4>
+
+1284109524 trix4x4>
 
 1275444195 /usr/include/QtGui/qgraphicsview.h
 	<QtCore/qmetatype.h>
@@ -4043,16 +4427,22 @@
 	<QtGui/qscrollarea.h>
 	<QtGui/qgraphicsscene.h>
 
+1284109524 aphicsscene.h>
+
 1275444195 /usr/include/QtGui/qgraphicswidget.h
 	<QtGui/qfont.h>
 	<QtGui/qgraphicslayoutitem.h>
 	<QtGui/qgraphicsitem.h>
 	<QtGui/qpalette.h>
 
+1284109525 lette.h>
+
 1275444195 /usr/include/QtGui/qgenericmatrix.h
 	<QtCore/qmetatype.h>
 	<QtCore/qdebug.h>
 	<QtCore/qdatastream.h>
+
+1284109525 atastream.h>
 
 1275444195 /usr/include/QtGui/qmatrix4x4.h
 	<QtGui/qvector3d.h>
@@ -4065,9 +4455,13 @@
 	<QtGui/qvector3d.h>
 	<QtGui/qvector4d.h>
 
+1284109524 ctor4d.h>
+
 1275444195 /usr/include/QtGui/qvector2d.h
 	<QtCore/qpoint.h>
 	<QtCore/qmetatype.h>
+
+1284109524 etatype.h>
 
 1275444195 /usr/include/QtGui/qvector3d.h
 	<QtCore/qpoint.h>
@@ -4105,16 +4499,22 @@
 	<QtCore/qobject.h>
 	<QtGui/qtextobject.h>
 
+1284109525 xtobject.h>
+
 1275444195 /usr/include/QtGui/qtextcursor.h
 	<QtCore/qstring.h>
 	<QtCore/qshareddata.h>
 	<QtGui/qtextformat.h>
+
+1284109525 xtformat.h>
 
 1275444195 /usr/include/QtGui/qtextdocument.h
 	<QtCore/qobject.h>
 	<QtCore/qsize.h>
 	<QtCore/qrect.h>
 	<QtGui/qfont.h>
+
+1284109524 nt.h>
 
 1275444195 /usr/include/QtGui/qtextdocumentfragment.h
 	<QtCore/qstring.h>
@@ -4131,6 +4531,8 @@
 	<QtGui/qpen.h>
 	<QtGui/qbrush.h>
 	<QtGui/qtextoption.h>
+
+1284109525 xtoption.h>
 
 1275444195 /usr/include/QtGui/qtextlayout.h
 	<QtCore/qstring.h>
@@ -4187,6 +4589,8 @@
 	<QtGui/qicon.h>
 	<QtCore/qdiriterator.h>
 
+1284109524 iriterator.h>
+
 1275444195 /usr/include/QtGui/qfontdialog.h
 	<QtGui/qwindowdefs.h>
 	<QtGui/qdialog.h>
@@ -4197,14 +4601,20 @@
 	<QtCore/qstring.h>
 	<QtGui/qlineedit.h>
 
+1284109524 needit.h>
+
 1275444195 /usr/include/QtGui/qmessagebox.h
 	<QtGui/qdialog.h>
 
 1275444195 /usr/include/QtGui/qpagesetupdialog.h
 	<QtGui/qabstractpagesetupdialog.h>
 
+1284109524 stractpagesetupdialog.h>
+
 1275444195 /usr/include/QtGui/qprintdialog.h
 	<QtGui/qabstractprintdialog.h>
+
+1284109524 stractprintdialog.h>
 
 1275444195 /usr/include/QtGui/qprintpreviewdialog.h
 	<QtGui/qdialog.h>
@@ -4228,6 +4638,8 @@
 1275444195 /usr/include/QtGui/qaccessible2.h
 	<QtGui/qaccessible.h>
 
+1284109525 cessible.h>
+
 1275444195 /usr/include/QtGui/qaccessiblebridge.h
 	<QtCore/qplugin.h>
 	<QtCore/qfactoryinterface.h>
@@ -4241,6 +4653,8 @@
 
 1275444195 /usr/include/QtGui/qaccessiblewidget.h
 	<QtGui/qaccessibleobject.h>
+
+1284109525 cessibleobject.h>
 
 1275444195 /usr/include/QtGui/qaction.h
 	<QtGui/qkeysequence.h>
@@ -4265,6 +4679,8 @@
 	<QtCore/qpoint.h>
 	<QtGui/qwindowdefs.h>
 
+1284109525 ndowdefs.h>
+
 1275444195 /usr/include/QtGui/qdesktopwidget.h
 	<QtGui/qwidget.h>
 
@@ -4285,8 +4701,12 @@
 	<QtCore/qmap.h>
 	<QtCore/qset.h>
 
+1284109524 et.h>
+
 1275444195 /usr/include/QtGui/qformlayout.h
 	<QtGui/QLayout>
+
+1284109524 yout>
 
 1275444195 /usr/include/QtGui/qgesture.h
 	<QtCore/qobject.h>
@@ -4299,6 +4719,8 @@
 1275444195 /usr/include/QtGui/qgesturerecognizer.h
 	<QtCore/qglobal.h>
 	<QtCore/qnamespace.h>
+
+1284109524 amespace.h>
 
 1275444195 /usr/include/QtGui/qgridlayout.h
 	<QtGui/qlayout.h>
@@ -4319,6 +4741,8 @@
 	<QtGui/qboxlayout.h>
 	<QtGui/qgridlayout.h>
 
+1284109524 idlayout.h>
+
 1275444195 /usr/include/QtGui/qlayoutitem.h
 	<QtGui/qsizepolicy.h>
 	<QtCore/qrect.h>
@@ -4333,6 +4757,8 @@
 	<QtGui/qcolor.h>
 	<QtGui/qbrush.h>
 
+1284109524 ush.h>
+
 1275444195 /usr/include/QtGui/qsessionmanager.h
 	<QtCore/qobject.h>
 	<QtGui/qwindowdefs.h>
@@ -4343,6 +4769,8 @@
 	<QtGui/qwidget.h>
 	<QtGui/qkeysequence.h>
 
+1284109524 ysequence.h>
+
 1275444195 /usr/include/QtGui/qsizepolicy.h
 	<QtCore/qobject.h>
 
@@ -4352,12 +4780,16 @@
 1275444195 /usr/include/QtGui/qstackedlayout.h
 	<QtGui/qlayout.h>
 
+1284109524 yout.h>
+
 1275444195 /usr/include/QtGui/qtooltip.h
 	<QtGui/qwidget.h>
 
 1275444195 /usr/include/QtGui/qwhatsthis.h
 	<QtCore/qobject.h>
 	<QtGui/qcursor.h>
+
+1284109524 rsor.h>
 
 1275444195 /usr/include/QtGui/qwidget.h
 	<QtGui/qwindowdefs.h>
@@ -4384,9 +4816,13 @@
 	<QtGui/qmacdefines_mac.h>
 	<QtGui/qwindowdefs_win.h>
 
+1284109524 ndowdefs_win.h>
+
 1275444195 /usr/include/QtGui/qabstractitemdelegate.h
 	<QtCore/qobject.h>
 	<QtGui/qstyleoption.h>
+
+1284109525 yleoption.h>
 
 1275444195 /usr/include/QtGui/qabstractitemview.h
 	<QtGui/qabstractscrollarea.h>
@@ -4394,19 +4830,29 @@
 	<QtGui/qitemselectionmodel.h>
 	<QtGui/qabstractitemdelegate.h>
 
+1284109525 stractitemdelegate.h>
+
 1275444195 /usr/include/QtGui/qabstractproxymodel.h
 	<QtCore/qabstractitemmodel.h>
+
+1284109525 bstractitemmodel.h>
 
 1275444195 /usr/include/QtGui/qcolumnview.h
 	<QtGui/qabstractitemview.h>
 
+1284109525 stractitemview.h>
+
 1275444195 /usr/include/QtGui/qdatawidgetmapper.h
 	"QtCore/qobject.h"
+
+1284109525 bject.h"
 
 1275444195 /usr/include/QtGui/qdirmodel.h
 	<QtCore/qabstractitemmodel.h>
 	<QtCore/qdir.h>
 	<QtGui/qfileiconprovider.h>
+
+1284109525 leiconprovider.h>
 
 1275444195 /usr/include/QtGui/qfileiconprovider.h
 	<QtCore/qfileinfo.h>
@@ -4443,12 +4889,16 @@
 	<QtCore/qvector.h>
 	<QtGui/qitemselectionmodel.h>
 
+1284109525 emselectionmodel.h>
+
 1275444195 /usr/include/QtGui/qproxymodel.h
 	<QtCore/qabstractitemmodel.h>
 
 1275444195 /usr/include/QtGui/qsortfilterproxymodel.h
 	<QtGui/qabstractproxymodel.h>
 	<QtCore/qregexp.h>
+
+1284109525 egexp.h>
 
 1275444195 /usr/include/QtGui/qstandarditemmodel.h
 	<QtCore/qabstractitemmodel.h>
@@ -4474,6 +4924,8 @@
 	<QtGui/qtableview.h>
 	<QtCore/qvariant.h>
 	<QtCore/qvector.h>
+
+1284109525 ector.h>
 
 1275444195 /usr/include/QtGui/qtreeview.h
 	<QtGui/qabstractitemview.h>
@@ -4525,6 +4977,8 @@
 	<QtCore/qrect.h>
 	<QtGui/qwmatrix.h>
 
+1284109525 atrix.h>
+
 1275444195 /usr/include/QtGui/qpaintdevice.h
 	<QtGui/qwindowdefs.h>
 	<QtCore/qrect.h>
@@ -4551,6 +5005,8 @@
 	<QtGui/qtransform.h>
 	<QtGui/qfontinfo.h>
 	<QtGui/qfontmetrics.h>
+
+1284109525 ntmetrics.h>
 
 1275444195 /usr/include/QtGui/qpainterpath.h
 	<QtGui/qmatrix.h>
@@ -4582,6 +5038,8 @@
 	<QtGui/QPrinter>
 	<QtCore/QList>
 
+1284109525 ist>
+
 1275444195 /usr/include/QtGui/qregion.h
 	<QtCore/qatomic.h>
 	<QtCore/qrect.h>
@@ -4590,6 +5048,8 @@
 
 1275444195 /usr/include/QtGui/qrgb.h
 	<QtCore/qglobal.h>
+
+1284109525 lobal.h>
 
 1275444195 /usr/include/QtGui/qstylepainter.h
 	<QtGui/qpainter.h>
@@ -4609,14 +5069,20 @@
 1275444195 /usr/include/QtGui/qwmatrix.h
 	<QtGui/qmatrix.h>
 
+1284109525 trix.h>
+
 1275444195 /usr/include/QtGui/qsymbianevent.h
 	<QtCore/qglobal.h>
 
 1275444197 /usr/include/QtGui/qcdestyle.h
 	<QtGui/qmotifstyle.h>
 
+1284109525 tifstyle.h>
+
 1275444197 /usr/include/QtGui/qcleanlooksstyle.h
 	<QtGui/qwindowsstyle.h>
+
+1284109525 ndowsstyle.h>
 
 1275444197 /usr/include/QtGui/qcommonstyle.h
 	<QtGui/qstyle.h>
@@ -4627,9 +5093,13 @@
 	<QtGui/QFont>
 	<QtGui/QFileDialog>
 
+1284109525 leDialog>
+
 1275444197 /usr/include/QtGui/qmotifstyle.h
 	<QtGui/qcommonstyle.h>
 	<QtCore/qpointer.h>
+
+1284109525 ointer.h>
 
 1275444197 /usr/include/QtGui/qplastiquestyle.h
 	<QtGui/qwindowsstyle.h>
@@ -4637,8 +5107,12 @@
 1275444197 /usr/include/QtGui/qproxystyle.h
 	<QtGui/QCommonStyle>
 
+1284109525 mmonStyle>
+
 1275444197 /usr/include/QtGui/qs60style.h
 	<QtGui/qcommonstyle.h>
+
+1284109525 mmonstyle.h>
 
 1275444197 /usr/include/QtGui/qstyle.h
 	<QtCore/qobject.h>
@@ -4681,11 +5155,15 @@
 1275444197 /usr/include/QtGui/qwindowsvistastyle.h
 	<QtGui/qwindowsxpstyle.h>
 
+1284109525 ndowsxpstyle.h>
+
 1275444196 /usr/include/QtGui/qwindowsxpstyle.h
 	<QtGui/qwindowsstyle.h>
 
 1275444197 /usr/include/QtGui/qkeyeventtransition.h
 	<QtCore/qeventtransition.h>
+
+1284109525 venttransition.h>
 
 1275444197 /usr/include/QtGui/qmouseeventtransition.h
 	<QtCore/qeventtransition.h>
@@ -4743,10 +5221,14 @@
 	<QtGui/QVBoxLayout>
 	<QtGui/QWidget>
 
+1286819319 dget>
+
 1284887094 source:/home/xytis/Documents/Programing/Projects/DoI/gui/gui.ui
 
 1275444188 /usr/include/QtCore/QObject
 	"qobject.h"
+
+1286093149 "
 
 1275444197 /usr/include/QtCore/qobject.h
 	<QtCore/qobjectdefs.h>
@@ -4767,6 +5249,8 @@
 	"ui_gui.h"
 	<QtGui/QtGui>
 	<QtGui/QApplication>
+
+1286819497 plication>
 
 1286819319 /home/xytis/Documents/Programing/Projects/DoI/include/gui/ui_gui.h
 	<QtCore/QVariant>
@@ -4792,6 +5276,8 @@
 1275444188 /usr/lib64/qt4/include/QtCore/QVariant
 	"qvariant.h"
 
+1286093151 h"
+
 1275444197 /usr/lib64/qt4/include/QtCore/qvariant.h
 	<QtCore/qatomic.h>
 	<QtCore/qbytearray.h>
@@ -4805,12 +5291,16 @@
 	<QtCore/qglobal.h>
 	<QtCore/qbasicatomic.h>
 
+1284109525 asicatomic.h>
+
 1284584146 /usr/lib64/qt4/include/QtCore/qglobal.h
 	<stddef.h>
 	<QtCore/qconfig.h>
 	<AvailabilityMacros.h>
 	<e32def.h>
 	<QtCore/qfeatures.h>
+
+1286093135 eatures.h>
 
 1284584849 /usr/lib64/qt4/include/QtCore/qconfig.h
 
@@ -4820,6 +5310,8 @@
 	<QtCore/qglobal.h>
 	<QtCore/qatomic_bootstrap.h>
 	<QtCore/qatomic_arch.h>
+
+1284109525 tomic_arch.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_bootstrap.h
 
@@ -4847,6 +5339,8 @@
 	"QtCore/qatomic_sh.h"
 	"QtCore/qatomic_sh4a.h"
 
+1284109525 tomic_sh4a.h"
+
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_vxworks.h
 	<QtCore/qatomic_powerpc.h>
 	<vxWorksCommon.h>
@@ -4865,6 +5359,8 @@
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_bfin.h
 	<asm/fixed_code.h>
 
+1284109525 _code.h>
+
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_generic.h
 
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_i386.h
@@ -4873,10 +5369,14 @@
 	<ia64intrin.h>
 	<ia64/sys/inline.h>
 
+1284109525 inline.h>
+
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_macosx.h
 	<QtCore/qatomic_x86_64.h>
 	<QtCore/qatomic_i386.h>
 	<QtCore/qatomic_powerpc.h>
+
+1284109525 tomic_powerpc.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_x86_64.h
 
@@ -4896,6 +5396,8 @@
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_windowsce.h
 	<QtCore/qglobal.h>
 	"QtCore/qatomic_windows.h"
+
+1284109525 tomic_windows.h"
 
 1275444197 /usr/lib64/qt4/include/QtCore/qatomic_symbian.h
 	<QtCore/qglobal.h>
@@ -4922,6 +5424,8 @@
 	<bits/string2.h>
 	<bits/string3.h>
 
+1279531113 ng3.h>
+
 1279531086 /usr/lib64/qt4/include/features.h
 	<sys/cdefs.h>
 	<gnu/stubs.h>
@@ -4930,12 +5434,16 @@
 	<features.h>
 	<bits/wordsize.h>
 
+1279531086 size.h>
+
 1279531109 /usr/lib64/qt4/include/bits/wordsize.h
 
 1279531086 /usr/lib64/qt4/include/gnu/stubs.h
 	<bits/wordsize.h>
 	<gnu/stubs-32.h>
 	<gnu/stubs-64.h>
+
+1279531086 -64.h>
 
 1279531150 /usr/lib64/qt4/include/gnu/stubs-64.h
 
@@ -4953,6 +5461,8 @@
 	<bits/endian.h>
 	<bits/byteswap.h>
 
+1279531113 swap.h>
+
 1279531113 /usr/lib64/qt4/include/bits/endian.h
 
 1279531113 /usr/lib64/qt4/include/bits/byteswap.h
@@ -4962,6 +5472,8 @@
 	<features.h>
 	<bits/wordsize.h>
 	<bits/typesizes.h>
+
+1279531117 sizes.h>
 
 1279531117 /usr/lib64/qt4/include/bits/typesizes.h
 
@@ -4975,6 +5487,8 @@
 	<alloca.h>
 	<bits/stdlib.h>
 	<bits/stdlib-ldbl.h>
+
+1279531109 ib-ldbl.h>
 
 1279531117 /usr/lib64/qt4/include/bits/waitflags.h
 
@@ -4991,6 +5505,8 @@
 	<sys/sysmacros.h>
 	<bits/pthreadtypes.h>
 
+1279531117 eadtypes.h>
+
 1279531115 /usr/lib64/qt4/include/time.h
 	<features.h>
 	<stddef.h>
@@ -5005,6 +5521,8 @@
 1279531115 /usr/lib64/qt4/include/bits/time.h
 	<bits/types.h>
 	<bits/types.h>
+
+1279531115 s.h>
 
 1279531120 /usr/lib64/qt4/include/sys/select.h
 	<features.h>
@@ -5091,11 +5609,15 @@
 	<stdarg.h>
 	<QtCore/qstringbuilder.h>
 
+1284109525 tringbuilder.h>
+
 1275444197 /usr/lib64/qt4/include/QtCore/qchar.h
 	<QtCore/qglobal.h>
 
 1275444198 /usr/lib64/qt4/include/Qt3Support/q3cstring.h
 	<QtCore/qbytearray.h>
+
+1284109525 ytearray.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qstringbuilder.h
 	<QtCore/qstring.h>
@@ -5114,12 +5636,16 @@
 	<QtCore/qbytearray.h>
 	<QtCore/qobjectdefs.h>
 
+1284109525 bjectdefs.h>
+
 1275444197 /usr/lib64/qt4/include/QtCore/qhash.h
 	<QtCore/qatomic.h>
 	<QtCore/qchar.h>
 	<QtCore/qiterator.h>
 	<QtCore/qlist.h>
 	<QtCore/qpair.h>
+
+1284109524 air.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qpair.h
 	<QtCore/qdatastream.h>
@@ -5165,6 +5691,8 @@
 	<QtCore/qglobal.h>
 	<Cocoa/Cocoa.h>
 
+1284109524 oa.h>
+
 1275444195 /usr/lib64/qt4/include/QtGui/qwindowdefs_win.h
 	<QtCore/qglobal.h>
 
@@ -5178,6 +5706,8 @@
 1275444197 /usr/lib64/qt4/include/QtCore/qrect.h
 	<QtCore/qsize.h>
 	<QtCore/qpoint.h>
+
+1284109525 oint.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qsize.h
 	<QtCore/qnamespace.h>
@@ -5206,6 +5736,8 @@
 	<QtCore/qstring.h>
 	<QtCore/qstringmatcher.h>
 	<Qt3Support/q3valuelist.h>
+
+1284109525 t/q3valuelist.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qregexp.h
 	<QtCore/qstring.h>
@@ -5250,6 +5782,8 @@
 	<string.h>
 	<QtCore/QPointF>
 	<QtCore/QPoint>
+
+1284109525 oint>
 
 1275444188 /usr/lib64/qt4/include/QtCore/QPointF
 	"qpoint.h"
@@ -5324,9 +5858,13 @@
 	<QtCore/qshareddata.h>
 	<QtCore/qsharedpointer_impl.h>
 
+1284109525 haredpointer_impl.h>
+
 1275444197 /usr/lib64/qt4/include/QtCore/qshareddata.h
 	<QtCore/qglobal.h>
 	<QtCore/qatomic.h>
+
+1284109525 tomic.h>
 
 1275444197 /usr/lib64/qt4/include/QtCore/qsharedpointer_impl.h
 	<new>
@@ -5437,6 +5975,8 @@
 1275444188 /usr/lib64/qt4/include/QtGui/QButtonGroup
 	"qbuttongroup.h"
 
+1286093150 oup.h"
+
 1275444195 /usr/lib64/qt4/include/QtGui/qbuttongroup.h
 	<QtCore/qobject.h>
 
@@ -5527,6 +6067,8 @@
 1275444188 /usr/lib64/qt4/include/QtGui/QHBoxLayout
 	"qboxlayout.h"
 
+1286093149 t.h"
+
 1275444195 /usr/lib64/qt4/include/QtGui/qboxlayout.h
 	<QtGui/qlayout.h>
 	<QtGui/qwidget.h>
@@ -5554,11 +6096,17 @@
 	<bits/posix2_lim.h>
 	<bits/xopen_lim.h>
 
+1279531086 n_lim.h>
+
 1279531117 /usr/lib64/qt4/include/bits/posix1_lim.h
 	<bits/local_lim.h>
 
+1279531117 l_lim.h>
+
 1279531117 /usr/lib64/qt4/include/bits/local_lim.h
 	<linux/limits.h>
+
+1279531117 its.h>
 
 1260277434 /usr/lib64/qt4/include/linux/limits.h
 
@@ -5577,6 +6125,8 @@
 
 1275444188 /usr/lib64/qt4/include/QtGui/QHeaderView
 	"qheaderview.h"
+
+1286093150 ew.h"
 
 1275444195 /usr/lib64/qt4/include/QtGui/qheaderview.h
 	<QtGui/qabstractitemview.h>
@@ -5613,6 +6163,8 @@
 1275444188 /usr/lib64/qt4/include/QtGui/QMainWindow
 	"qmainwindow.h"
 
+1286093150 ow.h"
+
 1275444195 /usr/lib64/qt4/include/QtGui/qmainwindow.h
 	<QtGui/qwidget.h>
 	<QtGui/qtabwidget.h>
@@ -5639,6 +6191,8 @@
 1275444188 /usr/lib64/qt4/include/QtGui/QSpacerItem
 	"qlayoutitem.h"
 
+1286093149 em.h"
+
 1275444188 /usr/lib64/qt4/include/QtGui/QSpinBox
 	"qspinbox.h"
 
@@ -5647,6 +6201,8 @@
 
 1275444188 /usr/lib64/qt4/include/QtGui/QStatusBar
 	"qstatusbar.h"
+
+1286093150 r.h"
 
 1275444195 /usr/lib64/qt4/include/QtGui/qstatusbar.h
 	<QtGui/qwidget.h>
@@ -6864,20 +7420,28 @@
 	"qtconcurrentthreadengine.h"
 	"qthreadpool.h"
 
+1286093147 ol.h"
+
 1284109525 /usr/include/qt4//QtCore/qabstractanimation.h
 	<QtCore/qobject.h>
 
 1284109525 /usr/include/qt4//QtCore/qanimationgroup.h
 	<QtCore/qabstractanimation.h>
 
+1284109525 bstractanimation.h>
+
 1284109525 /usr/include/qt4//QtCore/qparallelanimationgroup.h
 	<QtCore/qanimationgroup.h>
+
+1284109525 nimationgroup.h>
 
 1284109525 /usr/include/qt4//QtCore/qpauseanimation.h
 	<QtCore/qanimationgroup.h>
 
 1284109525 /usr/include/qt4//QtCore/qpropertyanimation.h
 	<QtCore/qvariantanimation.h>
+
+1284109525 ariantanimation.h>
 
 1284109525 /usr/include/qt4//QtCore/qvariantanimation.h
 	<QtCore/qeasingcurve.h>
@@ -6896,6 +7460,8 @@
 1284109525 /usr/include/qt4//QtCore/qabstracteventdispatcher.h
 	<QtCore/qobject.h>
 	<QtCore/qeventloop.h>
+
+1284109525 ventloop.h>
 
 1284109525 /usr/include/qt4//QtCore/qbasictimer.h
 	<QtCore/qglobal.h>
@@ -6941,6 +7507,8 @@
 1284109525 /usr/include/qt4//QtCore/qlibraryinfo.h
 	<QtCore/qstring.h>
 	<QtCore/QDate>
+
+1284109525 ate>
 
 1286093146 /usr/include/qt4//QtCore/QDate
 	"qdatetime.h"
@@ -6988,6 +7556,8 @@
 
 1284109525 /usr/include/qt4//QtCore/qpluginloader.h
 	<QtCore/qlibrary.h>
+
+1284109525 ibrary.h>
 
 1284109525 /usr/include/qt4//QtCore/quuid.h
 	<QtCore/qstring.h>
@@ -7051,14 +7621,20 @@
 	<QtCore/qabstracttransition.h>
 	<QtCore/qcoreevent.h>
 
+1284109525 oreevent.h>
+
 1284109525 /usr/include/qt4//QtCore/qfinalstate.h
 	<QtCore/qabstractstate.h>
+
+1284109525 bstractstate.h>
 
 1284109525 /usr/include/qt4//QtCore/qhistorystate.h
 	<QtCore/qabstractstate.h>
 
 1284109525 /usr/include/qt4//QtCore/qsignaltransition.h
 	<QtCore/qabstracttransition.h>
+
+1284109525 bstracttransition.h>
 
 1284109525 /usr/include/qt4//QtCore/qstate.h
 	<QtCore/qabstractstate.h>
@@ -7084,6 +7660,8 @@
 
 1284109525 /usr/include/qt4//QtCore/qabstractfileengine.h
 	<QtCore/qdir.h>
+
+1284109525 ir.h>
 
 1284109525 /usr/include/qt4//QtCore/qdir.h
 	<QtCore/qstring.h>
@@ -7113,6 +7691,8 @@
 	<QtCore/qset.h>
 	<QtCore/qcontiguouscache.h>
 
+1284109525 ontiguouscache.h>
+
 1284109525 /usr/include/qt4//QtCore/qtextstream.h
 	<QtCore/qiodevice.h>
 	<QtCore/qstring.h>
@@ -7131,10 +7711,14 @@
 1284109525 /usr/include/qt4//QtCore/qfsfileengine.h
 	<QtCore/qabstractfileengine.h>
 
+1284109525 bstractfileengine.h>
+
 1284109525 /usr/include/qt4//QtCore/qprocess.h
 	<QtCore/qiodevice.h>
 	<QtCore/qstringlist.h>
 	<QtCore/qshareddata.h>
+
+1284109525 hareddata.h>
 
 1284109525 /usr/include/qt4//QtCore/qresource.h
 	<QtCore/qstring.h>
@@ -7153,6 +7737,8 @@
 	<QtCore/qiodevice.h>
 	<QtCore/qfile.h>
 
+1284109525 ile.h>
+
 1284109525 /usr/include/qt4//QtCore/qurl.h
 	<QtCore/qbytearray.h>
 	<QtCore/qobjectdefs.h>
@@ -7166,12 +7752,16 @@
 	<QtCore/qstring.h>
 	<QtCore/qtconcurrentcompilertest.h>
 
+1284109525 concurrentcompilertest.h>
+
 1284109525 /usr/include/qt4//QtCore/qfutureinterface.h
 	<QtCore/qglobal.h>
 	<QtCore/qrunnable.h>
 	<QtCore/qmutex.h>
 	<QtCore/qtconcurrentexception.h>
 	<QtCore/qtconcurrentresultstore.h>
+
+1284109525 concurrentresultstore.h>
 
 1284109525 /usr/include/qt4//QtCore/qrunnable.h
 	<QtCore/qglobal.h>
@@ -7186,11 +7776,15 @@
 	<QtCore/qmap.h>
 	<QtCore/qdebug.h>
 
+1284109525 ebug.h>
+
 1284109525 /usr/include/qt4//QtCore/qtconcurrentcompilertest.h
 	<QtCore/qglobal.h>
 
 1284109525 /usr/include/qt4//QtCore/qfuturesynchronizer.h
 	<QtCore/qfuture.h>
+
+1284109525 uture.h>
 
 1284109525 /usr/include/qt4//QtCore/qfuturewatcher.h
 	<QtCore/qfuture.h>
@@ -7201,11 +7795,15 @@
 	<QtCore/qtconcurrentfilterkernel.h>
 	<QtCore/qtconcurrentfunctionwrappers.h>
 
+1284109525 concurrentfunctionwrappers.h>
+
 1284109525 /usr/include/qt4//QtCore/qtconcurrentfilterkernel.h
 	<QtCore/qglobal.h>
 	<QtCore/qtconcurrentiteratekernel.h>
 	<QtCore/qtconcurrentmapkernel.h>
 	<QtCore/qtconcurrentreducekernel.h>
+
+1284109525 concurrentreducekernel.h>
 
 1284109525 /usr/include/qt4//QtCore/qtconcurrentiteratekernel.h
 	<QtCore/qglobal.h>
@@ -7219,6 +7817,8 @@
 	<QtCore/qvector.h>
 	<QtCore/qalgorithms.h>
 
+1284109525 lgorithms.h>
+
 1284109525 /usr/include/qt4//QtCore/qtconcurrentthreadengine.h
 	<QtCore/qglobal.h>
 	<QtCore/qthreadpool.h>
@@ -7229,10 +7829,14 @@
 	<QtCore/qatomic.h>
 	<QtCore/qsemaphore.h>
 
+1284109525 emaphore.h>
+
 1284109525 /usr/include/qt4//QtCore/qthreadpool.h
 	<QtCore/qglobal.h>
 	<QtCore/qthread.h>
 	<QtCore/qrunnable.h>
+
+1284109525 unnable.h>
 
 1284109525 /usr/include/qt4//QtCore/qtconcurrentmapkernel.h
 	<QtCore/qglobal.h>
@@ -7264,15 +7868,21 @@
 	<QtCore/qtconcurrentrunbase.h>
 	<QtCore/qtconcurrentstoredfunctioncall.h>
 
+1284109525 concurrentstoredfunctioncall.h>
+
 1284109525 /usr/include/qt4//QtCore/qtconcurrentrunbase.h
 	<QtCore/qglobal.h>
 	<QtCore/qfuture.h>
 	<QtCore/qrunnable.h>
 	<QtCore/qthreadpool.h>
 
+1284109525 hreadpool.h>
+
 1284109525 /usr/include/qt4//QtCore/qtconcurrentstoredfunctioncall.h
 	<QtCore/qglobal.h>
 	<QtCore/qtconcurrentrunbase.h>
+
+1284109525 concurrentrunbase.h>
 
 1284109524 /usr/include/qt4//QtGui/qabstractpagesetupdialog.h
 	<QtGui/qdialog.h>
@@ -7416,8 +8026,12 @@
 1286093151 /usr/include/qt4//QtGui/QTransform
 	"qtransform.h"
 
+1286093151 m.h"
+
 1286093149 /usr/include/qt4//QtGui/QMatrix4x4
 	"qmatrix4x4.h"
+
+1286093149 4.h"
 
 1284109524 /usr/include/qt4//QtGui/qmatrix4x4.h
 	<QtGui/qvector3d.h>
@@ -7912,6 +8526,8 @@
 1286093150 /usr/include/qt4//QtGui/QCleanlooksStyle
 	"qcleanlooksstyle.h"
 
+1286093150 ksstyle.h"
+
 1286093149 /usr/include/qt4//QtGui/QPalette
 	"qpalette.h"
 
@@ -7921,6 +8537,8 @@
 1286093149 /usr/include/qt4//QtGui/QFileDialog
 	"qfiledialog.h"
 
+1286093149 og.h"
+
 1284109525 /usr/include/qt4//QtGui/qplastiquestyle.h
 	<QtGui/qwindowsstyle.h>
 
@@ -7929,6 +8547,8 @@
 
 1286093150 /usr/include/qt4//QtGui/QCommonStyle
 	"qcommonstyle.h"
+
+1286093150 yle.h"
 
 1284109525 /usr/include/qt4//QtGui/qs60style.h
 	<QtGui/qcommonstyle.h>
@@ -8054,13 +8674,83 @@
 	"include/cData.h"
 	"include\cSimulation.hpp"
 
+1288176537 Simulation.hpp"
+
 1288175969 source:c:\users\xytis\documents\programing\doi\include\cblock.cpp
 	"cBlock.h"
 
 1288177355 source:c:\users\xytis\documents\programing\doi\include\csimulation.cpp
 	"cSimulation.hpp"
 
+1288177355 on.hpp"
+
 1288177885 c:\users\xytis\documents\programing\doi\include\csimulation.hpp
+	"CExeptions.h"
+	"cConstants.h"
+	"cMaterial.h"
+	<map>
+	<string>
+	<iostream>
+
+1288190813 source:/home/xytis/Documents/Programing/Projects/DoI/include/cBlock.cpp
+	"cBlock.h"
+
+1288190813 /home/xytis/Documents/Programing/Projects/DoI/include/cBlock.h
+	<cstdlib>
+	<cassert>
+	"global.h"
+	"cData.h"
+	"cStatus.h"
+	"cConstants.h"
+
+1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/global.h
+
+1287939729 /home/xytis/Documents/Programing/Projects/DoI/include/cData.h
+	<iostream>
+	"global.h"
+	"cBlock.h"
+
+1285558682 /home/xytis/Documents/Programing/Projects/DoI/include/cStatus.h
+
+1288190813 /home/xytis/Documents/Programing/Projects/DoI/include/cConstants.h
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<string>
+	"global.h"
+	"CExeptions.h"
+
+1288215813 /home/xytis/Documents/Programing/Projects/DoI/include/CExeptions.h
+	<exception>
+	<string>
+
+1288190813 source:/home/xytis/Documents/Programing/Projects/DoI/include/cConstants.cpp
+	"cConstants.h"
+
+1288215009 source:/home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.cpp
+	"cMaterial.h"
+
+1288190813 /home/xytis/Documents/Programing/Projects/DoI/include/cMaterial.h
+	<cassert>
+	<cstdlib>
+	<vector>
+	<iostream>
+	<fstream>
+	"global.h"
+	"cBlock.h"
+	"cData.h"
+	"CExeptions.h"
+
+1288208109 source:/home/xytis/Documents/Programing/Projects/DoI/main.cpp
+	<iostream>
+	<iomanip>
+	<sstream>
+	"include/cMaterial.h"
+	"include/cConstants.h"
+	"include/cData.h"
+	"include/cSimulation.hpp"
+
+1288215444 /home/xytis/Documents/Programing/Projects/DoI/include/cSimulation.hpp
 	"CExeptions.h"
 	"cConstants.h"
 	"cMaterial.h"
