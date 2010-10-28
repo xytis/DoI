@@ -431,7 +431,10 @@ namespace DoI
     injection()
     {
         //INJEKCIJA
-        //Dabar vyksta nevaldomai ir neaiškiai.
+        //Esant įtampai <= 0, injekcija NEVYKSTA. (tipo celiv atveju)
+
+        if (m_G->U() <= 0)
+            return;
 
         double dc;
         //Sąlyga: kairėje elektronai, dešinėje skylės
