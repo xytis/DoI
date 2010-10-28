@@ -11,36 +11,51 @@
 
 namespace DoI {
     class cSimulation {
-        /** Ği klasë turi valdyti simuliacijà, leisti prijungti gui,
-        scenarijø vykdymas irgi jos rûpestis.
+        /** Ãi klasÃ« turi valdyti simuliacijÃ , leisti prijungti gui,
+        scenarijÃ¸ vykdymas irgi jos rÃ»pestis.
         */
         private:
-            //Konstantø klasë, joje vertës nekinta per amşiø.
-            //Taèiau pati klasë gali bûti pakeista kita klase.
+            //KonstantÅ³ klasÄ—, joje vertÄ—s nekinta per amÅ¾iÅ³.
+            //TaÄiau pati klasÄ— gali bÅ«ti pakeista kita klase.
             cConstants * m_constants;
-            //Parametrø klasë, kurioje vyksta keitimai scenarijaus eigoje
+            //ParametrÅ³ klasÄ—, kurioje vyksta keitimai scenarijaus eigoje
             cGlobal    * m_global;
 
-            //Apdorojanèiø funkcijø şemëlapis,
+            //ApdorojanÄiÅ³ funkcijÅ³ Å¾emÄ—lapis,
             //kiekviena f-ja pati nusiskaito parametrus.
             std::map<std::string, void (cSimulation::*) (std::ifstream &)> m_controlers;
 
-            //Failo vardas á kurá saugoma srovë
-            std::string current_output;
+            //Viena simuliacija turi tik vienÄ… medÅ¾iagÄ…. Å½inoma, niekas netrukdo
+            //viduryje simuliacijos jÄ… pakeisti kita.
+            cMaterial  * m_object;
+
+            //Stream'as Ä¯ kurÄ¯ saugoma srovÄ—
+            std::ostream * current_output;
 
             void init();    //Funkcija susiejanti vardus su funkcijomis map'e
 
             void load_constants(std::ifstream &);
             void load_global(std::ifstream &);
             void set_output(std::ifstream &);
-            void run_by_time(std::ifstream &);
+            void create_object(std::ifstream &);
+            void load_object(std::ifstream &);
+            void save_object(std::ifstream &);
+            void run_by_transit(std::ifstream &);
+            void run_until(std::ifstream &);
+            void run_iter(std::ifstream &);
+
+            void doi(std::ifstream &);
+            void stable(std::ifstream &);
+            void celiv(std::ifstream &);
+
+            void pause(std::ifstream &);
             void end(std::ifstream &);
 
         public:
             cSimulation();
-            //Scenarijus uşrağomas tekstu,
-            //su nuorodomis á paprogrames ir parametrais
-            //Kiekviena nuoroda yra kitaip interpretuojama, ir prie jø reikalingi spec. parametrai.
+            //Scenarijus uÃ¾raÃ°omas tekstu,
+            //su nuorodomis Ã¡ paprogrames ir parametrais
+            //Kiekviena nuoroda yra kitaip interpretuojama, ir prie jÃ¸ reikalingi spec. parametrai.
             void read_n_execute(std::string);
 
 

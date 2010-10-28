@@ -1,5 +1,14 @@
-LOAD_CONSTANTS	DoIconst.txt
+LOAD_CONSTANTS		DoIconst.txt
 LOAD_GLOBAL		global.txt
-SET_OUTPUT		current.dat
-RUN_BY_TIME		7
-END
+CREATE_OBJECT
+
+SET_OUTPUT		doi.dat
+DOI			8	1
+
+SET_OUTPUT		stable.dat
+STABLE			1
+
+SET_OUTPUT		celiv.dat
+CELIV			0	-8	1
+
+END 
