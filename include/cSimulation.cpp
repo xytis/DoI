@@ -29,6 +29,8 @@ namespace DoI
         {
             fin >> label;
             function = m_controlers[label];
+            if (!function)
+                throw exception::BadCommand("Function "+label+" not found");
             (*this.*function) (fin);
         }
     }
@@ -45,6 +47,10 @@ namespace DoI
         m_controlers["RUN_BY_TRANSIT"]  = &cSimulation::run_by_transit;
         m_controlers["RUN_UNTIL"]       = &cSimulation::run_until;
         m_controlers["RUN_ITER"]        = &cSimulation::run_iter;
+        m_controlers["DOI"]             = &cSimulation::doi;
+        m_controlers["STABLE"]          = &cSimulation::stable;
+        m_controlers["CELIV"]           = &cSimulation::celiv;
+        m_controlers["PAUSE"]           = &cSimulation::pause;
         m_controlers["END"]             = &cSimulation::end;
 
     }
@@ -130,6 +136,12 @@ namespace DoI
     void cSimulation::
     set_output(std::ifstream & fin)
     {
+        if ((current_output != &(std::cout)) && (current_output))
+        {
+            (*current_output).flush();
+            delete current_output;
+        }
+
         std::string filename;
         fin >> filename;
         if (filename == "cout")
@@ -140,10 +152,11 @@ namespace DoI
         else
         {
             current_output = new std::ofstream(filename.c_str());
-            std::cout << ">>SET OUTPUT FILE: " << current_output << std::endl;
+            if (!current_output)
+                throw exception::FileMisingExeption(filename);
+            std::cout << ">>SET OUTPUT TO FILE: " << filename << std::endl;
         }
-        if (!current_output)
-            throw exception::FileMisingExeption(filename);
+
     }
 
     void cSimulation::
@@ -171,8 +184,8 @@ namespace DoI
         uint64_t output_file_num = 100;
 
         double interval = transit_cycles*transit_time/output_file_num;
-        double log_inc = 1.00001; //1 kas kiekvien� cikl� �ra�yti.
-        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai did�iuliai.
+        double log_inc = 1.00001; //1 kas kiekvienà ciklà áraðyti.
+        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didþiuliai.
 
         double log_cummulative = 1;
         double last_time = 0;
@@ -199,7 +212,7 @@ namespace DoI
                 number ++;
             }
 
-            //Logaritmin� srov�
+            //Logaritminë srovë
             if (m_object->time() > last_time*log_cummulative)
             {
                 m_object->fcurrent(*current_output);
@@ -228,16 +241,23 @@ namespace DoI
             return ;
         }
 
-        uint64_t output_file_num = 100;
+        //Jei tai pirmas kartas, tam kad laikas taptų == 0
+        if (m_object->time() < 0)
+        {
+            m_object->run();
+        }
 
-        double interval = (end_time-m_object->time())/output_file_num;
-        double log_inc = 1.00001; //1 kas kiekvien� cikl� �ra�yti.
-        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai did�iuliai.
+        double dt = m_global->dt();
+
+        double interval = (end_time-m_object->time())/100; //1/100 viso intervalo.
+        double log_inc = 1.00001; //1 kas kiekvienà ciklà áraðyti.
+        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didþiuliai.
 
         double log_cummulative = 1;
         double last_time = 0;
 
-        uint64_t number = 0;
+        uint64_t number;
+        number = 0;
 
         while (m_object->time() < end_time)
         {
@@ -252,11 +272,11 @@ namespace DoI
                 m_object->write_field(temp.str());
                 #endif //DUMP
                 std::cout << "TIME: " << m_object->time() << '\t';
-                std::cout << "PERCENT: " << number*100.0/output_file_num << std::endl;
+                std::cout << "PERCENT: " << number << std::endl;
                 number ++;
             }
 
-            //Logaritmin� srov�
+            //Logaritminë srovë
             if (m_object->time() > last_time*log_cummulative)
             {
                 m_object->fcurrent(*current_output);
@@ -276,6 +296,8 @@ namespace DoI
 
         //Making the last step:
         std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+        //Returning dt to starting value:
+        m_global->s_dt(dt);
 
     }
 
@@ -310,10 +332,12 @@ namespace DoI
                 #endif //DUMP
                 std::cout << "TIME: " << m_object->time() << '\t';
                 std::cout << "PERCENT: " << count*100.0/loop_count <<std::endl;
-            }
 
+
+            }
             count ++;
             m_object->run();
+            m_object->fcurrent(*(current_output));
         }
     }
 
@@ -351,8 +375,129 @@ namespace DoI
     }
 
     void cSimulation::
+    doi(std::ifstream & fin)
+    /**Pagrindinė DoI funkcija,
+    Kviečiama taip: DOI įtampa laikas
+    */
+    {
+        if (!m_global || !m_constants || !m_object)
+            throw exception::BadCommand("BAD INITIATION");
+
+        double voltage;
+        fin >> voltage;
+        m_global->s_U(voltage);
+        run_until(fin);
+    }
+
+    void cSimulation::
+    stable(std::ifstream & fin)
+    /**Funkcija atjungianti įtampą,
+    Kviečiama taip: STABLE laikas
+    */
+    {
+        if (!m_global || !m_constants || !m_object)
+            throw exception::BadCommand("BAD INITIATION");
+        m_global->s_U(0);
+        run_until(fin);
+    }
+
+    void cSimulation::
+    celiv(std::ifstream & fin)
+    /**Pagrindinė CELIV funkcija,
+    Kviečiama taip: CELIV pradinė_įtampa galinė_įtampa laikas
+    */
+    {
+        if (!m_global || !m_constants || !m_object)
+            throw exception::BadCommand("BAD INITIATION");
+
+        double s_voltage, e_voltage, end_time;
+        fin >> s_voltage >> e_voltage >> end_time;
+
+
+
+        if (m_object->time() < 0)
+        {
+            m_global->s_U(s_voltage);
+            m_object->run();
+        }
+
+        //Įtampos linija U = a+b*t;
+        double b = (s_voltage-e_voltage)/(m_object->time()-end_time);
+        double a = s_voltage - b*m_object->time();
+
+        double dt = m_global->dt();
+
+        double interval = (end_time-m_object->time())/100; //1/100 viso intervalo.
+        double log_inc = 1.00001; //1 kas kiekvieną ciklą árašyti.
+        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didžiuliai.
+
+        double log_cummulative = 1;
+        double last_time = 0;
+
+        uint64_t number;
+        number = 0;
+
+        while (m_object->time() < end_time)
+        {
+            if (m_object->time() > number*interval)
+            {
+                #ifdef DUMP
+                std::ostringstream temp;
+                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
+                m_object->write_material(temp.str());
+                temp.str("");
+                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
+                m_object->write_field(temp.str());
+                #endif //DUMP
+                std::cout << "TIME: " << m_object->time() << '\t';
+                std::cout << "PERCENT: " << number << std::endl;
+                number ++;
+            }
+
+            //Logaritminë srovë
+            if (m_object->time() > last_time*log_cummulative)
+            {
+                m_object->fcurrent(*current_output);
+                log_cummulative *= log_inc;
+                last_time = m_object->time();
+            }
+
+            //Watching for the last step:
+            if (m_object->time() > end_time - m_global->dt())
+            {
+                //Decreasing the dt, to meet the time limit.
+                m_global->s_dt(end_time-m_object->time());
+            }
+
+            m_global->s_U(a+b*m_object->time());
+            m_object->run();
+        }
+
+        //Making the last step:
+        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+        //Returning dt to starting value:
+        m_global->s_dt(dt);
+    }
+
+    void cSimulation::
+    pause(std::ifstream & fin)
+    {
+        std::cout << ">>PAUSED" << std::endl;
+        std::cout << "..press ENTER to continue";
+        std::cin.get();
+    }
+
+    void cSimulation::
     end(std::ifstream & fin)
     {
-        std::cout << "...death of all..." << std::endl;
+        delete m_constants;
+        delete m_global;
+        delete m_object;
+        if (current_output != &(std::cout))
+        {
+            (*current_output).flush();
+            delete current_output;
+        }
+        std::cout << ">>END ...death of all electrons..." << std::endl;
     }
 };

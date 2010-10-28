@@ -20,11 +20,15 @@ int main(int argc, char * argv[])
     }
     catch (exception::FileMisingExeption & e)
     {
-        std::cout << e.what() << std::endl;
+        std::cout << "E>" << e.what() << std::endl;
     }
     catch (exception::FileBadExeption & e)
     {
-        std::cout << e.what() << std::endl;
+        std::cout << "E>" << e.what() << std::endl;
+    }
+    catch (exception::BadCommand & e)
+    {
+        std::cout << "E>" << e.what() << ": " << e.reason() << std::endl;
     }
 
     return 0;
@@ -43,7 +47,7 @@ int main(int argc, char * argv[])
     //Current file
     std::ofstream fcurrent ("current.dat");
 
-
+*/
     /**Diskretus ciklas*/
 /*
     uint64_t loop_count = 1000000;

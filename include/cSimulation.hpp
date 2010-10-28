@@ -43,6 +43,12 @@ namespace DoI {
             void run_by_transit(std::ifstream &);
             void run_until(std::ifstream &);
             void run_iter(std::ifstream &);
+
+            void doi(std::ifstream &);
+            void stable(std::ifstream &);
+            void celiv(std::ifstream &);
+
+            void pause(std::ifstream &);
             void end(std::ifstream &);
 
         public:

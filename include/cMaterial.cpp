@@ -20,6 +20,11 @@
 
 namespace DoI
 {
+    /**
+    Inicijuojant suteikiamas -dt laikas,
+    nes pirmas žingsnis turi baigtis kai t==0.
+    Po to laikas eina normaliai =]
+    */
     cMaterial::
     cMaterial(cConstants * C, cGlobal * G):
         m_constants(C),
@@ -319,12 +324,14 @@ namespace DoI
         {
             changeTimeInterval(-10);
             std::cerr << e.what() << std::endl;
+            std::cerr << "Changed to: " << m_global->dt() << std::endl;
             restore();
         }
         catch (exception::TimeIntervalTooSmall & e)
         {
             changeTimeInterval(+10);
             std::cerr << e.what() << std::endl;
+            std::cerr << "Changed to: " << m_global->dt() << std::endl;
             restore();
         }
     }
@@ -504,7 +511,7 @@ namespace DoI
         //Writing time
         fout << m_time << std::endl;
         //Writing memory dump
-        for (uint64_t i = 0; i < m_global->size() + 1; i++)
+        for (uint64_t i = 0; i < m_global->size(); i++)
         {
             fout << m_blockArray.at(i)->read();
         }
