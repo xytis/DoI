@@ -49,20 +49,31 @@ namespace DoI
             friend std::ostream & operator << (std::ostream & out, const cConstants & C);
     };
 
+    enum CONTACTS_TYPE
+    {
+        BLOCKING  = 0,
+        INJECTING = 1,
+        EXTRACTING = 2,
+        NON_BLOCKING = 3    //NON_BLOCKING = INJECTING+EXTRACTING
+    };
+
+
     class cGlobal {
         private:
             double        m_U;
             double        m_dt;
             double        m_width;
+            CONTACTS_TYPE m_contacts_type;
             int           m_timeout;
             int           m_time_depth;         //Naudojamas nustatyti kiek kartų laikas buvo sumažintas.
             uint64_t      m_size;
         public:
-            cGlobal (double U, double dt, double width,
+            cGlobal (double U, double dt, double width, CONTACTS_TYPE type,
                     int timeout, int time_depth, uint64_t size):
             m_U(U),
             m_dt(dt),
             m_width(width),
+            m_contacts_type(type),
             m_timeout(timeout),
             m_time_depth(time_depth),
             m_size(size)
@@ -71,6 +82,7 @@ namespace DoI
             double        U() { return m_U; };
             double        dt() { return m_dt; };
             double        width() { return m_width; };
+            CONTACTS_TYPE contacts_type () { return m_contacts_type; };
             int           timeout() { return m_timeout; };
             int           time_depth() { return m_time_depth; };
             uint64_t      size() { return m_size; };
@@ -78,6 +90,7 @@ namespace DoI
             void          s_U(double n_U) { m_U = n_U; };
             void          s_dt(double n_dt) { m_dt = n_dt; };
             void          s_width(double n_width) { m_width = n_width; };
+            void          s_contacts_type (CONTACTS_TYPE n_type) { m_contacts_type = n_type; };
             void          s_timeout(int n_timeout) { m_timeout = n_timeout; };
             void          s_time_depth(int n_time_depth) { m_time_depth = n_time_depth; };
             void          s_size(uint64_t n_size) { m_size = n_size; };

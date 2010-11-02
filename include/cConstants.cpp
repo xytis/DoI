@@ -24,6 +24,16 @@ namespace DoI
         out << "Įtampa\t\t\t:\t" << G.U() << std::endl;
         out << "Laiko žingsnis\t\t:\t" << G.dt() << std::endl;
         out << "Storis\t\t\t:\t" << G.width() << std::endl;
+        out << "Kontaktai\t\t:\t";
+        switch (G.contacts_type())
+        {
+            case (BLOCKING) : out << "blokuojantys"; break;
+            case (INJECTING): out << "injektuojantys"; break;
+            case (EXTRACTING): out << "ištraukiantys"; break;
+            case (NON_BLOCKING): out << "pralaidūs"; break;
+            default : out << "nenustatyti"; break;
+        }
+        out << std::endl;
         out << "timeout\t\t\t:\t" << G.timeout() << std::endl;
         out << "time_depth\t\t:\t" << G.time_depth() << std::endl;
         out << "Padalinimų sk.\t\t:\t" << G.size() << std::endl;

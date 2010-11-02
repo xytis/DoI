@@ -4,6 +4,7 @@
 #include "CExeptions.h"
 #include "cConstants.h"
 #include "cMaterial.h"
+#include "tFunctors.hpp"
 
 #include <map>
 #include <string>
@@ -36,10 +37,17 @@ namespace DoI {
 
             void load_constants(std::ifstream &);
             void load_global(std::ifstream &);
+
+            void set_voltage(std::ifstream &);
+            void set_contacts(std::ifstream &);
             void set_output(std::ifstream &);
+
             void create_object(std::ifstream &);
             void load_object(std::ifstream &);
             void save_object(std::ifstream &);
+
+            void foto_injection(std::ifstream &);
+
             void run_by_transit(std::ifstream &);
             void run_until(std::ifstream &);
             void run_iter(std::ifstream &);

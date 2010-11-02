@@ -1,13 +1,17 @@
 LOAD_CONSTANTS		DoIconst.txt
 LOAD_GLOBAL		global.txt
-LOAD_OBJECT		foto.dat
+CREATE_OBJECT
+SET_VOLTAGE		0
+SET_CONTACTS		0
 
-SET_OUTPUT		stable.dat
-STABLE			7e-7
+SET_OUTPUT		foto_current.dat
 
-SET_OUTPUT		celiv.dat
-CELIV			0	-32	28e-7
+FOTO_INJECTION		1e7	1000	0
+SAVE_OBJECT		foto_starting.dat
+STABLE			0
+CELIV			0	16	14e-7
+STABLE			21e-7
 
-SAVE_OBJECT		after.dat
+SAVE_OBJECT		foto_after.dat
 
 END 

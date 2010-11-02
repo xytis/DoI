@@ -8655,10 +8655,10 @@
 	<QtGui/qstyle.h>
 	<QtGui/qwidget.h>
 
-1288177378 source:c:\users\xytis\documents\programing\doi\include\cconstants.cpp
+1288725350 source:c:\users\xytis\documents\programing\doi\include\cconstants.cpp
 	"cConstants.h"
 
-1288177113 c:\users\xytis\documents\programing\doi\include\cconstants.h
+1288725136 c:\users\xytis\documents\programing\doi\include\cconstants.h
 	<cstdlib>
 	<iostream>
 	<fstream>
@@ -8666,16 +8666,16 @@
 	"global.h"
 	"CExeptions.h"
 
-1287951014 c:\users\xytis\documents\programing\doi\include\global.h
+1287947414 c:\users\xytis\documents\programing\doi\include\global.h
 
-1288266727 c:\users\xytis\documents\programing\doi\include\cexeptions.h
+1288263127 c:\users\xytis\documents\programing\doi\include\cexeptions.h
 	<exception>
 	<string>
 
-1288266727 source:c:\users\xytis\documents\programing\doi\include\cmaterial.cpp
+1288733110 source:c:\users\xytis\documents\programing\doi\include\cmaterial.cpp
 	"cMaterial.h"
 
-1288177815 c:\users\xytis\documents\programing\doi\include\cmaterial.h
+1288729477 c:\users\xytis\documents\programing\doi\include\cmaterial.h
 	<cassert>
 	<cstdlib>
 	<vector>
@@ -8685,8 +8685,9 @@
 	"cBlock.h"
 	"cData.h"
 	"CExeptions.h"
+	"tFunctors.hpp"
 
-1288175839 c:\users\xytis\documents\programing\doi\include\cblock.h
+1288725033 c:\users\xytis\documents\programing\doi\include\cblock.h
 	<cstdlib>
 	<cassert>
 	"global.h"
@@ -8694,36 +8695,38 @@
 	"cStatus.h"
 	"cConstants.h"
 
-1287953158 c:\users\xytis\documents\programing\doi\include\cdata.h
+1288732581 c:\users\xytis\documents\programing\doi\include\cdata.h
 	<iostream>
 	"global.h"
 	"cBlock.h"
 
-1287951014 c:\users\xytis\documents\programing\doi\include\cstatus.h
+1287947414 c:\users\xytis\documents\programing\doi\include\cstatus.h
 
-1288266727 source:c:\users\xytis\documents\programing\doi\main.cpp
+1288732766 source:c:\users\xytis\documents\programing\doi\main.cpp
 	<iostream>
 	<iomanip>
 	<sstream>
 	"include/cMaterial.h"
 	"include/cConstants.h"
 	"include/cData.h"
+	"include\tFunctors.hpp"
 	"include/cSimulation.hpp"
 
 1288176537 Simulation.hpp"
 
-1288270339 source:c:\users\xytis\documents\programing\doi\include\cblock.cpp
+1288735013 source:c:\users\xytis\documents\programing\doi\include\cblock.cpp
 	"cBlock.h"
 
-1288266727 source:c:\users\xytis\documents\programing\doi\include\csimulation.cpp
+1288729633 source:c:\users\xytis\documents\programing\doi\include\csimulation.cpp
 	"cSimulation.hpp"
 
 1288177355 on.hpp"
 
-1288266727 c:\users\xytis\documents\programing\doi\include\csimulation.hpp
+1288729003 c:\users\xytis\documents\programing\doi\include\csimulation.hpp
 	"CExeptions.h"
 	"cConstants.h"
 	"cMaterial.h"
+	"tFunctors.hpp"
 	<map>
 	<string>
 	<iostream>
@@ -8738,4 +8741,7 @@
 
 1288261436 source:/home/xytis/Documents/Programing/Projects/DoI/include/cSimulation.cpp
 	"cSimulation.hpp"
+
+1288732948 c:\users\xytis\documents\programing\doi\include\tfunctors.hpp
+	<cmath>
 

@@ -169,6 +169,7 @@ namespace DoI
             cGlobal * m_G;
 
             void injection();
+            void extraction();
             void recombination();
             void glue_unglue();
 

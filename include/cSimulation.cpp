@@ -9,7 +9,8 @@ namespace DoI
     m_object(NULL),
     current_output(NULL)
     {
-
+        //Sukuriame naują m_global
+        m_global = new cGlobal(0,0,0,(CONTACTS_TYPE)0,0,0,0);
     }
 
     void cSimulation::
@@ -40,10 +41,13 @@ namespace DoI
     {
         m_controlers["LOAD_CONSTANTS"]  = &cSimulation::load_constants;
         m_controlers["LOAD_GLOBAL"]     = &cSimulation::load_global;
+        m_controlers["SET_VOLTAGE"]     = &cSimulation::set_voltage;
+        m_controlers["SET_CONTACTS"]    = &cSimulation::set_contacts;
         m_controlers["SET_OUTPUT"]      = &cSimulation::set_output;
         m_controlers["CREATE_OBJECT"]   = &cSimulation::create_object;
         m_controlers["LOAD_OBJECT"]     = &cSimulation::load_object;
         m_controlers["SAVE_OBJECT"]     = &cSimulation::save_object;
+        m_controlers["FOTO_INJECTION"]   = &cSimulation::foto_injection;
         m_controlers["RUN_BY_TRANSIT"]  = &cSimulation::run_by_transit;
         m_controlers["RUN_UNTIL"]       = &cSimulation::run_until;
         m_controlers["RUN_ITER"]        = &cSimulation::run_iter;
@@ -118,19 +122,57 @@ namespace DoI
         double U;
         double dt;
         double width;
+        uint64_t type;
         uint64_t size;
 
         std::string id;
         gfile >> id >> U;
         gfile >> id >> dt;
         gfile >> id >> width;
+        gfile >> id >> type;
         gfile >> id >> size;
 
         gfile.close();
 
-        m_global = new cGlobal(U, dt, width, 0, 0, size);
+        if (m_global)
+            delete m_global;
+
+        m_global = new cGlobal(U, dt, width, (CONTACTS_TYPE)type, 0, 0, size);
         std::cout << ">>LOADED GLOBALS FROM FILE: " << filename << std::endl;
         std::cout << *m_global << std::endl;
+    }
+
+    void cSimulation::
+    set_voltage(std::ifstream & fin)
+    {
+        if (!m_global)
+            throw exception::BadCommand("Global constants not loaded.");
+        double U;
+        fin >> U;
+        m_global->s_U(U);
+        std::cout << ">>VOLTAGE SET TO: " << U << std::endl;
+    }
+
+    void cSimulation::
+    set_contacts(std::ifstream & fin)
+    {
+        if (!m_global)
+            throw exception::BadCommand("Global constants not loaded.");
+        uint64_t type;
+        fin >> type;
+        m_global->s_contacts_type((CONTACTS_TYPE)type);
+        std::cout << ">>CONTACTS SET TO: ";
+        switch (m_global->contacts_type())
+        {
+            case (BLOCKING) : std::cout << "BLOCKING"; break;
+            case (INJECTING): std::cout << "INJECTING"; break;
+            case (EXTRACTING): std::cout << "EXTRACTING"; break;
+            case (NON_BLOCKING): std::cout << "NON_BLOCKING"; break;
+            default : std::cout << "NONE";
+                throw exception::BadCommand("Contact type not defined");
+                break;
+        }
+        std::cout << std::endl;
     }
 
     void cSimulation::
@@ -372,6 +414,24 @@ namespace DoI
         }
         m_object->dump(filename);
         std::cout << "..DONE" << std::endl;
+    }
+
+    void cSimulation::
+    foto_injection(std::ifstream & fin)
+    /**Fotoinjekcijos funkcija:
+    FOTO_INJECTION alpha luminosity time
+    */
+    {
+        double alpha, luminocity, time;
+        fin >> alpha >> luminocity >> time;
+        //Skaičiuojama funkcijos vertė laukelio viduryje,
+        // ir toks dalelių kiekis priskiriamas laukeliui.
+
+        mathExp * foo = new mathExp(alpha, luminocity);
+
+        m_object->fill(reinterpret_cast<mathFunction *>(foo), reinterpret_cast<mathFunction *>(foo));
+
+        std::cout << ">>FOTO INJECTED" << std::endl;
     }
 
     void cSimulation::

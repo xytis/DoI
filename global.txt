@@ -1,4 +1,5 @@
 U       0
 dt      1e-7
 width   1e-6
+contacts 0
 size    200

@@ -122,7 +122,7 @@ namespace DoI
     double diffusion(const double & interest,const double & neighbour, const double & D,
                       const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
-
+        /*
         double dc;
         dc = (interest - neighbour)* D * G->dt() / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
         if (dc>interest/5)
@@ -130,7 +130,7 @@ namespace DoI
         if (dc < C->c_MIN)
             dc = 0;
         return dc;
-
+        */
         return 0; //No diff
     }
 
@@ -471,8 +471,12 @@ namespace DoI
 
             m_data.m_p_buffer += dc;
         }
+    }
 
-
+    void cContact::
+    extraction()
+    {
+        return ;
     }
 
     void cContact::
@@ -493,8 +497,23 @@ namespace DoI
     relax()
     {
         //Čia rekombinacija ir krūvininkų prilipimas ir injekcija
-        //injekcija
-        injection();
+        switch (m_G->contacts_type())
+        {
+            case BLOCKING:
+                break;
+            case INJECTING:
+                //injekcija
+                injection();
+                break;
+            case EXTRACTING:
+                //ekstrakcija
+                extraction();
+                break;
+            case NON_BLOCKING:
+                injection();
+                extraction();
+                break;
+        }
         //rekombinacija irgi vyksta.
         recombination();
         //prilipimas, atlipimas... HMM???
@@ -538,13 +557,15 @@ namespace DoI
         //Dreifas pagal kontaktą:
         if (m_type == LEFT)
         {
-            //Juda elektronai
+            //Juda pasroviui elektronai
             dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "1");
+            dp += drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "2");
         }
         if (m_type == RIGHT)
         {
-            //Juda skylės
-            dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "2");
+            //Juda pasroviui skylės
+            dn += drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "3");
+            dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "4");
         }
 
         //Isimam daleles.

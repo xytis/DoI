@@ -33,6 +33,7 @@
 #include "cBlock.h"
 #include "cData.h"
 #include "CExeptions.h"
+#include "tFunctors.hpp"
 
 namespace DoI
 {
@@ -87,6 +88,9 @@ namespace DoI
             cMaterial(cConstants *, cGlobal *);
             cMaterial(cConstants *, cGlobal *, const uint64_t & size, const cData & first, const cData & other, const cData & last);
             cMaterial(cConstants *, cGlobal *, std::vector<cData> &);
+
+            //Funkcija leidžianti įvairiai užpildyti medžiagą dalelėmis
+            void fill(mathFunction *, mathFunction *);
 
             //Pagrindinio ciklo žingsnis
             void run();

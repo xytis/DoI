@@ -308,7 +308,22 @@ namespace DoI
         return c*m_constants->c_q/m_global->dt()/m_global->size();
     }
 
-
+    void cMaterial::
+    fill(mathFunction * f_n, mathFunction * f_p)
+    {
+        //Palei x vertę paima dalelių kiekį
+        cData temp;
+        double x;
+        x = 0;
+        for (uint64_t i = 0; i < m_global->size(); i++)
+        {
+            temp = m_blockArray.at(i)->read();
+            temp.m_n = (*f_n)(x);
+            temp.m_p = (*f_p)(x);
+            m_blockArray.at(i)->write(temp);
+            x += temp.m_width;
+        }
+    }
 
     void cMaterial::
     run()
