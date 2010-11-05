@@ -1,17 +1,24 @@
 LOAD_CONSTANTS		DoIconst.txt
-LOAD_GLOBAL		global.txt
+LOAD_GLOBAL			global.txt
+
 CREATE_OBJECT
-SET_VOLTAGE		0
-SET_CONTACTS		0
+# A = 1e4, normuojam á t_tr ir I_0
+SET_OUTPUT			foto_current.dat 2 6.26e-5 69.47e-12
 
-SET_OUTPUT		foto_current.dat
+SET_VOLTAGE			0
+SET_CONTACTS		2
 
-FOTO_INJECTION		1e7	1000	0
-SAVE_OBJECT		foto_starting.dat
-STABLE			0
-CELIV			0	16	14e-7
-STABLE			21e-7
+PAUSE
 
-SAVE_OBJECT		foto_after.dat
+#injektuojame fotoinjekcijos bûdu
+FOTO_INJECTION		0.714e5	1e8	0
 
-END 
+SAVE_OBJECT			foto_before.dat
+#uþlaikome krûvininkus bandinyje, kad parekombinuotø
+#STABLE				1e-4
+#iðtraukiame su celiv
+CELIV				0	5	5e-4
+
+SAVE_OBJECT			foto_after.dat
+
+END

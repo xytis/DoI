@@ -71,4 +71,10 @@ namespace DoI
     {
         return (1/(eps * eps0 * S));
     }
+
+    double
+    talpa (double eps, double eps0, double S, double d)
+    {
+        return eps*eps0*S/d;
+    }
 };

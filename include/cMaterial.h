@@ -100,7 +100,7 @@ namespace DoI
             //Parodo kas vyksta dabar. Gali būti naudojamas komunikuoti su cInterface klase.
             void fstats(std::ostream & out = std::cout);
             void stats(sSnapshot &);
-            void fcurrent(std::ostream & out = std::cout);
+            void fcurrent(std::ostream & out = std::cout, double x_norm = 1, double y_norm = 1);
 
             //Pasiunčia visą duomenų masyvą lauk į failą (id::string)
             void write_material(std::string);
@@ -122,6 +122,122 @@ namespace DoI
             //Patikrina ar veikia flush() ir calc()
             void check_run();
             #endif //DEBUG
+    };
+
+        class printFunction
+    {
+        public:
+            virtual void operator()() = 0;  // call using operator
+            virtual void Call() = 0;       // call using function
+    };
+
+    class iterPrint : public printFunction
+    {
+        private:
+            std::ostream * out;
+            cMaterial * object;
+            double lastTime;
+        public:
+            iterPrint(std::ostream * n_out, cMaterial * n_object):
+            out(n_out), object(n_object), lastTime(0) {};
+            void operator()()
+            {
+                if (object->time()>lastTime)
+                {
+                    object->fcurrent(*(out));
+                    lastTime = object->time();
+                }
+            };
+
+            void Call()
+            {
+                if (object->time()>lastTime)
+                {
+                    object->fcurrent(*(out));
+                    lastTime = object->time();
+                }
+            };
+
+            ~iterPrint()
+            {
+                out->flush();
+            };
+    };
+
+    class logPrint : public printFunction
+    {
+        private:
+            uint64_t callTimes;
+            uint64_t lastPrint;
+            std::ostream * out;
+            cMaterial * object;
+        public:
+            logPrint(std::ostream * n_out, cMaterial * n_object):
+            callTimes(0), lastPrint(1), out(n_out), object(n_object) {};
+            void operator()()
+            {
+                callTimes++;
+                if (lastPrint * 2 <= callTimes)
+                {
+                    object->fcurrent((*out));
+                    lastPrint *= 2;
+                }
+
+            };
+            void Call()
+            {
+                callTimes++;
+                if (lastPrint * 2 <= callTimes)
+                {
+                    object->fcurrent((*out));
+                    lastPrint *= 2;
+                }
+            };
+            ~logPrint()
+            {
+                out->flush();
+            };
+    };
+
+    class normLogPrint : public printFunction
+    {
+        private:
+            uint64_t callTimes;
+            uint64_t lastPrint;
+            double  x_norm;
+            double  y_norm;
+            std::ostream * out;
+            cMaterial * object;
+        public:
+            normLogPrint(std::ostream * n_out, cMaterial * n_object,
+                        double n_x_norm, double n_y_norm):
+            callTimes(0), lastPrint(1),
+            x_norm(n_x_norm), y_norm(n_y_norm),
+            out(n_out), object(n_object) {};
+            void operator()()
+            {
+                callTimes++;
+                if (lastPrint * 2 <= callTimes)
+                {
+                    object->fcurrent((*out), x_norm, y_norm);
+                    lastPrint *= 2;
+                }
+
+            };
+            void Call()
+            {
+                callTimes++;
+                if (lastPrint * 2 <= callTimes)
+                {
+                    std::cout << 'a';
+                    object->fcurrent((*out), x_norm, y_norm);
+                    lastPrint *= 2;
+                }
+            };
+            ~normLogPrint()
+            {
+                out->flush();
+            };
     };
 };
 

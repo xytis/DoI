@@ -4,34 +4,37 @@
 	<File name="include\CExeptions.h" open="1" top="0" tabpos="1">
 		<Cursor position="3590" topLine="103" />
 	</File>
-	<File name="include\cBlock.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="9681" topLine="530" />
+	<File name="include\cBlock.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="11683" topLine="492" />
 	</File>
-	<File name="include\cBlock.h" open="1" top="0" tabpos="2">
-		<Cursor position="4981" topLine="150" />
+	<File name="include\cBlock.h" open="1" top="0" tabpos="6">
+		<Cursor position="5244" topLine="174" />
 	</File>
 	<File name="include\cConstants.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="502" topLine="19" />
+		<Cursor position="1150" topLine="0" />
 	</File>
 	<File name="include\cConstants.h" open="1" top="0" tabpos="8">
-		<Cursor position="1663" topLine="20" />
+		<Cursor position="1478" topLine="48" />
 	</File>
-	<File name="include\cData.h" open="1" top="0" tabpos="3">
-		<Cursor position="1431" topLine="47" />
+	<File name="include\cData.h" open="1" top="0" tabpos="2">
+		<Cursor position="1862" topLine="53" />
 	</File>
-	<File name="include\cMaterial.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="2822" topLine="105" />
+	<File name="include\cMaterial.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="10707" topLine="333" />
 	</File>
-	<File name="include\cMaterial.h" open="1" top="0" tabpos="4">
-		<Cursor position="3382" topLine="78" />
+	<File name="include\cMaterial.h" open="1" top="0" tabpos="3">
+		<Cursor position="7119" topLine="216" />
 	</File>
-	<File name="include\cSimulation.cpp" open="1" top="0" tabpos="10">
-		<Cursor position="6854" topLine="61" />
+	<File name="include\cSimulation.cpp" open="1" top="1" tabpos="10">
+		<Cursor position="8121" topLine="95" />
 	</File>
 	<File name="include\cSimulation.hpp" open="1" top="0" tabpos="11">
-		<Cursor position="1495" topLine="15" />
+		<Cursor position="2321" topLine="51" />
+	</File>
+	<File name="include\tFunctors.hpp" open="1" top="0" tabpos="12">
+		<Cursor position="516" topLine="76" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="9">
-		<Cursor position="829" topLine="30" />
+		<Cursor position="303" topLine="12" />
 	</File>
 </CodeBlocks_layout_file>

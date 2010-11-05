@@ -318,10 +318,11 @@ namespace DoI
         for (uint64_t i = 0; i < m_global->size(); i++)
         {
             temp = m_blockArray.at(i)->read();
-            temp.m_n = (*f_n)(x);
-            temp.m_p = (*f_p)(x);
+            x += temp.m_width /2;
+            temp.m_n += (*f_n)(x) * temp.m_width;
+            temp.m_p += (*f_p)(x) * temp.m_width;
             m_blockArray.at(i)->write(temp);
-            x += temp.m_width;
+            x += temp.m_width /2;
         }
     }
 
@@ -444,9 +445,9 @@ namespace DoI
     }
 
     void cMaterial::
-    fcurrent(std::ostream & out)
+    fcurrent(std::ostream & out, double x_norm, double y_norm)
     {
-        out << m_time << '\t' << current() << '\t' << m_global->dt() << std::endl;
+        out << m_time/x_norm << '\t' << current()/y_norm << '\t' << m_global->dt() << std::endl;
     }
 
 

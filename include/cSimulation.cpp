@@ -7,7 +7,7 @@ namespace DoI
     m_constants(NULL),
     m_global(NULL),
     m_object(NULL),
-    current_output(NULL)
+    m_current_output(NULL)
     {
         //Sukuriame naują m_global
         m_global = new cGlobal(0,0,0,(CONTACTS_TYPE)0,0,0,0);
@@ -29,10 +29,15 @@ namespace DoI
         while (label!="END")
         {
             fin >> label;
-            function = m_controlers[label];
-            if (!function)
-                throw exception::BadCommand("Function "+label+" not found");
-            (*this.*function) (fin);
+            if (!check_and_discard_comment(label, fin))
+            {
+                function = m_controlers[label];
+                if (!function)
+                    throw exception::BadCommand("Function "+label+" not found");
+                (*this.*function) (fin);
+                //Now ignore anything till the end of line.
+                fin.ignore(2048, '\n');
+            }
         }
     }
 
@@ -43,11 +48,12 @@ namespace DoI
         m_controlers["LOAD_GLOBAL"]     = &cSimulation::load_global;
         m_controlers["SET_VOLTAGE"]     = &cSimulation::set_voltage;
         m_controlers["SET_CONTACTS"]    = &cSimulation::set_contacts;
+        m_controlers["SET_TIME_STEP"]   = &cSimulation::set_time_step;
         m_controlers["SET_OUTPUT"]      = &cSimulation::set_output;
         m_controlers["CREATE_OBJECT"]   = &cSimulation::create_object;
         m_controlers["LOAD_OBJECT"]     = &cSimulation::load_object;
         m_controlers["SAVE_OBJECT"]     = &cSimulation::save_object;
-        m_controlers["FOTO_INJECTION"]   = &cSimulation::foto_injection;
+        m_controlers["FOTO_INJECTION"]  = &cSimulation::foto_injection;
         m_controlers["RUN_BY_TRANSIT"]  = &cSimulation::run_by_transit;
         m_controlers["RUN_UNTIL"]       = &cSimulation::run_until;
         m_controlers["RUN_ITER"]        = &cSimulation::run_iter;
@@ -178,208 +184,109 @@ namespace DoI
     void cSimulation::
     set_output(std::ifstream & fin)
     {
-        if ((current_output != &(std::cout)) && (current_output))
-        {
-            (*current_output).flush();
-            delete current_output;
-        }
+        if (m_current_output)
+            delete m_current_output;
 
         std::string filename;
-        fin >> filename;
+        uint64_t type;
+        fin >> filename >> type;
         if (filename == "cout")
         {
-            current_output = &(std::cout);
-            std::cout << ">>SET OUTPUT TO STD::COUT" << std::endl;
+            if (type == 0)
+            {
+                m_current_output = new logPrint(&(std::cout), m_object);
+                std::cout << ">>SET OUTPUT TO STD::COUT TYPE LOG" << std::endl;
+            }
+            else if (type == 1)
+            {
+                m_current_output = new iterPrint(&(std::cout), m_object);
+                std::cout << ">>SET OUTPUT TO STD::COUT TYPE ITER" << std::endl;
+            }
+            else if (type == 2)
+            {
+                double x_norm, y_norm;
+                fin >> x_norm >> y_norm;
+                m_current_output = new normLogPrint(&(std::cout), m_object, x_norm, y_norm);
+                std::cout << ">>SET OUTPUT TO STD::COUT TYPE NORM LOG" << std::endl;
+            }
         }
         else
         {
-            current_output = new std::ofstream(filename.c_str());
-            if (!current_output)
+            std::ofstream * out = new std::ofstream(filename.c_str());
+            if (!out)
                 throw exception::FileMisingExeption(filename);
-            std::cout << ">>SET OUTPUT TO FILE: " << filename << std::endl;
+            if (type == 0)
+            {
+                m_current_output = new logPrint(out, m_object);
+                std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE LOG" << std::endl;
+            }
+            else if (type == 1)
+            {
+                m_current_output = new iterPrint(out, m_object);
+                std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE ITER" <<std::endl;
+            }
+            else if (type == 2)
+            {
+                double x_norm, y_norm;
+                fin >> x_norm >> y_norm;
+                m_current_output = new normLogPrint(out, m_object, x_norm, y_norm);
+                std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE NORM LOG" <<std::endl;
+            }
         }
 
     }
 
     void cSimulation::
+    set_time_step(std::ifstream & fin)
+    {
+        if (!m_global)
+            throw exception::BadCommand("Global constants not loaded.");
+        double dt;
+        fin >> dt;
+        m_global->s_dt(dt);
+        std::cout << ">>TIME STEP SET TO: " << dt << std::endl;
+    }
+
+    void cSimulation::
     run_by_transit(std::ifstream & fin)
     {
-        if (!m_object)
-        {
-            throw exception::BadCommand("Test Object not initialized.");
-        }
-
         double transit_cycles;
 
         fin >> transit_cycles;
         std::cout << ">>RUNING FOR " << transit_cycles << " TRANSIT CYCLES" << std::endl;
 
-        if (!current_output)
-        {
-            std::cout << "W>OUTPUT FILE NOT SET!" << std::endl;
-        }
-
-
-
         double transit_time = transitTime(*m_constants, *m_global);
-
-        uint64_t output_file_num = 100;
-
-        double interval = transit_cycles*transit_time/output_file_num;
-        double log_inc = 1.00001; //1 kas kiekvienà ciklà áraðyti.
-        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didþiuliai.
-
-        double log_cummulative = 1;
-        double last_time = 0;
-
-        uint64_t number = 0;
-
-        std::cout << "BEGIN" << std::endl;
         std::cout << "T_tr: " << transit_time << std::endl;
 
-        while (m_object->time() < transit_cycles*transit_time)
-        {
-            if (m_object->time() > number*interval)
-            {
-                #ifdef DUMP
-                std::ostringstream temp;
-                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_material(temp.str());
-                temp.str("");
-                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_field(temp.str());
-                #endif //DUMP
-                std::cout << "TIME: " << m_object->time() << '\t';
-                std::cout << "PERCENT: " << number*100.0/output_file_num << std::endl;
-                number ++;
-            }
-
-            //Logaritminë srovë
-            if (m_object->time() > last_time*log_cummulative)
-            {
-                m_object->fcurrent(*current_output);
-                log_cummulative *= log_inc;
-                last_time = m_object->time();
-            }
-
-            m_object->run();
-        }
+        do_until(m_object->time() + transit_time*transit_cycles);
 
     }
 
     void cSimulation::
     run_until(std::ifstream & fin)
     {
-        if (!m_object)
-        {
-            throw exception::BadCommand("Test Object not initialized.");
-        }
+        check_init();
 
         double end_time;
         fin >>end_time;
-        if (end_time < m_object->time())
-        {
-            std::cout << "E>END TIME PASSED" << std::endl;
-            return ;
-        }
 
-        //Jei tai pirmas kartas, tam kad laikas taptų == 0
-        if (m_object->time() < 0)
-        {
-            m_object->run();
-        }
-
-        double dt = m_global->dt();
-
-        double interval = (end_time-m_object->time())/100; //1/100 viso intervalo.
-        double log_inc = 1.00001; //1 kas kiekvienà ciklà áraðyti.
-        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didþiuliai.
-
-        double log_cummulative = 1;
-        double last_time = 0;
-
-        uint64_t number;
-        number = 0;
-
-        while (m_object->time() < end_time)
-        {
-            if (m_object->time() > number*interval)
-            {
-                #ifdef DUMP
-                std::ostringstream temp;
-                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_material(temp.str());
-                temp.str("");
-                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_field(temp.str());
-                #endif //DUMP
-                std::cout << "TIME: " << m_object->time() << '\t';
-                std::cout << "PERCENT: " << number << std::endl;
-                number ++;
-            }
-
-            //Logaritminë srovë
-            if (m_object->time() > last_time*log_cummulative)
-            {
-                m_object->fcurrent(*current_output);
-                log_cummulative *= log_inc;
-                last_time = m_object->time();
-            }
-
-            //Watching for the last step:
-            if (m_object->time() > end_time - m_global->dt())
-            {
-                //Decreasing the dt, to meet the time limit.
-                m_global->s_dt(end_time-m_object->time());
-            }
-
-            m_object->run();
-        }
-
-        //Making the last step:
-        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
-        //Returning dt to starting value:
-        m_global->s_dt(dt);
+        do_until(end_time);
 
     }
 
     void cSimulation::
     run_iter(std::ifstream & fin)
     {
-        if (!m_object)
-        {
-            throw exception::BadCommand("Test Object not initialized.");
-        }
+        check_init();
 
         uint64_t loop_count;
         fin >> loop_count;
 
-        uint64_t count = 0;
-
         std::cout << ">>RUNING FOR " << loop_count << " LOOPS" << std::endl;
 
-        while (count < loop_count)
+        for (uint64_t c; c < loop_count; c++)
         {
-            if (count % 10000 == 0)
-            {
-                #ifdef DUMP
-                static uint64_t number = 1;
-                std::ostringstream temp;
-                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_material(temp.str());
-                temp.str("");
-                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_field(temp.str());
-                number ++;
-                #endif //DUMP
-                std::cout << "TIME: " << m_object->time() << '\t';
-                std::cout << "PERCENT: " << count*100.0/loop_count <<std::endl;
-
-
-            }
-            count ++;
-            m_object->run();
-            m_object->fcurrent(*(current_output));
+            do_iter();
         }
     }
 
@@ -467,61 +374,27 @@ namespace DoI
     Kviečiama taip: CELIV pradinė_įtampa galinė_įtampa laikas
     */
     {
-        if (!m_global || !m_constants || !m_object)
-            throw exception::BadCommand("BAD INITIATION");
+        check_init();
 
         double s_voltage, e_voltage, end_time;
         fin >> s_voltage >> e_voltage >> end_time;
 
-
-
-        if (m_object->time() < 0)
-        {
-            m_global->s_U(s_voltage);
-            m_object->run();
-        }
+        statusFunction status(m_object->time(), end_time);
 
         //Įtampos linija U = a+b*t;
-        double b = (s_voltage-e_voltage)/(m_object->time()-end_time);
-        double a = s_voltage - b*m_object->time();
+        mathFunction * foo = \
+            new mathPositiveLine( \
+                s_voltage - (s_voltage-e_voltage)/(m_object->time()-end_time)*m_object->time(), \
+                (s_voltage-e_voltage)/(m_object->time()-end_time) \
+            );
+
+        std::cout << "BEGIN" << std::endl;
 
         double dt = m_global->dt();
 
-        double interval = (end_time-m_object->time())/100; //1/100 viso intervalo.
-        double log_inc = 1.00001; //1 kas kiekvieną ciklą árašyti.
-        //Pakankamas tikslumas 1.001, geras tikslumas 1.00001, na ir tobula 1, bet failai didžiuliai.
-
-        double log_cummulative = 1;
-        double last_time = 0;
-
-        uint64_t number;
-        number = 0;
-
         while (m_object->time() < end_time)
         {
-            if (m_object->time() > number*interval)
-            {
-                #ifdef DUMP
-                std::ostringstream temp;
-                temp << "dumps/material" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_material(temp.str());
-                temp.str("");
-                temp << "dumps/field" << std::setfill('0') << std::setw(3) << number << ".dat";
-                m_object->write_field(temp.str());
-                #endif //DUMP
-                std::cout << "TIME: " << m_object->time() << '\t';
-                std::cout << "PERCENT: " << number << std::endl;
-                number ++;
-            }
-
-            //Logaritminë srovë
-            if (m_object->time() > last_time*log_cummulative)
-            {
-                m_object->fcurrent(*current_output);
-                log_cummulative *= log_inc;
-                last_time = m_object->time();
-            }
-
+            status(m_object->time());
             //Watching for the last step:
             if (m_object->time() > end_time - m_global->dt())
             {
@@ -529,8 +402,8 @@ namespace DoI
                 m_global->s_dt(end_time-m_object->time());
             }
 
-            m_global->s_U(a+b*m_object->time());
-            m_object->run();
+            m_global->s_U(foo->Call(m_object->time()));
+            do_iter();
         }
 
         //Making the last step:
@@ -553,11 +426,84 @@ namespace DoI
         delete m_constants;
         delete m_global;
         delete m_object;
-        if (current_output != &(std::cout))
-        {
-            (*current_output).flush();
-            delete current_output;
-        }
+        delete m_current_output;
         std::cout << ">>END ...death of all electrons..." << std::endl;
+    }
+
+    //HELPERS
+    void cSimulation::
+    check_init()
+    {
+        if (!m_global)
+        {
+            throw exception::BadCommand("Global params not initialized.");
+        }
+        if (!m_constants)
+        {
+            throw exception::BadCommand("Constants not initialized.");
+        }
+        if (!m_object)
+        {
+            throw exception::BadCommand("Test Object not initialized.");
+        }
+        if (!m_current_output)
+        {
+            throw exception::BadCommand("Output file not initialized.");
+        }
+    }
+
+    void cSimulation::
+    do_iter()
+    {
+        //Makes 1 iteration, reports current to given function.
+        m_object->run();
+        m_current_output->Call();
+    }
+
+    void cSimulation::
+    do_until(double end_time)
+    {
+        statusFunction status(m_object->time(), end_time);
+
+        if (end_time < m_object->time())
+        {
+            std::cout << "E>END TIME PASSED" << std::endl;
+            return ;
+        }
+
+        std::cout << "BEGIN" << std::endl;
+
+        double dt = m_global->dt(); //Saving starting value
+
+        while (m_object->time() < end_time)
+        {
+            status(m_object->time());
+            //Watching for the last step:
+            if (m_object->time() > end_time - m_global->dt())
+            {
+                //Decreasing the dt, to meet the time limit.
+                m_global->s_dt(end_time-m_object->time());
+            }
+
+            do_iter();
+        }
+
+        //Making the last step:
+        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+        //Returning dt to starting value:
+        m_global->s_dt(dt);
+
+    }
+
+    bool cSimulation::
+    check_and_discard_comment(std::string & label, std::istream & fin)
+    {
+        if (label.at(0) == '#')
+        {
+            fin.ignore(2048, '\n');
+            label = "COMMENT";
+            return true;
+        }
+        else return false;
     }
 };

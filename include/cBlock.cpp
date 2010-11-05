@@ -17,6 +17,8 @@
  */
 #include "cBlock.h"
 
+#define ALLOWED 2
+
 namespace DoI
 {
 
@@ -125,7 +127,7 @@ namespace DoI
         /*
         double dc;
         dc = (interest - neighbour)* D * G->dt() / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
-        if (dc>interest/5)
+        if (dc>interest/ALLOWED)
             throw exception::TimeIntervalTooLarge(10, std::string("Diffusion ") + place);
         if (dc < C->c_MIN)
             dc = 0;
@@ -140,7 +142,7 @@ namespace DoI
 
         double dc;
         dc = miu * field * G->dt() / data.m_width * interest;
-        if (dc > interest/5)
+        if (dc > interest/ALLOWED)
             throw exception::TimeIntervalTooLarge(10, std::string("Drift ") + place);
         if (dc < C->c_MIN)
             dc = 0;
@@ -151,6 +153,7 @@ namespace DoI
 
     double recombine(const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
+/*
         double pairs;
         pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
         if ((pairs > data.m_n)||(pairs > data.m_p))
@@ -160,6 +163,8 @@ namespace DoI
             pairs = 0;
         }
         return pairs;
+*/
+        return 0;
     }
 
     /**cBlock**/
@@ -476,6 +481,32 @@ namespace DoI
     void cContact::
     extraction()
     {
+        //Pilna ekstrakcija iš paskutinio laukelio.
+        //Jei įtampa    +-    <0
+        //              -+    >0
+        // kai u = 0, nevyksta ekstrakcija.
+        if (m_G->U() < 0)
+        {
+            if (m_type == LEFT)
+            {
+                m_data.m_n = 0;
+            }
+            if (m_type == RIGHT)
+            {
+                m_data.m_p = 0;
+            }
+        }
+        else if (m_G->U() > 0)
+        {
+            if (m_type == LEFT)
+            {
+                m_data.m_p = 0;
+            }
+            if (m_type == RIGHT)
+            {
+                m_data.m_n = 0;
+            }
+        }
         return ;
     }
 

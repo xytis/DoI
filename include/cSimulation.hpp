@@ -30,8 +30,8 @@ namespace DoI {
             //viduryje simuliacijos ją pakeisti kita.
             cMaterial  * m_object;
 
-            //Stream'as į kurį saugoma srovė
-            std::ostream * current_output;
+            //Funkcija srovės print'ui
+            printFunction * m_current_output;
 
             void init();    //Funkcija susiejanti vardus su funkcijomis map'e
 
@@ -41,6 +41,7 @@ namespace DoI {
             void set_voltage(std::ifstream &);
             void set_contacts(std::ifstream &);
             void set_output(std::ifstream &);
+            void set_time_step(std::ifstream &);
 
             void create_object(std::ifstream &);
             void load_object(std::ifstream &);
@@ -58,6 +59,13 @@ namespace DoI {
 
             void pause(std::ifstream &);
             void end(std::ifstream &);
+
+            //HELPERS
+            void check_init();
+            void do_iter();
+            void do_until(double time);
+
+            bool check_and_discard_comment(std::string &, std::istream &);
 
         public:
             cSimulation();
