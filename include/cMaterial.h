@@ -139,7 +139,7 @@ namespace DoI
             double lastTime;
         public:
             iterPrint(std::ostream * n_out, cMaterial * n_object):
-            out(n_out), object(n_object), lastTime(0) {};
+            out(n_out), object(n_object), lastTime(n_object->time()) {};
             void operator()()
             {
                 if (object->time()>lastTime)
@@ -199,6 +199,44 @@ namespace DoI
             };
     };
 
+    class normIterPrint : public printFunction
+    {
+        private:
+            std::ostream * out;
+            cMaterial * object;
+            double lastTime;
+            double  x_norm;
+            double  y_norm;
+        public:
+            normIterPrint(std::ostream * n_out, cMaterial * n_object,
+                        double n_x_norm, double n_y_norm):
+            lastTime(n_object->time()),
+            x_norm(n_x_norm), y_norm(n_y_norm),
+            out(n_out), object(n_object) {};
+            void operator()()
+            {
+                if (object->time()>lastTime)
+                {
+                    object->fcurrent(*(out), x_norm, y_norm);
+                    lastTime = object->time();
+                }
+            };
+
+            void Call()
+            {
+                if (object->time()>lastTime)
+                {
+                    object->fcurrent(*(out), x_norm, y_norm);
+                    lastTime = object->time();
+                }
+            };
+
+            ~normIterPrint()
+            {
+                out->flush();
+            };
+    };
+
     class normLogPrint : public printFunction
     {
         private:
@@ -229,7 +267,6 @@ namespace DoI
                 callTimes++;
                 if (lastPrint * 2 <= callTimes)
                 {
-                    std::cout << 'a';
                     object->fcurrent((*out), x_norm, y_norm);
                     lastPrint *= 2;
                 }

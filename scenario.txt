@@ -3,21 +3,27 @@ LOAD_GLOBAL			global.txt
 
 CREATE_OBJECT
 # A = 1e4, normuojam á t_tr ir I_0
-SET_OUTPUT			foto_current.dat 2 6.26e-5 69.47e-12
+SET_OUTPUT			foto_current.dat 3 6.26e-5 694.7e-9
+#SET_OUTPUT			stable_current.dat 3 3.92e-6 1e-4
 
 SET_VOLTAGE			0
-SET_CONTACTS		2
+SET_CONTACTS		0
 
-PAUSE
+#PAUSE
 
 #injektuojame fotoinjekcijos bûdu
-FOTO_INJECTION		0.714e5	1e8	0
+#FOTO_INJECTION		0.714e5	1e10	0
+FOTO_INJECTION		0.714e9 1e10	0
 
 SAVE_OBJECT			foto_before.dat
 #uþlaikome krûvininkus bandinyje, kad parekombinuotø
 #STABLE				1e-4
+
 #iðtraukiame su celiv
 CELIV				0	5	5e-4
+
+#EKRS TESTAS
+#DOI					5	1e-5
 
 SAVE_OBJECT			foto_after.dat
 

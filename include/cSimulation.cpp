@@ -190,24 +190,32 @@ namespace DoI
         std::string filename;
         uint64_t type;
         fin >> filename >> type;
+        double x_norm, y_norm;
         if (filename == "cout")
         {
-            if (type == 0)
+            switch (type)
             {
-                m_current_output = new logPrint(&(std::cout), m_object);
-                std::cout << ">>SET OUTPUT TO STD::COUT TYPE LOG" << std::endl;
-            }
-            else if (type == 1)
-            {
-                m_current_output = new iterPrint(&(std::cout), m_object);
-                std::cout << ">>SET OUTPUT TO STD::COUT TYPE ITER" << std::endl;
-            }
-            else if (type == 2)
-            {
-                double x_norm, y_norm;
-                fin >> x_norm >> y_norm;
-                m_current_output = new normLogPrint(&(std::cout), m_object, x_norm, y_norm);
-                std::cout << ">>SET OUTPUT TO STD::COUT TYPE NORM LOG" << std::endl;
+                case 0:
+                    m_current_output = new logPrint(&(std::cout), m_object);
+                    std::cout << ">>SET OUTPUT TO STD::COUT TYPE LOG" << std::endl;
+                break;
+
+                case 1:
+                    m_current_output = new iterPrint(&(std::cout), m_object);
+                    std::cout << ">>SET OUTPUT TO STD::COUT TYPE ITER" << std::endl;
+                break;
+
+                case 2:
+                    fin >> x_norm >> y_norm;
+                    m_current_output = new normLogPrint(&(std::cout), m_object, x_norm, y_norm);
+                    std::cout << ">>SET OUTPUT TO STD::COUT TYPE NORM LOG" << std::endl;
+                break;
+
+                case 3:
+                    fin >> x_norm >> y_norm;
+                    m_current_output = new normIterPrint(&(std::cout), m_object, x_norm, y_norm);
+                    std::cout << ">>SET OUTPUT TO STD::COUT TYPE NORM ITER" << std::endl;
+                break;
             }
         }
         else
@@ -215,22 +223,29 @@ namespace DoI
             std::ofstream * out = new std::ofstream(filename.c_str());
             if (!out)
                 throw exception::FileMisingExeption(filename);
-            if (type == 0)
+            switch (type)
             {
-                m_current_output = new logPrint(out, m_object);
-                std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE LOG" << std::endl;
-            }
-            else if (type == 1)
-            {
-                m_current_output = new iterPrint(out, m_object);
-                std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE ITER" <<std::endl;
-            }
-            else if (type == 2)
-            {
-                double x_norm, y_norm;
-                fin >> x_norm >> y_norm;
-                m_current_output = new normLogPrint(out, m_object, x_norm, y_norm);
-                std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE NORM LOG" <<std::endl;
+                case 0:
+                    m_current_output = new logPrint(out, m_object);
+                    std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE LOG" << std::endl;
+                break;
+
+                case 1:
+                    m_current_output = new iterPrint(out, m_object);
+                    std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE ITER" <<std::endl;
+                break;
+
+                case 2:
+                    fin >> x_norm >> y_norm;
+                    m_current_output = new normLogPrint(out, m_object, x_norm, y_norm);
+                    std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE NORM LOG" <<std::endl;
+                break;
+
+                case 3:
+                    fin >> x_norm >> y_norm;
+                    m_current_output = new normIterPrint(out, m_object, x_norm, y_norm);
+                    std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE NORM ITER" <<std::endl;
+                break;
             }
         }
 
@@ -284,8 +299,9 @@ namespace DoI
 
         std::cout << ">>RUNING FOR " << loop_count << " LOOPS" << std::endl;
 
-        for (uint64_t c; c < loop_count; c++)
+        for (uint64_t c = 0; c < loop_count; c++)
         {
+            std::cout << c << std::endl;
             do_iter();
         }
     }

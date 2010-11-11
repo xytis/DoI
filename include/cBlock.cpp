@@ -17,7 +17,7 @@
  */
 #include "cBlock.h"
 
-#define ALLOWED 2
+#define ALLOWED 10
 
 namespace DoI
 {
@@ -124,7 +124,7 @@ namespace DoI
     double diffusion(const double & interest,const double & neighbour, const double & D,
                       const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
-        /*
+/*
         double dc;
         dc = (interest - neighbour)* D * G->dt() / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
         if (dc>interest/ALLOWED)
@@ -132,7 +132,7 @@ namespace DoI
         if (dc < C->c_MIN)
             dc = 0;
         return dc;
-        */
+*/
         return 0; //No diff
     }
 
@@ -157,7 +157,8 @@ namespace DoI
         double pairs;
         pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
         if ((pairs > data.m_n)||(pairs > data.m_p))
-            throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
+            //throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
+            pairs = data.m_n>data.m_p?data.m_p:data.m_n;
         if (pairs < C->c_MIN)
         {
             pairs = 0;
