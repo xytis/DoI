@@ -23,6 +23,7 @@
 
 #include "global.h"
 #include "cData.h"
+#include "cField.hpp"
 #include "cStatus.h"
 #include "cConstants.h"
 
@@ -36,42 +37,8 @@ namespace DoI
 
     class cData;
     class IBlock;
+    class cField;
 
-    class cField
-    {
-        private:
-            cField * m_next;
-            cField * m_prev;
-            IBlock * m_left;
-            IBlock * m_right;
-        public:
-            cField();
-
-            cField * next();
-            cField * prev();
-
-            void set_next(cField *);
-            void set_prev(cField *);
-            void attach_left(IBlock *);
-            void attach_right(IBlock *);
-
-
-            friend std::ostream & operator << (std::ostream &, cField &);
-            void iprint(std::ostream &); //Saviiteruojantis metodas.
-
-            double calculate(double); //Saviiteruojantis metodas
-            double integrate();
-            void force_raise(double);
-
-            //Tarpinis kintamasis dE
-            double dE;
-
-            double supE;
-            double infE;
-
-            //Kintamasis laukui saugoti
-            double E;
-    };
 
     class IBlock
     {
@@ -113,7 +80,7 @@ namespace DoI
             cField * m_E_next;
             cField * m_E_prev;
             cData    m_data;
-            //MOVED BUFER AREA TO m_data
+            //MOVED BUFFER AREA TO m_data
             //double   m_n_buffer;
             //double   m_p_buffer;
 
