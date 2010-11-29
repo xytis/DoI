@@ -240,8 +240,7 @@ namespace DoI
     class normLogPrint : public printFunction
     {
         private:
-            uint64_t callTimes;
-            uint64_t lastPrint;
+            double  nextTime;
             double  x_norm;
             double  y_norm;
             std::ostream * out;
@@ -249,26 +248,24 @@ namespace DoI
         public:
             normLogPrint(std::ostream * n_out, cMaterial * n_object,
                         double n_x_norm, double n_y_norm):
-            callTimes(0), lastPrint(1),
+            nextTime(n_object->time()),
             x_norm(n_x_norm), y_norm(n_y_norm),
             out(n_out), object(n_object) {};
             void operator()()
             {
-                callTimes++;
-                if (lastPrint * 2 <= callTimes)
+                if (object->time() > nextTime)
                 {
                     object->fcurrent((*out), x_norm, y_norm);
-                    lastPrint *= 2;
+                    nextTime = object->time()*1.01;
                 }
 
             };
             void Call()
             {
-                callTimes++;
-                if (lastPrint * 2 <= callTimes)
+                if (object->time() > nextTime)
                 {
                     object->fcurrent((*out), x_norm, y_norm);
-                    lastPrint *= 2;
+                    nextTime = object->time()*1.01;
                 }
             };
             ~normLogPrint()

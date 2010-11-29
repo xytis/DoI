@@ -3,8 +3,12 @@
 
 #include "cBlock.h"
 
+
+
 namespace DoI
 {
+    class IBlock;
+
     class cField
     {
         private:
