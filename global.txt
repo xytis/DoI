@@ -3,3 +3,5 @@ dt      1e-9
 width   1.4e-6
 contacts 0
 size    200
+n_cap	1e6
+p_cap	1e6

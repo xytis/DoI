@@ -35,21 +35,21 @@ namespace DoI
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
         //Šiuo atveju svarbu koks storio parametras duotas C.
-        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,0,0,0,G->width()/G->size()), C,G);
+        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,G->n_cap(),G->p_cap(),0,0,0,G->width()/G->size()), C,G);
         m_blockArray.push_back(temp);
 
         for (uint64_t i = 1; i < G->size()-1; i++)
         {
             E_temp = new cField();
             m_fieldArray.push_back(E_temp);
-            temp = new cBlock(cData(0,0,0,0,0,0,0,G->width()/G->size()) ,C,G);
+            temp = new cBlock(cData(0,0,0,0,G->n_cap(),G->p_cap(),0,0,0,G->width()/G->size()) ,C,G);
             m_blockArray.push_back(temp);
         }
 
         E_temp = new cField();
         m_fieldArray.push_back(E_temp);
 
-        temp = new cContact(RIGHT, cData(0,0,0,0,0,0,0,G->width()/G->size()) ,C,G);
+        temp = new cContact(RIGHT, cData(0,0,0,0,G->n_cap(),G->p_cap(),0,0,0,G->width()/G->size()) ,C,G);
         m_blockArray.push_back(temp);
 
         //Lauko yra 1 daugiau.
@@ -148,7 +148,7 @@ namespace DoI
         //Backup part
         for (uint64_t i = 0; i < size; i++)
         {
-            m_backupArray.push_back(cData(0,0,0,0,0,0,0,0));
+            m_backupArray.push_back(cData(0,0,0,0,0,0,0,0,0,0));
         }
         //Length part
         m_global->s_width(0);
@@ -509,7 +509,7 @@ namespace DoI
         //Reading time
         fin >> m_time;
         //Reading memory dump
-        cData temp(0,0,0,0,0,0,0,0);
+        cData temp(0,0,0,0,0,0,0,0,0,0);
         for (uint64_t i = 0; i < m_global->size(); i++)
         {
             fin >> temp;
@@ -567,7 +567,7 @@ namespace DoI
         //Make some changes =]
         for (uint64_t i = 0; i < m_global->size(); i++)
         {
-            m_blockArray.at(i)->write(cData(1,1,1,1,1,1,1,1));
+            m_blockArray.at(i)->write(cData(1,1,1,1,1,1,1,1,1,1));
         }
         report("after messing");
         restore();

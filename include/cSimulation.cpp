@@ -10,7 +10,7 @@ namespace DoI
     m_current_output(NULL)
     {
         //Sukuriame naują m_global
-        m_global = new cGlobal(0,0,0,(CONTACTS_TYPE)0,0,0,0);
+        m_global = new cGlobal(0,0,0,(CONTACTS_TYPE)0,0,0,0,0,0);
     }
 
     void cSimulation::
@@ -76,7 +76,7 @@ namespace DoI
             throw exception::FileMisingExeption(filename);
 
         //double beta, S, MIN, q, eps, eps0, k, T, n_miu, p_miu, n_D, p_D,  U, dt, width, timeout, size;
-        double S, MIN, q, eps, eps0, T, n_miu, p_miu;
+        double S, MIN, q, eps, eps0, T, n_miu, p_miu, k_glue;
         std::string id;
         std::string none;
 
@@ -92,13 +92,14 @@ namespace DoI
         cfile >> id >> p_miu;
         cfile >> id >> none;
         cfile >> id >> none;
+        cfile >> id >> k_glue;
 
         cfile.close();
 
         if (m_constants != NULL)
             delete m_constants;
 
-        m_constants = new cConstants(recombinationConst(q, n_miu, p_miu, eps, eps0),
+        m_constants = new cConstants(   recombinationConst(q, n_miu, p_miu, eps, eps0),
                                         S,
                                         MIN,
                                         q,
@@ -109,7 +110,8 @@ namespace DoI
                                         n_miu,
                                         p_miu,
                                         diffusionConst(T, n_miu, q),
-                                        diffusionConst(T, p_miu, q));
+                                        diffusionConst(T, p_miu, q),
+                                        k_glue );
 
         std::cout << ">>LOADED CONSTANTS FROM FILE: " << filename << std::endl;
         std::cout << *m_constants << std::endl;
@@ -130,6 +132,8 @@ namespace DoI
         double width;
         uint64_t type;
         uint64_t size;
+        double n_cap;
+        double p_cap;
 
         std::string id;
         gfile >> id >> U;
@@ -137,13 +141,15 @@ namespace DoI
         gfile >> id >> width;
         gfile >> id >> type;
         gfile >> id >> size;
+        gfile >> id >> n_cap;
+        gfile >> id >> p_cap;
 
         gfile.close();
 
         if (m_global)
             delete m_global;
 
-        m_global = new cGlobal(U, dt, width, (CONTACTS_TYPE)type, 0, 0, size);
+        m_global = new cGlobal(U, dt, width, (CONTACTS_TYPE)type, 0, 0, size, n_cap, p_cap);
         std::cout << ">>LOADED GLOBALS FROM FILE: " << filename << std::endl;
         std::cout << *m_global << std::endl;
     }
@@ -245,6 +251,15 @@ namespace DoI
                     fin >> x_norm >> y_norm;
                     m_current_output = new normIterPrint(out, m_object, x_norm, y_norm);
                     std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE NORM ITER" <<std::endl;
+                break;
+
+                case 4:
+                    std::string tl;
+                    fin >> tl >> x_norm >> y_norm;
+                    std::ofstream * cumul = new std::ofstream(tl.c_str(), std::ios::app);
+                    (*cumul) << "MAX FROM " << filename << std::endl;
+                    m_current_output = new cumulPrint(out, cumul, m_object, x_norm, y_norm);
+                    std::cout << ">>SET OUTPUT TO FILE: " << filename << " TYPE APP" <<std::endl;
                 break;
             }
         }

@@ -16,6 +16,7 @@ namespace DoI
         out << "Diffusion n\t\t:\t" << C.c_n_D << std::endl;
         out << "Diffusion p\t\t:\t" << C.c_p_D << std::endl;
         out << "Recombination Beta\t:\t" << C.c_beta << std::endl;
+        out << "Prilipimo konstanta\t:\t" << C.c_k_glue << std::endl;
         return out;
     }
 
@@ -37,6 +38,8 @@ namespace DoI
         out << "timeout\t\t\t:\t" << G.timeout() << std::endl;
         out << "time_depth\t\t:\t" << G.time_depth() << std::endl;
         out << "Padalinimų sk.\t\t:\t" << G.size() << std::endl;
+        out << "N talpa\t\t\t:\t" << G.n_cap() << std::endl;
+        out << "P talpa\t\t\t:\t" << G.p_cap() << std::endl;
         return out;
     }
 

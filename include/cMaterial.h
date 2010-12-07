@@ -131,6 +131,66 @@ namespace DoI
             virtual void Call() = 0;       // call using function
     };
 
+    class cumulPrint : public printFunction
+    {
+        private:
+            double  nextTime;
+            double  x_norm;
+            double  y_norm;
+            double  last_current;
+            double  last_delta;
+            std::ostream * out;
+            std::ostream * cumul;
+            cMaterial * object;
+        public:
+            cumulPrint(std::ostream * n_out, std::ostream * n_cumul, cMaterial * n_object,
+                        double n_x_norm, double n_y_norm):
+            nextTime(n_object->time()),
+            x_norm(n_x_norm), y_norm(n_y_norm),
+            last_current(n_object->current()), last_delta(0),
+            out(n_out), cumul(n_cumul), object(n_object) {};
+            void operator()()
+            {
+                double delta = object->current() - last_current;
+                //(*cumul) << delta << std::endl;
+                if (((delta > 0) && (last_delta < 0))||((delta < 0) && (last_delta > 0)))
+                {
+                    object->fcurrent((*cumul), x_norm, y_norm);
+                }
+
+                last_delta = delta;
+                last_current = object->current();
+                if (object->time() > nextTime)
+                {
+                    object->fcurrent((*out), x_norm, y_norm);
+                    nextTime = object->time()*1.01;
+                }
+
+            };
+            void Call()
+            {
+                double delta = object->current() - last_current;
+                //(*cumul) << delta << std::endl;
+                if (((delta > 0) && (last_delta < 0))||((delta < 0) && (last_delta > 0)))
+                {
+                    object->fcurrent((*cumul), x_norm, y_norm);
+                }
+
+                last_delta = object->current() - last_current;
+                last_current = object->current();
+                if (object->time() > nextTime)
+                {
+                    object->fcurrent((*out), x_norm, y_norm);
+                    nextTime = object->time()*1.01;
+                }
+            };
+            ~cumulPrint()
+            {
+                out->flush();
+            };
+
+    };
+
     class iterPrint : public printFunction
     {
         private:
@@ -167,30 +227,27 @@ namespace DoI
     class logPrint : public printFunction
     {
         private:
-            uint64_t callTimes;
-            uint64_t lastPrint;
+            double  nextTime;
             std::ostream * out;
             cMaterial * object;
         public:
             logPrint(std::ostream * n_out, cMaterial * n_object):
-            callTimes(0), lastPrint(1), out(n_out), object(n_object) {};
+            nextTime(n_object->time()), out(n_out), object(n_object) {};
             void operator()()
             {
-                callTimes++;
-                if (lastPrint * 2 <= callTimes)
+                if (object->time() > nextTime)
                 {
                     object->fcurrent((*out));
-                    lastPrint *= 2;
+                    nextTime = object->time()*1.01;
                 }
 
             };
             void Call()
             {
-                callTimes++;
-                if (lastPrint * 2 <= callTimes)
+                if (object->time() > nextTime)
                 {
                     object->fcurrent((*out));
-                    lastPrint *= 2;
+                    nextTime = object->time()*1.01;
                 }
             };
             ~logPrint()

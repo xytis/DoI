@@ -134,7 +134,7 @@ namespace DoI
             dc = 0;
         return dc;
 
-        //return 0; //No diff
+        return 0; //No diff
     }
 
     double drift(const double & interest, const double & field, const double & miu,
@@ -149,11 +149,12 @@ namespace DoI
             dc = 0;
         return dc;
 
-        //return 0;   //no drift
+        return 0;   //no drift
     }
 
     double recombine(const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
+
         double pairs;
         pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
         if ((pairs > data.m_n)||(pairs > data.m_p))
@@ -164,6 +165,30 @@ namespace DoI
             pairs = 0;
         }
         return pairs;
+
+        return 0;
+    }
+
+    double  glue(const cConstants * C, cGlobal * G, const cData & data, double particles, double free_space)
+    {
+        if (free_space<0)
+            free_space = 0;
+        double d = C->c_k_glue * particles * free_space / (C->c_S * data.m_width);
+        if (d > free_space)
+            d = free_space;
+        if (d > particles)
+            d = particles;
+        if (d < 0)
+            d = 0;
+
+        //return 0;
+
+        return d;
+    }
+
+    double  unglue()
+    {
+        return 0;
     }
 
     /**cBlock**/
@@ -240,7 +265,12 @@ namespace DoI
     void cBlock::
     glue_unglue()
     {
-        //TODO: wtf???
+        double n = glue(m_C, m_G, m_data, m_data.m_n, m_data.m_n_capacity-m_data.m_n_stuck);
+        double p = glue(m_C, m_G, m_data, m_data.m_p, m_data.m_p_capacity-m_data.m_p_stuck);
+        m_data.m_n -= n;
+        m_data.m_n_stuck += n;
+        m_data.m_p -= p;
+        m_data.m_p_stuck += p;
     }
 
     void cBlock::
@@ -520,7 +550,12 @@ namespace DoI
     void cContact::
     glue_unglue()
     {
-        //TODO: wtf???
+        double n = glue(m_C, m_G, m_data, m_data.m_n, m_data.m_n_capacity-m_data.m_n_stuck);
+        double p = glue(m_C, m_G, m_data, m_data.m_p, m_data.m_p_capacity-m_data.m_p_stuck);
+        m_data.m_n -= n;
+        m_data.m_n_stuck += n;
+        m_data.m_p -= p;
+        m_data.m_p_stuck += p;
     }
 
     void cContact::

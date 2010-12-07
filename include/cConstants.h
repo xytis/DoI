@@ -27,9 +27,11 @@ namespace DoI
             const double c_p_miu;
             const double c_n_D;
             const double c_p_D;
+            const double c_k_glue;
+
 
             cConstants(double beta, double S, double MIN, double q, double eps, double eps0,
-                       double k, double T, double n_miu, double p_miu, double n_D, double p_D):
+                       double k, double T, double n_miu, double p_miu, double n_D, double p_D, double k_glue):
                 c_beta(beta),
                 c_S(S),
                 c_MIN(MIN),
@@ -41,7 +43,8 @@ namespace DoI
                 c_n_miu(n_miu),
                 c_p_miu(p_miu),
                 c_n_D(n_D),
-                c_p_D(p_D)
+                c_p_D(p_D),
+                c_k_glue(k_glue)
             {
 
             }
@@ -67,16 +70,20 @@ namespace DoI
             int           m_timeout;
             int           m_time_depth;         //Naudojamas nustatyti kiek kartų laikas buvo sumažintas.
             uint64_t      m_size;
+            double        m_n_cap;
+            double        m_p_cap;
         public:
             cGlobal (double U, double dt, double width, CONTACTS_TYPE type,
-                    int timeout, int time_depth, uint64_t size):
+                    int timeout, int time_depth, uint64_t size, double n_cap, double p_cap):
             m_U(U),
             m_dt(dt),
             m_width(width),
             m_contacts_type(type),
             m_timeout(timeout),
             m_time_depth(time_depth),
-            m_size(size)
+            m_size(size),
+            m_n_cap(n_cap),
+            m_p_cap(p_cap)
             {};
 
             double        U() { return m_U; };
@@ -86,6 +93,8 @@ namespace DoI
             int           timeout() { return m_timeout; };
             int           time_depth() { return m_time_depth; };
             uint64_t      size() { return m_size; };
+            double        n_cap() { return m_n_cap;};
+            double        p_cap() { return m_p_cap;};
 
             void          s_U(double n_U) { m_U = n_U; };
             void          s_dt(double n_dt) { m_dt = n_dt; };

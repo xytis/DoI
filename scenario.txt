@@ -3,7 +3,8 @@ LOAD_GLOBAL			global.txt
 
 CREATE_OBJECT
 # A = 1e4, normuojam á t_tr ir I_0
-SET_OUTPUT			current6.dat 3 6.26e-5 694.7e-9
+SET_OUTPUT      jL1000a100miu100.dat 2 6.26e-4 694.7e-7
+#SET_OUTPUT			jL1000a0.1.dat 4 max.dat 6.26e-5 694.7e-9
 #SET_OUTPUT			stable_current.dat 3 3.92e-6 1e-4
 
 SET_VOLTAGE			0
@@ -13,14 +14,17 @@ SET_CONTACTS		0
 
 #injektuojame fotoinjekcijos būdu
 #FOTO_INJECTION		0.714e5	1e10	0
-FOTO_INJECTION		0.714e9 1e10	0
+FOTO_INJECTION		0.714e7 1e10	0
 
 SAVE_OBJECT			foto_before.dat
 #užlaikome krūvininkus bandinyje, kad parekombinuotų
 #STABLE				1e-4
 
+SET_VOLTAGE			5
+RUN_ITER			5000
+
 #ištraukiame su celiv
-CELIV				0	5	5e-4
+#CELIV				0	5	5e-7
 
 #EKRS TESTAS
 #DOI					5	1e-5
