@@ -6,7 +6,7 @@ eps     3.5
 eps0    8.85e-12
 k       none
 T       273
-n_miu   1e-5
+n_miu   1e-7
 p_miu   0
 n_D     none
 p_D     none
