@@ -132,7 +132,7 @@ namespace DoI
             throw exception::TimeIntervalTooLarge(10, std::string("Diffusion ") + place);
         if (dc < C->c_MIN)
             dc = 0;
-        return dc;
+        //return dc;
 
         return 0; //No diff
     }
@@ -156,7 +156,7 @@ namespace DoI
     {
 
         double pairs;
-        pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
+        pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width /10;
         if ((pairs > data.m_n)||(pairs > data.m_p))
             //throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
             pairs = data.m_n>data.m_p?data.m_p:data.m_n;
@@ -186,7 +186,7 @@ namespace DoI
         return d;
     }
 
-    double  unglue()
+    double  unglue(const cConstants * C, cGlobal * G, const cData & data)
     {
         return 0;
     }

@@ -2,27 +2,15 @@ LOAD_CONSTANTS		DoIconst.txt
 LOAD_GLOBAL			global.txt
 
 CREATE_OBJECT
-SET_OUTPUT      		testGlue.dat 0
+SET_OUTPUT      		doi5N7_k22Glue.dat 2 1e-8 1
 
-SET_VOLTAGE			0
-SET_CONTACTS			0
+SET_VOLTAGE			5
+SET_CONTACTS			1
 
 #PAUSE
 
-#injektuojame fotoinjekcijos būdu
-#FOTO_INJECTION		0.714e5	1e10	0
-FOTO_INJECTION		0.714e7 1e10	0
+DOI					1	1e-6
 
-#SAVE_OBJECT			foto_before.dat
-#užlaikome krūvininkus bandinyje, kad parekombinuotų
-#STABLE				1e-4
-
-#ištraukiame su celiv
-CELIV				0	5	5e-5
-
-#EKRS TESTAS
-#DOI					5	1e-5
-
-SAVE_OBJECT			glue_after.dat
+SAVE_OBJECT			doi_after.dat
 
 END
