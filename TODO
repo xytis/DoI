@@ -3,5 +3,8 @@
 
 Padaryti programoje:
 1.	Prilipimo įskaičiavimas
+Started:
+  Prilipimas skaičiuojamas, priklauso nuo talpos. Gali įvykti pilnas talpos
+  užsipildymas vienu žingsniu.
 2.*	Perkelti normavimo funkcijas į skaičiavimo mechanizmą.
 3.	Pertvarkyti visus skaičiavimų if į funkcijų adresus.

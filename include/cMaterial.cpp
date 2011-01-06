@@ -35,21 +35,21 @@ namespace DoI
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
         //Šiuo atveju svarbu koks storio parametras duotas C.
-        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,G->n_cap(),G->p_cap(),0,0,0,G->width()/G->size()), C,G);
+        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,G->n_cap()/G->size(),G->p_cap()/G->size(),0,0,0,G->width()/G->size()), C,G);
         m_blockArray.push_back(temp);
 
         for (uint64_t i = 1; i < G->size()-1; i++)
         {
             E_temp = new cField();
             m_fieldArray.push_back(E_temp);
-            temp = new cBlock(cData(0,0,0,0,G->n_cap(),G->p_cap(),0,0,0,G->width()/G->size()) ,C,G);
+            temp = new cBlock(cData(0,0,0,0,G->n_cap()/G->size(),G->p_cap()/G->size(),0,0,0,G->width()/G->size()) ,C,G);
             m_blockArray.push_back(temp);
         }
 
         E_temp = new cField();
         m_fieldArray.push_back(E_temp);
 
-        temp = new cContact(RIGHT, cData(0,0,0,0,G->n_cap(),G->p_cap(),0,0,0,G->width()/G->size()) ,C,G);
+        temp = new cContact(RIGHT, cData(0,0,0,0,G->n_cap()/G->size(),G->p_cap()/G->size(),0,0,0,G->width()/G->size()) ,C,G);
         m_blockArray.push_back(temp);
 
         //Lauko yra 1 daugiau.

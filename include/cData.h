@@ -31,6 +31,7 @@ namespace DoI
         public:
             double  m_n;            //active carriers
             double  m_p;
+
             double  m_n_stuck;      //stuck carriers
             double  m_p_stuck;
             double  m_n_capacity;
