@@ -23,6 +23,8 @@ namespace DoI
         if (!fin)
             throw exception::FileMisingExeption(filename);
 
+        std::cout << ">>DOING SIMULATION FROM FILE: " << filename << std::endl;
+
         //Parse ZE file
         std::string label="";
         void (cSimulation::*function)        (std::ifstream &);

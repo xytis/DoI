@@ -125,7 +125,7 @@ namespace DoI
     double diffusion(const double & interest,const double & neighbour, const double & D,
                       const cConstants * C, cGlobal * G, const cData & data, std::string place)
     {
-
+/*
         double dc;
         dc = (interest - neighbour)* D * G->dt() / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
         if (dc>interest/ALLOWED)
@@ -133,7 +133,7 @@ namespace DoI
         if (dc < C->c_MIN)
             dc = 0;
         //return dc;
-
+*/
         return 0; //No diff
     }
 
@@ -149,7 +149,7 @@ namespace DoI
             dc = 0;
         return dc;
 
-        return 0;   //no drift
+        //return 0;   //no drift
     }
 
     double recombine(const cConstants * C, cGlobal * G, const cData & data, std::string place)
@@ -166,11 +166,12 @@ namespace DoI
         }
         return pairs;
 
-        return 0;
+        //return 0;
     }
 
     double  glue(const cConstants * C, cGlobal * G, const cData & data, double particles, double free_space)
     {
+   /*
         if (free_space<0)
             free_space = 0;
         double d = C->c_k_glue * particles * free_space / (C->c_S * data.m_width);
@@ -180,10 +181,9 @@ namespace DoI
             d = particles;
         if (d < 0)
             d = 0;
-
-        //return 0;
-
         return d;
+*/
+        return 0;
     }
 
     double  unglue(const cConstants * C, cGlobal * G, const cData & data)

@@ -17,7 +17,15 @@ int main(int argc, char * argv[])
 {
     cSimulation sim;
     try {
-        sim.read_n_execute("scenario.txt");
+        if (argc>1)
+        {
+            std::string filename(argv[1]);
+            sim.read_n_execute(filename);
+        }
+        else
+        {
+            sim.read_n_execute("scenario.txt");
+        }
     }
     catch (exception::FileMisingExeption & e)
     {
