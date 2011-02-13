@@ -29,12 +29,6 @@
 
 namespace DoI
 {
-    enum eStatus
-    {
-        OK,
-        WRONG
-    };
-
     class cData;
     class IBlock;
     class cField;
@@ -60,7 +54,7 @@ namespace DoI
             virtual     void            receive(const double &, const double &) = 0;
             virtual const cData &       read() = 0;
             virtual const cData &       write(const cData &) = 0;
-            virtual const eStatus       check() = 0;
+            //virtual const eStatus       check() = 0;
             virtual const double        current() = 0;
 
     };
@@ -111,7 +105,7 @@ namespace DoI
             virtual     void            receive(const double &, const double &);
             virtual const cData &       read();
             virtual const cData &       write(const cData &);
-            virtual const eStatus       check();
+            //virtual const eStatus       check();
             virtual const double       current();
     };
 
@@ -157,7 +151,7 @@ namespace DoI
             virtual     void            receive(const double &, const double &);
             virtual const cData &       read();
             virtual const cData &       write(const cData &);
-            virtual const eStatus       check();
+            //virtual const eStatus       check();
             virtual const double       current();
     };
 

@@ -331,7 +331,7 @@ namespace DoI
     //This one makes things happen
     {
         try {
-            backup();   //Saves current state !!!THE BUFFER IS NOT SAVED
+            backup();   //Saves current state !!!THE BUFFER IS NOT SAVED (buffer moved to cData. Thus, it's saved)
             clock_tick(); //Advances the clock
             flush();    //Flushes the buffered particles
             calc();     //Makes the calculations, fills the buffers
@@ -372,6 +372,7 @@ namespace DoI
         {
             m_global->s_dt(m_global->dt() * 10);
             m_global->s_time_depth(m_global->time_depth() - 1);
+            m_global->s_timeout(1);
         }
     }
 

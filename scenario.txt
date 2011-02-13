@@ -4,13 +4,26 @@ LOAD_GLOBAL			global.txt
 CREATE_OBJECT
 SET_OUTPUT      		doi5N7_k22Glue.dat 2 1e-8 1
 
-SET_VOLTAGE			5
+SET_VOLTAGE			0
 SET_CONTACTS			1
 
 #PAUSE
 
-DOI					1	1e-6
-
-SAVE_OBJECT			doi_after.dat
+#injektuojame fotoinjekcijos būdu
+#FOTO_INJECTION     0.714e5 1e10    0
+FOTO_INJECTION      1e6 1e14    0
+SAVE_OBJECT	debug.dump
+PAUSE
+RUN_ITER 1
+SAVE_OBJECT	debug.dump
+PAUSE
+SET_VOLTAGE			1e-7
+RUN_ITER 1
+SAVE_OBJECT	debug.dump
+PAUSE
+SET_VOLTAGE			2e-7
+RUN_ITER 1
+SAVE_OBJECT	debug.dump
+PAUSE
 
 END

@@ -156,10 +156,10 @@ namespace DoI
     {
 
         double pairs;
-        pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width /10;
-        if ((pairs > data.m_n)||(pairs > data.m_p))
-            //throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
-            pairs = data.m_n>data.m_p?data.m_p:data.m_n;
+        pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
+        if ((pairs > data.m_n/ALLOWED)||(pairs > data.m_p/ALLOWED))
+            throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
+            //pairs = data.m_n>data.m_p?data.m_p:data.m_n;
         if (pairs < C->c_MIN)
         {
             pairs = 0;
@@ -378,13 +378,13 @@ namespace DoI
         m_data = data;
         return m_data;
     }
-
+/*
     const eStatus cBlock::
     check()
     {
         return OK;
     }
-
+*/
     const double cBlock::
     current()
     {
@@ -680,13 +680,13 @@ namespace DoI
         m_data = data;
         return m_data;
     }
-
+/*
     const eStatus cContact::
     check()
     {
         return OK;
     }
-
+*/
     const double cContact::
     current()
     {
