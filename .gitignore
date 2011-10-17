@@ -1,7 +1,9 @@
 #Git ignore file
 bin/
 obj/
-dumps/
+*.layout
+*.depend
+
 *.save
 moc_*
 *.dat

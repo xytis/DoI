@@ -132,7 +132,7 @@ namespace DoI
             throw exception::TimeIntervalTooLarge(10, std::string("Diffusion ") + place);
         if (dc < C->c_MIN)
             dc = 0;
-        //return dc;
+        return dc;
 */
         return 0; //No diff
     }
