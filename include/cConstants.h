@@ -8,7 +8,7 @@
 
 
 #include "global.h"
-#include "CExeptions.h"
+#include "cExeptions.h"
 
 namespace DoI
 {

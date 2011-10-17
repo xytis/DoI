@@ -1,20 +1,22 @@
 #ifndef CSIMULATION_HPP_INCLUDED
 #define CSIMULATION_HPP_INCLUDED
 
-#include "CExeptions.h"
+#include "cExeptions.h"
 #include "cConstants.h"
 #include "cMaterial.h"
 #include "tFunctors.hpp"
+#include "cPrinter.h"
 
 #include <map>
 #include <string>
 #include <iostream>
 
 namespace DoI {
+    /** Main simulation executive class.
+    Controls constant clases, output classes, parsing of scenario file.
+    */
     class cSimulation {
-        /** Ði klasë turi valdyti simuliacijà, leisti prijungti gui,
-        scenarijø vykdymas irgi jos rûpestis.
-        */
+
         private:
             //Konstantų klasė, joje vertės nekinta per amžių.
             //Tačiau pati klasė gali būti pakeista kita klase.
@@ -31,7 +33,7 @@ namespace DoI {
             cMaterial  * m_object;
 
             //Funkcija srovės print'ui
-            printFunction * m_current_output;
+            cPrinter * m_current_output;
 
             void init();    //Funkcija susiejanti vardus su funkcijomis map'e
 

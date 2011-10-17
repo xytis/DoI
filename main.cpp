@@ -5,9 +5,9 @@
 #include "include/cMaterial.h"
 #include "include/cConstants.h"
 #include "include/cData.h"
-#include "include/tFunctors.hpp"
+#include "include/tFunctors.h"
 
-#include "include/cSimulation.hpp"
+#include "include/cSimulation.h"
 
 //#define DUMP
 
@@ -15,16 +15,16 @@ using namespace DoI;
 
 int main(int argc, char * argv[])
 {
-    cSimulation sim;
+    cSimulation * sim = new cSimulation();
     try {
         if (argc>1)
         {
             std::string filename(argv[1]);
-            sim.read_n_execute(filename);
+            sim->read_n_execute(filename);
         }
         else
         {
-            sim.read_n_execute("scenario.txt");
+            sim->read_n_execute("scenario.txt");
         }
     }
     catch (exception::FileMisingExeption & e)
