@@ -44,7 +44,6 @@
 		<Unit filename="include/cSimulation.cpp" />
 		<Unit filename="include/cSimulation.hpp" />
 		<Unit filename="include/global.h" />
-		<Unit filename="include/gui/gui.ui" />
 		<Unit filename="include/tFunctors.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
