@@ -1,0 +1,47 @@
+SIMULATION
+
+ENVIRONMENT
+INCLUDE "config/const.txt"
+TIME_STEP 1e-9
+SPACE_DIVISION 200
+WIDTH 1e-6
+CONTACTS BLOCKING
+cap_n 0
+cap_p 0
+END
+
+PRINTER
+INCLUDE "config/printer.txt"
+TYPE LOG 2
+#TYPE LINEAR 1000
+#TYPE TIMER 1e-10
+MODE CURRENT
+#MODE DUMP
+#WILDCARD ON
+#REWRITE ON
+FILENAME "replace.txt"
+#FILENAME "wildcard_*_test.txt"
+#FILENAME "wildcard_not_here.txt"
+END
+
+MATERIAL
+PARAMETER L_0 = 10
+PARAMETER alpha = 0.1
+FUNCTION f(x) = L_0 * exp(-x*alpha)
+FUNCTION g(x) = (1 + 2 * 3 - 4 / 5 )^2
+
+INITIAL f(x)
+END
+
+#Will be documented (maybe)
+SCENARIO
+#RUN name t_begin t_end other params
+PARAMETER A = 1e4
+FUNCTION transit_time() = 5*5*5
+FUNCTION end_time() = 5*transit_time()
+RUN CELIV 0 end_time() A
+#RUN DOI
+#RUN EKRS
+#RUN STABLE end_time() end_time()
+
+END

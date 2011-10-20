@@ -44,6 +44,6 @@ namespace DoI
             //Kintamasis laukui saugoti
             double E;
     };
-};
+}
 
 #endif //CFIELD_HPP_INCLUDED

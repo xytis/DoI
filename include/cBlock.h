@@ -22,17 +22,19 @@
 #include <cassert>
 
 #include "global.h"
+
+#include "physics.h"
 #include "cData.h"
 #include "cField.h"
 #include "cStatus.h"
 #include "cConstants.h"
+#include "cEnvironment.h"
 
 namespace DoI
 {
     class cData;
     class IBlock;
     class cField;
-
 
     class IBlock
     {
@@ -59,13 +61,6 @@ namespace DoI
 
     };
 
-    // Formulaes
-    double drift(const double &, const double &, const double &,
-                 const cConstants *, const cGlobal *, const cData &, std::string);
-    double diffusion(const double &, const double &, const double &,
-                     const cConstants *, const cGlobal *, const cData &, std::string);
-    double recombine(const cConstants *, const cGlobal *, const cData &, std::string);
-
     class cBlock : public IBlock
     {
         private:
@@ -74,22 +69,17 @@ namespace DoI
             cField * m_E_next;
             cField * m_E_prev;
             cData    m_data;
-            //MOVED BUFFER AREA TO m_data
-            //double   m_n_buffer;
-            //double   m_p_buffer;
 
             double m_current;
 
             cConstants * m_C;
-            cGlobal * m_G;
+            cEnvironment * m_G;
 
             void recombination();
             void glue_unglue();
 
-
-
         public:
-            cBlock(const cData &, cConstants *, cGlobal *);
+            cBlock(const cData &, cConstants *, cEnvironment *);
             virtual     IBlock *        next();
             virtual     IBlock *        prev();
             virtual     cField *        E_next();
@@ -127,7 +117,7 @@ namespace DoI
             //double   m_p_buffer;
             double  m_current;
             cConstants * m_C;
-            cGlobal * m_G;
+            cEnvironment * m_G;
 
             void injection();
             void extraction();
@@ -135,7 +125,7 @@ namespace DoI
             void glue_unglue();
 
         public:
-            cContact(eContactType, const cData &, cConstants *, cGlobal *);
+            cContact(eContactType, const cData &, cConstants *, cEnvironment *);
             virtual     IBlock *        next();
             virtual     IBlock *        prev();
             virtual     cField *        E_next();
@@ -155,6 +145,6 @@ namespace DoI
             virtual const double       current();
     };
 
-};
+}
 
 #endif // CBLOCK_H_INCLUDED

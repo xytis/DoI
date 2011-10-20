@@ -33,6 +33,7 @@
 #include "cBlock.h"
 #include "cData.h"
 #include "cExeptions.h"
+#include "cEnvironment.h"
 #include "tFunctors.h"
 
 namespace DoI
@@ -45,6 +46,10 @@ namespace DoI
         double current;
     };
 
+    class IBlock;
+    class cField;
+    class cEnvironment;
+
     class cMaterial
     {
         private:
@@ -54,8 +59,7 @@ namespace DoI
             //Pagalbinis duomenų masyvas, be link'ų
             std::vector<cData> m_backupArray;
 
-            cConstants * m_constants;
-            cGlobal * m_global;
+            cEnvironment * m_environment;
 
             //Laiko kintamieji
             double m_time;
@@ -85,9 +89,9 @@ namespace DoI
 
         public:
             //Konstruktoriai
-            cMaterial(cConstants *, cGlobal *);
-            cMaterial(cConstants *, cGlobal *, const uint64_t & size, const cData & first, const cData & other, const cData & last);
-            cMaterial(cConstants *, cGlobal *, std::vector<cData> &);
+            cMaterial(cEnvironment *);
+            cMaterial(cEnvironment *, const uint64_t & size, const cData & first, const cData & other, const cData & last);
+            cMaterial(cEnvironment *, std::vector<cData> &);
 
             //Funkcija leidžianti įvairiai užpildyti medžiagą dalelėmis
             void fill(mathFunction *, mathFunction *);
@@ -102,7 +106,7 @@ namespace DoI
             void stats(sSnapshot &);
             void fcurrent(std::ostream & out = std::cout, double x_norm = 1, double y_norm = 1);
 
-            //Pasiunčia visą duomenų masyvą lauk į failą (id::string)
+            //Pasiunčia visą duomenų masyvą lauk į failą (std::string)
             void write_material(std::string);
             void write_field(std::string);
             //Parsigabeną visą duomenų masyvą iš formatuoto failo.
@@ -123,6 +127,6 @@ namespace DoI
             void check_run();
             #endif //DEBUG
     };
-};
+}
 
 #endif // CMATERIAL_H_INCLUDED

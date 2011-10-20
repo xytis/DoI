@@ -21,8 +21,6 @@
 #include <iostream>
 
 #include "global.h"
-#include "cBlock.h"
-
 
 namespace DoI
 {
@@ -83,7 +81,7 @@ namespace DoI
                 m_n_buffer(copy.m_n_buffer), m_p_buffer(copy.m_p_buffer),
                 m_width(copy.m_width) {};
     };
-};
+}
 
 
 #endif // CDATA_H_INCLUDED

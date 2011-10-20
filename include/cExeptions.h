@@ -47,6 +47,19 @@ namespace DoI
                 ~FileMisingExeption () throw () {}
         };
 
+        class NoObject: public std::exception
+        {
+            public:
+                NoObject() throw()
+                {
+                }
+                const char* what() const throw()
+                {
+                    return "Parser failed to create an object!";
+                }
+                ~NoObject () throw () {}
+        };
+
         class TimeIntervalTooLarge: public std::exception
         {
             private:
@@ -157,7 +170,7 @@ namespace DoI
                 ~FileBadVersionExeption () throw () {}
         };
     };
-};
+}
 
 
 #endif // CEXEPTIONS_H_INCLUDED

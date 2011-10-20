@@ -1,4 +1,21 @@
-#include "cConstants.h"
+/*
+ * =====================================================================================
+ *
+ *       Filename:  cConstants.cpp
+ *
+ *    Description:  implementation file
+ *
+ *        Version:  2.0
+ *        Created:  2010-04-13-18.23.43
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Vytis Valentinavičius (), vytis.valentinavicius@gmail.com
+ *        Company:  VU FF
+ *
+ * =====================================================================================
+ */
+ #include "cConstants.h"
 
 namespace DoI
 {
@@ -46,15 +63,15 @@ namespace DoI
 
 
     double
-    transitTime(cConstants & C, cGlobal & G)
+    transitTime(cEnvironment & E)
     {
-        return 0.78*G.width()*G.width()/C.c_n_miu/G.U();
+        return 0.78*E.width()*E.width()/E.C()->c_n_miu/E.voltage();
     }
 
     double
-    currentMax(cConstants & C, cGlobal & G)
+    currentMax(cEnvironment & E)
     {
-        return 9.0/8.0*C.c_eps*C.c_eps0*(C.c_n_miu +C.c_p_miu)*G.U()*G.U()/G.width()/G.width()/G.width() * C.c_S;
+        return 9.0/8.0*E.C()->c_eps*E.C()->c_eps0*(E.C()->c_n_miu +E.C()->c_p_miu)*E.voltage()*E.voltage()/E.width()/E.width()/E.width() * E.C()->c_S;
     }
 
     double
@@ -80,4 +97,4 @@ namespace DoI
     {
         return eps*eps0*S/d;
     }
-};
+}

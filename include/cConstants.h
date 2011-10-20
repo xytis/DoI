@@ -9,6 +9,7 @@
 
 #include "global.h"
 #include "cExeptions.h"
+#include "cEnvironment.h"
 
 namespace DoI
 {
@@ -52,13 +53,7 @@ namespace DoI
             friend std::ostream & operator << (std::ostream & out, const cConstants & C);
     };
 
-    enum CONTACTS_TYPE
-    {
-        BLOCKING  = 0,
-        INJECTING = 1,
-        EXTRACTING = 2,
-        NON_BLOCKING = 3    //NON_BLOCKING = INJECTING+EXTRACTING
-    };
+
 
 
     class cGlobal {
@@ -107,11 +102,13 @@ namespace DoI
             friend std::ostream & operator << (std::ostream & out, cGlobal & G);
     };
 
+    class cEnvironment;
+
     double diffusionConst(double T, double miu, double q);
     double recombinationConst(double q, double n_miu, double p_miu, double eps, double eps0);
     double driftConst(double eps, double eps0, double S);
-    double transitTime(cConstants & C, cGlobal & G);
-    double currentMax(cConstants & C, cGlobal & G);
-};
+    double transitTime(cEnvironment & E);
+    double currentMax(cEnvironment & E);
+}
 
 #endif // CCONSTANTS_H_INCLUDED

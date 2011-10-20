@@ -16,9 +16,7 @@
  * =====================================================================================
  */
 #include "cBlock.h"
-#include "cField.h"
-
-#define ALLOWED 10
+#include "physics.h"
 
 namespace DoI
 {
@@ -120,56 +118,9 @@ namespace DoI
         return out;
     }
 
-    // Helpers for formulaes
 
-    double diffusion(const double & interest,const double & neighbour, const double & D,
-                      const cConstants * C, cGlobal * G, const cData & data, std::string place)
-    {
-/*
-        double dc;
-        dc = (interest - neighbour)* D * G->dt() / (data.m_width*data.m_width);  //dc = D * deltaC * dt / dx^2
-        if (dc>interest/ALLOWED)
-            throw exception::TimeIntervalTooLarge(10, std::string("Diffusion ") + place);
-        if (dc < C->c_MIN)
-            dc = 0;
-        return dc;
-*/
-        return 0; //No diff
-    }
 
-    double drift(const double & interest, const double & field, const double & miu,
-                  const cConstants * C, cGlobal * G, const cData & data, std::string place)
-    {
-
-        double dc;
-        dc = miu * field * G->dt() / data.m_width * interest;
-        if (dc > interest/ALLOWED)
-            throw exception::TimeIntervalTooLarge(10, std::string("Drift ") + place);
-        if (dc < C->c_MIN)
-            dc = 0;
-        return dc;
-
-        //return 0;   //no drift
-    }
-
-    double recombine(const cConstants * C, cGlobal * G, const cData & data, std::string place)
-    {
-
-        double pairs;
-        pairs = data.m_n * data.m_p * C->c_beta * G->dt() / C->c_S / data.m_width;
-        if ((pairs > data.m_n/ALLOWED)||(pairs > data.m_p/ALLOWED))
-            throw exception::TimeIntervalTooLarge(10, std::string("Recombination ") + place);
-            //pairs = data.m_n>data.m_p?data.m_p:data.m_n;
-        if (pairs < C->c_MIN)
-        {
-            pairs = 0;
-        }
-        return pairs;
-
-        //return 0;
-    }
-
-    double  glue(const cConstants * C, cGlobal * G, const cData & data, double particles, double free_space)
+    double  glue(const cConstants * C, cEnvironment * G, const cData & data, double particles, double free_space)
     {
    /*
         if (free_space<0)
@@ -186,7 +137,7 @@ namespace DoI
         return 0;
     }
 
-    double  unglue(const cConstants * C, cGlobal * G, const cData & data)
+    double  unglue(const cConstants * C, cEnvironment * G, const cData & data)
     {
         return 0;
     }
@@ -195,7 +146,7 @@ namespace DoI
 
 
     cBlock::
-    cBlock(const cData & data, cConstants * C, cGlobal * G):
+    cBlock(const cData & data, cConstants * C, cEnvironment * G):
         m_data(data),
         m_current(0),
         m_C(C),
@@ -394,7 +345,7 @@ namespace DoI
     /**cContact**/
 
     cContact::
-    cContact(eContactType type, const cData & data, cConstants * C, cGlobal * G):
+    cContact(eContactType type, const cData & data, cConstants * C, cEnvironment * G):
         m_type(type),
         m_data(data),
         m_current(0),
@@ -467,7 +418,7 @@ namespace DoI
         //INJEKCIJA
         //Esant įtampai <= 0, injekcija NEVYKSTA. (tipo celiv atveju)
 
-        if (m_G->U() <= 0)
+        if (m_G->voltage() <= 0)
             return;
 
         double dc;
@@ -514,7 +465,7 @@ namespace DoI
         //Jei įtampa    +-    <0
         //              -+    >0
         // kai u = 0, nevyksta ekstrakcija.
-        if (m_G->U() < 0)
+        if (m_G->voltage() < 0)
         {
             if (m_type == LEFT)
             {
@@ -525,7 +476,7 @@ namespace DoI
                 m_data.m_p = 0;
             }
         }
-        else if (m_G->U() > 0)
+        else if (m_G->voltage() > 0)
         {
             if (m_type == LEFT)
             {
@@ -562,7 +513,7 @@ namespace DoI
     relax()
     {
         //Čia rekombinacija ir krūvininkų prilipimas ir injekcija
-        switch (m_G->contacts_type())
+        switch (m_G->contacts())
         {
             case BLOCKING:
                 break;

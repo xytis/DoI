@@ -1,11 +1,14 @@
 #ifndef CSIMULATION_HPP_INCLUDED
 #define CSIMULATION_HPP_INCLUDED
 
+#include "global.h"
+
 #include "cExeptions.h"
 #include "cConstants.h"
 #include "cMaterial.h"
 #include "tFunctors.h"
 #include "cPrinter.h"
+#include "cEnvironment.h"
 
 #include <map>
 #include <string>
@@ -15,9 +18,16 @@ namespace DoI {
     /** Main simulation executive class.
     Controls constant clases, output classes, parsing of scenario file.
     */
-    class cSimulation {
+    class cSimulation : public cObject {
 
         private:
+            ///Environment for the calculation
+            cEnvironment * m_environment;
+            ///Object for testing
+            cMaterial * m_object;
+            ///Printer for output
+            cPrinter * m_printer;
+
             //Konstantų klasė, joje vertės nekinta per amžių.
             //Tačiau pati klasė gali būti pakeista kita klase.
             cConstants * m_constants;
@@ -30,7 +40,7 @@ namespace DoI {
 
             //Viena simuliacija turi tik vieną medžiagą. Žinoma, niekas netrukdo
             //viduryje simuliacijos ją pakeisti kita.
-            cMaterial  * m_object;
+            //cMaterial  * m_object;
 
             //Funkcija srovės print'ui
             cPrinter * m_current_output;
@@ -70,16 +80,22 @@ namespace DoI {
             bool check_and_discard_comment(std::string &, std::istream &);
 
         public:
+            ///Constructor which creates the object
             cSimulation();
+            ///Main function, which controls the flow
+            void run();
+            ///Validation function, checks if run method is ok to run
+            bool validityCheck();
+/*
             //Scenarijus uþraðomas tekstu,
             //su nuorodomis á paprogrames ir parametrais
             //Kiekviena nuoroda yra kitaip interpretuojama, ir prie jø reikalingi spec. parametrai.
             void read_n_execute(std::string);
-
+*/
 
 
 
     };
-};
+}
 
 #endif //CSIMULATION_HPP_INCLUDED

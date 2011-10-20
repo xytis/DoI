@@ -41,7 +41,11 @@ namespace DoI
             nextTime(n_object->time()),
             x_norm(n_x_norm), y_norm(n_y_norm),
             last_current(n_object->current()), last_delta(0),
-            out(n_out), cumul(n_cumul), object(n_object) {};
+            out(n_out), cumul(n_cumul), object(n_object)
+            {
+
+            };
+
             void operator()()
             {
                 double delta = object->current() - last_current;
@@ -60,6 +64,7 @@ namespace DoI
                 }
 
             };
+
             void Call()
             {
                 double delta = object->current() - last_current;
@@ -81,7 +86,6 @@ namespace DoI
             {
                 out->flush();
             };
-
     };
 
     class iterPrint : public cPrinter
@@ -223,6 +227,6 @@ namespace DoI
                 out->flush();
             };
     };
-};
+}
 
 #endif // CPRINTER_H_INCLUDED

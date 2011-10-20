@@ -1,18 +1,15 @@
-#include "cSimulation.hpp"
+#include "cSimulation.h"
 
 namespace DoI
 {
     cSimulation::
     cSimulation():
-    m_constants(NULL),
-    m_global(NULL),
+    m_environment(NULL),
     m_object(NULL),
-    m_current_output(NULL)
+    m_printer(NULL)
     {
-        //Sukuriame naują m_global
-        m_global = new cGlobal(0,0,0,(CONTACTS_TYPE)0,0,0,0,0,0);
     }
-
+/*
     void cSimulation::
     read_n_execute(std::string filename)
     {
@@ -42,7 +39,7 @@ namespace DoI
             }
         }
     }
-
+*/
     void cSimulation::
     init ()
     {
@@ -287,7 +284,7 @@ namespace DoI
         fin >> transit_cycles;
         std::cout << ">>RUNING FOR " << transit_cycles << " TRANSIT CYCLES" << std::endl;
 
-        double transit_time = transitTime(*m_constants, *m_global);
+        double transit_time = transitTime(*m_environment);
         std::cout << "T_tr: " << transit_time << std::endl;
 
         do_until(m_object->time() + transit_time*transit_cycles);
@@ -327,7 +324,7 @@ namespace DoI
     create_object(std::ifstream & fin)
     {
         std::cout << ">>CREATING TEST OBJECT" << std::endl;
-        m_object = new cMaterial(m_constants, m_global);
+        m_object = new cMaterial(m_environment);
         std::cout << "..DONE" << std::endl;
     }
 
@@ -337,7 +334,7 @@ namespace DoI
         std::cout << ">>LOADING TEST OBJECT" << std::endl;
         std::string filename;
         fin >> filename;
-        m_object = new cMaterial(m_constants, m_global);
+        m_object = new cMaterial(m_environment);
         m_object->load(filename);
         std::cout << "..DONE" << std::endl;
     }
@@ -539,4 +536,9 @@ namespace DoI
         }
         else return false;
     }
-};
+
+    bool cSimulation::validityCheck()
+    {
+        return m_environment and m_object and m_printer;
+    }
+}

@@ -26,45 +26,79 @@ namespace DoI
     Po to laikas eina normaliai =]
     */
     cMaterial::
-    cMaterial(cConstants * C, cGlobal * G):
-        m_constants(C),
-        m_global(G),
-        m_time(-G->dt())
+    cMaterial(cEnvironment * E):
+        m_environment(E)
     {
+        E->m_time = - E->time_step();
         //Kuriam paraleliai ir el. lauko masyvą.
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
         //Šiuo atveju svarbu koks storio parametras duotas C.
-        IBlock * temp = new cContact(LEFT, cData(0,0,0,0,G->n_cap()/G->size(),G->p_cap()/G->size(),0,0,0,G->width()/G->size()), C,G);
+        IBlock * temp = new cContact(LEFT,
+                                     cData(0,
+                                           0,
+                                           0,
+                                           0,
+                                           E->capacity_n()/E->space_division(),
+                                           E->capacity_p()/E->space_division(),
+                                           0,
+                                           0,
+                                           0,
+                                           E->width()/E->space_division()),
+                                     E->C(),
+                                     E);
         m_blockArray.push_back(temp);
 
-        for (uint64_t i = 1; i < G->size()-1; i++)
+        for (uint64_t i = 1; i < E->space_division()-1; i++)
         {
             E_temp = new cField();
             m_fieldArray.push_back(E_temp);
-            temp = new cBlock(cData(0,0,0,0,G->n_cap()/G->size(),G->p_cap()/G->size(),0,0,0,G->width()/G->size()) ,C,G);
+            temp = new cBlock(cData(0,
+                                    0,
+                                    0,
+                                    0,
+                                    E->capacity_n()/E->space_division(),
+                                    E->capacity_p()/E->space_division(),
+                                    0,
+                                    0,
+                                    0,
+                                    E->width()/E->space_division()),
+                              E->C(),
+                              E);
             m_blockArray.push_back(temp);
         }
 
         E_temp = new cField();
         m_fieldArray.push_back(E_temp);
 
-        temp = new cContact(RIGHT, cData(0,0,0,0,G->n_cap()/G->size(),G->p_cap()/G->size(),0,0,0,G->width()/G->size()) ,C,G);
+        temp = new cContact(RIGHT,
+                            cData(0,
+                                  0,
+                                  0,
+                                  0,
+                                  E->capacity_n()/E->space_division(),
+                                  E->capacity_p()/E->space_division(),
+                                  0,
+                                  0,
+                                  0,
+                                  E->width()/E->space_division()),
+                            E->C(),
+                            E);
         m_blockArray.push_back(temp);
 
         //Lauko yra 1 daugiau.
         E_temp = new cField();
         m_fieldArray.push_back(E_temp);
 
-        init(G->size());
+        init(E->space_division());
     }
 
     cMaterial::
-    cMaterial(cConstants * C, cGlobal * G, const uint64_t & size, const cData & first, const cData & other, const cData & last):
-        m_constants(C),
-        m_global(G),
-        m_time(-G->dt())
+    cMaterial(cEnvironment * E, const uint64_t & size, const cData & first, const cData & other, const cData & last):
+        m_environment(E)
     {
+        E->m_time = - E->time_step();
+        /*
         //Kuriam paraleliai ir el. lauko masyvą.
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
@@ -91,14 +125,15 @@ namespace DoI
         m_fieldArray.push_back(E_temp);
 
         init(size);
+        */
     }
 
     cMaterial::
-    cMaterial(cConstants * C, cGlobal * G, std::vector<cData> & all):
-        m_constants(C),
-        m_global(G),
-        m_time(-G->dt())
+    cMaterial(cEnvironment * E, std::vector<cData> & all):
+        m_environment(E)
     {
+        E->m_time = - E->time_step();
+        /*
         //Lauko masyvas nėra išsaugomas.
         //Kuriam paraleliai ir el. lauko masyvą.
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
@@ -126,6 +161,7 @@ namespace DoI
         m_fieldArray.push_back(E_temp);
 
         init(all.size());
+        */
     }
 
     void cMaterial::
@@ -151,13 +187,13 @@ namespace DoI
             m_backupArray.push_back(cData(0,0,0,0,0,0,0,0,0,0));
         }
         //Length part
-        m_global->s_width(0);
+        m_environment->width(0);
         for (uint64_t i = 0; i < size; i++)
         {
-            m_global->s_width(m_global->width() + m_blockArray.at(i)->read().m_width);
+            m_environment->width(m_environment->width() + m_blockArray.at(i)->read().m_width);
         }
         //Paskleidžiame size dydį.
-        m_global->s_size(size);
+        m_environment->space_division(size);
     }
 
     void cMaterial::
@@ -182,8 +218,8 @@ namespace DoI
     backup()
     //This function reads the working array and copies the data to backup
     {
-        m_backup_time = m_time;
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        m_environment->m_backup_time = m_environment->m_time;
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             m_backupArray.at(i) = m_blockArray.at(i)->read();
         }
@@ -194,8 +230,8 @@ namespace DoI
     //This function writes the backup array to working array
     //WARNING: if backup array is bad -- so goes the simulation
     {
-        m_time = m_backup_time;
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        m_environment->m_time = m_environment->m_backup_time;
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             m_blockArray.at(i)->write(m_backupArray.at(i));
         }
@@ -205,7 +241,7 @@ namespace DoI
     flush()
     //Forces all blocks to flush incoming particles
     {
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             m_blockArray.at(i)->flush();
         }
@@ -254,7 +290,7 @@ namespace DoI
     //Commands all blocks to make calculations
     {
         //m_fieldArray.at(0)->E = 0;
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             //Čia įvyksta lauko skaičiavimas, pirma dalis
             //Kartu nunulinama sena reikšmė
@@ -272,7 +308,7 @@ namespace DoI
         //Skirtumą pridėti prie vidinio lauko verčių.
         double E_local = m_fieldArray.at(0)->integrate();
         //Čia yra vidinis laukas. Dabar su išoriniu:
-        double E_external = m_global->U() / m_global->width() * m_global->size();
+        double E_external = m_environment->voltage() / m_environment->width() * m_environment->space_division();
         //tadaa =]
         //Dabar randam skirtumą, dalinam jį per laukelių sk. ir pridedam prie laukelių.
         //ĖĖĖ!!! O kaip bus kai nėra įtampos ank kontaktų? Visai lauką numušim?
@@ -280,14 +316,14 @@ namespace DoI
         //kad išorinė įtampa turi nustatyti vidinį lauką?
         //Juk išorinio ir vidinių laukų suma, kai dalelių viduje pakankamai (soties sąlyga) turi būti lygi 0.
         //Na, trumpiau kalbant, gal išorinę įtampą taikyti tik injekcijai?
-        double dE = (E_external - E_local)/m_global->size();
+        double dE = (E_external - E_local)/m_environment->space_division();
         //Kolkas, jei nėr išorinės įtampos nedarom nieko.
         //if (E_external > 0)
         m_fieldArray.at(0)->force_raise(dE);
 
         //Na va. Turim suskaičiuotą lauką. HMM. Sunku, ane?
 
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             //Čia įvyksta rekombinacija ir prilipimai, atlipimai, krūvio injekcija
             m_blockArray.at(i)->relax();
@@ -300,12 +336,12 @@ namespace DoI
     current ()
     {
         double c = 0;
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             //Srovė teigiama jei n-> ir <-p.
             c += m_blockArray.at(i)->current();
         }
-        return c*m_constants->c_q/m_global->dt()/m_global->size();
+        return c*m_environment->C()->c_q/m_environment->time_step()/m_environment->space_division();
     }
 
     void cMaterial::
@@ -315,7 +351,7 @@ namespace DoI
         cData temp;
         double x;
         x = 0;
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             temp = m_blockArray.at(i)->read();
             x += temp.m_width /2;
@@ -340,14 +376,14 @@ namespace DoI
         {
             changeTimeInterval(-10);
             std::cerr << e.what() << std::endl;
-            std::cerr << "Changed to: " << m_global->dt() << std::endl;
+            std::cerr << "Changed to: " << m_environment->time_step() << std::endl;
             restore();
         }
         catch (exception::TimeIntervalTooSmall & e)
         {
             changeTimeInterval(+10);
             std::cerr << e.what() << std::endl;
-            std::cerr << "Changed to: " << m_global->dt() << std::endl;
+            std::cerr << "Changed to: " << m_environment->time_step() << std::endl;
             restore();
         }
     }
@@ -355,7 +391,7 @@ namespace DoI
     double cMaterial::
     time()
     {
-        return m_time;
+        return m_environment->m_time;
     }
 
     void cMaterial::
@@ -363,29 +399,29 @@ namespace DoI
     {
         if (by < 0)
         {
-            m_global->s_dt(m_global->dt() / 10);
-            m_global->s_timeout(m_global->timeout() + 500);      //FIXME: na, reikia sugalvoti lankstesnį grįžimo mechanizmą.
-            m_global->s_time_depth(m_global->time_depth() + 1);
+            m_environment->time_step(m_environment->time_step() / 10);
+            m_environment->m_timeout += 500;      //FIXME: na, reikia sugalvoti lankstesnį grįžimo mechanizmą.
+            m_environment->m_time_depth += 1;
 
         }
         if (by > 0)
         {
-            m_global->s_dt(m_global->dt() * 10);
-            m_global->s_time_depth(m_global->time_depth() - 1);
-            m_global->s_timeout(1);
+            m_environment->time_step(m_environment->time_step() * 10);
+            m_environment->m_time_depth -= 1;
+            m_environment->m_timeout = 1;
         }
     }
 
     void cMaterial::
     clock_tick()
     {
-        m_time += m_global->dt();
+        m_environment->m_time += m_environment->time_step();
 
-        if (m_global->time_depth() > 0)
+        if (m_environment->m_time_depth > 0)
         {
-            m_global->s_timeout(m_global->timeout() - 1);
+            m_environment->m_timeout = m_environment->m_timeout - 1;
 
-            if (m_global->timeout() == 0)
+            if (m_environment->m_timeout == 0)
             {
                 throw exception::TimeIntervalTooSmall(10, "clock check");
             }
@@ -400,7 +436,7 @@ namespace DoI
             std::cout << "#BEGIN REPORT " << reportID << ": " << name << std::endl;
         else
             std::cout << "#BEGIN REPORT " << reportID << " #" << std::endl;
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             std::cout << m_blockArray.at(i)->read();
         }
@@ -417,11 +453,11 @@ namespace DoI
     fstats(std::ostream & out)
     {
         out << "Statistics on simulation." << std::endl;
-        out << "Size of collumns " << m_global->size() << ' ' \
-        << "time stamp " << m_time << 's' << std::endl;
-        out << "Time step " << m_global->dt() << std::endl;
+        out << "Size of collumns " << m_environment->space_division() << ' ' \
+        << "time stamp " << m_environment->m_time << 's' << std::endl;
+        out << "Time step " << m_environment->time_step() << std::endl;
         /*
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             std::cout << m_blockArray.at(i)->read();
         }
@@ -430,17 +466,17 @@ namespace DoI
         fcurrent(out);
         out << std::endl;
 /*
-        for (uint64_t i = 0; i < m_global->size()+1; i++)
+        for (uint64_t i = 0; i < m_environment->space_division()+1; i++)
         {
             std::cout << m_fieldArray.at(i)->E << '\t';
         }
         std::cout << std::endl;
 */
 
-        out << "Transit time: " << transitTime(*m_constants, *m_global) << std::endl;
-        out << "Max Current: " << currentMax(*m_constants, *m_global) << std::endl;
+        out << "Transit time: " << transitTime(*m_environment) << std::endl;
+        out << "Max Current: " << currentMax(*m_environment) << std::endl;
         out << "Other: " << std::endl;
-        out << (*m_constants) << std::endl;
+        out << (*(m_environment->C())) << std::endl;
         out << std::endl;
 
     }
@@ -448,7 +484,7 @@ namespace DoI
     void cMaterial::
     fcurrent(std::ostream & out, double x_norm, double y_norm)
     {
-        out << m_time/x_norm << '\t' << current()/y_norm << '\t' << m_global->dt() << std::endl;
+        out << m_environment->m_time/x_norm << '\t' << current()/y_norm << '\t' << m_environment->time_step() << std::endl;
     }
 
 
@@ -461,9 +497,9 @@ namespace DoI
             throw exception::FileMisingExeption(name);
 
         //Writing time
-        //fout << m_time << std::endl;
+        //fout << m_environment->m_time << std::endl;
         //Writing data
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             fout << m_blockArray.at(i)->read();
         }
@@ -477,9 +513,9 @@ namespace DoI
         if (!fout)
             throw exception::FileMisingExeption(name);
         //Writing time
-        //fout << m_time << std::endl;
+        //fout << m_environment->m_time << std::endl;
         //Writing data
-        for (uint64_t i = 0; i < m_global->size() + 1; i++)
+        for (uint64_t i = 0; i < m_environment->space_division() + 1; i++)
         {
             fout << *(m_fieldArray.at(i)) << std::endl;
         }
@@ -489,11 +525,11 @@ namespace DoI
     void cMaterial::
     stats(sSnapshot & snap)
     {
-        snap.cur_time = m_time;
-        snap.array_size = m_global->size();
+        snap.cur_time = m_environment->m_time;
+        snap.array_size = m_environment->space_division();
         delete[] snap.array;
         snap.array = new cData[snap.array_size];
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             snap.array[i] = m_blockArray.at(i)->read();
         }
@@ -508,10 +544,10 @@ namespace DoI
         if (!fin)
             throw exception::FileMisingExeption(name);
         //Reading time
-        fin >> m_time;
+        fin >> m_environment->m_time;
         //Reading memory dump
         cData temp(0,0,0,0,0,0,0,0,0,0);
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             fin >> temp;
             m_blockArray.at(i)->write(temp);
@@ -526,9 +562,9 @@ namespace DoI
         if (!fout)
             throw exception::FileMisingExeption(name);
         //Writing time
-        fout << m_time << std::endl;
+        fout << m_environment->m_time << std::endl;
         //Writing memory dump
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             fout << m_blockArray.at(i)->read();
         }
@@ -542,13 +578,13 @@ namespace DoI
     {
         report("initial");
         IBlock * cur = m_blockArray.at(0);
-        for (uint64_t i = 1; i < m_global->size(); i++)
+        for (uint64_t i = 1; i < m_environment->space_division(); i++)
         {
             assert(m_blockArray.at(i) == cur->next());
             cur = cur->next();
         }
         report("after forward check");
-        cur = m_blockArray.at(m_global->size()-1);
+        cur = m_blockArray.at(m_environment->space_division()-1);
         //FIXME: čia su uint64_t bėda, kai išeina į -1 tai gaunam overflow.
         //Todėl ciklas begalinis...
         for (int i = -2; i >= 0; i--)
@@ -566,7 +602,7 @@ namespace DoI
         backup();
         report("after backup");
         //Make some changes =]
-        for (uint64_t i = 0; i < m_global->size(); i++)
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
             m_blockArray.at(i)->write(cData(1,1,1,1,1,1,1,1,1,1));
         }
