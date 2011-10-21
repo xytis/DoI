@@ -68,6 +68,7 @@ namespace DoI
 
     cParser * cParserStack::pop()
     {
+        //TODO: Rethink this shit. How to avoid deletion of itself?
         if (last)
         {
             delete last;
@@ -177,7 +178,12 @@ namespace DoI
                 return false;
             }
             bool (cParser::*function) (std::stringstream &) = act->second;
-            return (*this.*function) (reader);
+            if (!(*this.*function) (reader))
+            {
+                cLogger::warning(std::string("Line ") + line + std::string(" parsing failed."));
+                return false;
+            }
+            return true;
         }
         else
         {
@@ -285,6 +291,10 @@ namespace DoI
 
         m_actions[ENVIRONMENTPARSER_TIME_STEP] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::time_step);
         m_actions[ENVIRONMENTPARSER_SPACE_DIVISION] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::space_division);
+        m_actions[ENVIRONMENTPARSER_WIDTH] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::width);
+        m_actions[ENVIRONMENTPARSER_CONTACTS] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::contacts);
+        m_actions[ENVIRONMENTPARSER_CAPACITY_N] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::capacity_n);
+        m_actions[ENVIRONMENTPARSER_CAPACITY_P] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::capacity_p);
 
     }
 
@@ -329,7 +339,8 @@ namespace DoI
 
     bool cEnvironmentParser::area(std::stringstream & params)
     {
-        return params >> m_area;
+        params >> m_area;
+        return true;
     }
 
     bool cEnvironmentParser::min(std::stringstream & params)
@@ -358,7 +369,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = physics::driftConst(m_epsilon, m_epsilon_0, m_area);
+            m_drift = physics::driftConst(m_epsilon, m_epsilon_0, m_area);
             std::stringstream ss;
             ss << "Calculating drift constant from curently known values. Please check: " << m_drift;
             cLogger::warning(ss.str());
@@ -393,7 +404,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = physics::diffusionConst(m_temperature, m_mobility_n, m_charge);
+            m_diffusion_n = physics::diffusionConst(m_temperature, m_mobility_n, m_charge);
             std::stringstream ss;
             ss << "Calculating diffusion N coeficient from curently known values. Please check: " << m_diffusion_n;
             cLogger::warning(ss.str());
@@ -413,7 +424,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = physics::diffusionConst(m_temperature, m_mobility_p, m_charge);
+            m_diffusion_p = physics::diffusionConst(m_temperature, m_mobility_p, m_charge);
             std::stringstream ss;
             ss << "Calculating diffusion P coeficient from curently known values. Please check: " << m_diffusion_p;
             cLogger::warning(ss.str());
@@ -443,5 +454,46 @@ namespace DoI
         return params >> m_space_division;
     }
 
+    bool cEnvironmentParser::width(std::stringstream & params)
+    {
+        return params >> m_width;
+    }
+
+    bool cEnvironmentParser::contacts(std::stringstream & params)
+    {
+        std::string verbal;
+        params >> verbal;
+        if (verbal == "BLOCKING")
+        {
+            m_contacts = BLOCKING;
+            return true;
+        }
+        if (verbal == "INJECTING")
+        {
+            m_contacts = INJECTING;
+            return true;
+        }
+        if (verbal == "EXTRACTING")
+        {
+            m_contacts = EXTRACTING;
+            return true;
+        }
+        if (verbal == "NON_BLOCKING")
+        {
+            m_contacts = NON_BLOCKING;
+            return true;
+        }
+        return false;
+    }
+
+    bool cEnvironmentParser::capacity_n(std::stringstream & params)
+    {
+        return params >> m_capacity_n;
+    }
+
+    bool cEnvironmentParser::capacity_p(std::stringstream & params)
+    {
+        return params >> m_capacity_p;
+    }
 
  }

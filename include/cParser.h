@@ -37,8 +37,10 @@
 #define ENVIRONMENTPARSER_CONSTANT_GLUE "k_glue"
 #define ENVIRONMENTPARSER_TIME_STEP "TIME_STEP"
 #define ENVIRONMENTPARSER_SPACE_DIVISION "SPACE_DIVISION"
-#define ENVIRONMENTPARSER_GLOBAL_CAPACITY_N "n_cap"
-#define ENVIRONMENTPARSER_GLOBAL_CAPACITY_P "p_cap"
+#define ENVIRONMENTPARSER_WIDTH "WIDTH"
+#define ENVIRONMENTPARSER_CONTACTS "CONTACTS"
+#define ENVIRONMENTPARSER_CAPACITY_N "cap_n"
+#define ENVIRONMENTPARSER_CAPACITY_P "cap_p"
 
 namespace DoI
 {
@@ -126,6 +128,10 @@ namespace DoI
             ///Global
             bool time_step(std::stringstream & params);
             bool space_division(std::stringstream & params);
+            bool width(std::stringstream & params);
+            bool contacts(std::stringstream & params);
+            bool capacity_n(std::stringstream & params);
+            bool capacity_p(std::stringstream & params);
             ~cEnvironmentParser() {};
     	protected:
 
@@ -147,6 +153,11 @@ namespace DoI
             ///Global
             double m_time_step;
             uint64_t m_space_division;
+            double m_width;
+            CONTACTS_TYPE m_contacts;
+            double m_capacity_n;
+            double m_capacity_p;
+
     };
 
     class cPrinterParser : public cParser

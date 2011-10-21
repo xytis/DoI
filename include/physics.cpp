@@ -17,11 +17,17 @@
  */
 #include "physics.h"
 
+bool test()
+{
+    int a = 0;
+    return false;
+}
+
 namespace DoI
 {
     // Helpers for formulaes
 
-    double diffusion(const double & interest,const double & neighbour, const double & D,
+    double physics::diffusion(const double & interest,const double & neighbour, const double & D,
                       cEnvironment * E, const cData & data, std::string place)
     {
 
@@ -36,7 +42,7 @@ namespace DoI
         return 0; //No diff
     }
 
-    double drift(const double & interest, const double & field, const double & miu,
+    double physics::drift(const double & interest, const double & field, const double & miu,
                   cEnvironment * E, const cData & data, std::string place)
     {
 
@@ -51,7 +57,7 @@ namespace DoI
         //return 0;   //no drift
     }
 
-    double recombine(cEnvironment * E, const cData & data, std::string place)
+    double physics::recombine(cEnvironment * E, const cData & data, std::string place)
     {
 
         double pairs;
@@ -68,38 +74,32 @@ namespace DoI
         //return 0;
     }
 
-    double
-    transitTime(cEnvironment & E)
+    double physics::transitTime(cEnvironment & E)
     {
         return 0.78*E.width()*E.width()/E.C()->c_n_miu/E.voltage();
     }
 
-    double
-    currentMax(cEnvironment & E)
+    double physics::currentMax(cEnvironment & E)
     {
         return 9.0/8.0*E.C()->c_eps*E.C()->c_eps0*(E.C()->c_n_miu +E.C()->c_p_miu)*E.voltage()*E.voltage()/E.width()/E.width()/E.width() * E.C()->c_S;
     }
 
-    double
-    diffusionConst(double T, double miu, double q)
+    double physics::diffusionConst(double T, double miu, double q)
     {
         return (1.38e-23 * T * miu / q);
     }
 
-    double
-    recombinationConst(double q, double n_miu, double p_miu, double eps, double eps0)
+    double physics::recombinationConst(double q, double n_miu, double p_miu, double eps, double eps0)
     {
         return q * (n_miu + p_miu) / eps /eps0; //Landþeveno rekombinacija
     }
 
-    double
-    driftConst(double eps, double eps0, double S)
+    double physics::driftConst(double eps, double eps0, double S)
     {
         return (1/(eps * eps0 * S));
     }
 
-    double
-    talpa (double eps, double eps0, double S, double d)
+    double physics::talpa (double eps, double eps0, double S, double d)
     {
         return eps*eps0*S/d;
     }
