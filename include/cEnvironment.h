@@ -41,10 +41,9 @@ namespace DoI
             double capacity_p();
 
             double m_time;
+            double m_backup_time;
             int m_timeout;
             int m_time_depth;
-
-            double m_backup_time;
 
             ~cEnvironment() {};
         protected:

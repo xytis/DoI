@@ -26,27 +26,26 @@
 #include "physics.h"
 #include "cData.h"
 #include "cField.h"
-#include "cStatus.h"
-#include "cConstants.h"
 #include "cEnvironment.h"
 
 namespace DoI
 {
     class cData;
-    class IBlock;
     class cField;
+    class cEnvironment;
 
-    class IBlock
+    /** Interface class for inherinting. */
+    class iBlock
     {
         private:
-            //friend class IBlock;
+
         public:
-            virtual     IBlock *        next() = 0;
-            virtual     IBlock *        prev() = 0;
+            virtual     iBlock *        next() = 0;
+            virtual     iBlock *        prev() = 0;
             virtual     cField *        E_next() = 0;
             virtual     cField *        E_prev() = 0;
-            virtual     void            set_next(IBlock *) = 0;
-            virtual     void            set_prev(IBlock *) = 0;
+            virtual     void            set_next(iBlock *) = 0;
+            virtual     void            set_prev(iBlock *) = 0;
             virtual     void            set_E_next(cField *) = 0;
             virtual     void            set_E_prev(cField *) = 0;
             virtual     void            relax() = 0;
@@ -61,7 +60,7 @@ namespace DoI
 
     };
 
-    class cBlock : public IBlock
+    class cBlock : public iBlock
     {
         private:
             cBlock * m_next;
@@ -72,20 +71,19 @@ namespace DoI
 
             double m_current;
 
-            cConstants * m_C;
-            cEnvironment * m_G;
+            cEnvironment * m_E;
 
             void recombination();
             void glue_unglue();
 
         public:
-            cBlock(const cData &, cConstants *, cEnvironment *);
-            virtual     IBlock *        next();
-            virtual     IBlock *        prev();
+            cBlock(const cData &, cEnvironment *);
+            virtual     iBlock *        next();
+            virtual     iBlock *        prev();
             virtual     cField *        E_next();
             virtual     cField *        E_prev();
-            virtual     void            set_next(IBlock *);
-            virtual     void            set_prev(IBlock *);
+            virtual     void            set_next(iBlock *);
+            virtual     void            set_prev(iBlock *);
             virtual     void            set_E_next(cField *);
             virtual     void            set_E_prev(cField *);
             virtual     void            relax();
@@ -105,7 +103,7 @@ namespace DoI
         LEFT
     };
 
-    class cContact : public IBlock
+    class cContact : public iBlock
     {
         private:
             cBlock * m_block;
@@ -113,11 +111,9 @@ namespace DoI
             cField * m_E_prev;
             const eContactType m_type;
             cData    m_data;
-            //double   m_n_buffer;
-            //double   m_p_buffer;
             double  m_current;
-            cConstants * m_C;
-            cEnvironment * m_G;
+
+            cEnvironment * m_E;
 
             void injection();
             void extraction();
@@ -125,13 +121,13 @@ namespace DoI
             void glue_unglue();
 
         public:
-            cContact(eContactType, const cData &, cConstants *, cEnvironment *);
-            virtual     IBlock *        next();
-            virtual     IBlock *        prev();
+            cContact(eContactType, const cData &, cEnvironment *);
+            virtual     iBlock *        next();
+            virtual     iBlock *        prev();
             virtual     cField *        E_next();
             virtual     cField *        E_prev();
-            virtual     void            set_next(IBlock *);
-            virtual     void            set_prev(IBlock *);
+            virtual     void            set_next(iBlock *);
+            virtual     void            set_prev(iBlock *);
             virtual     void            set_E_next(cField *);
             virtual     void            set_E_prev(cField *);
             virtual     void            relax();

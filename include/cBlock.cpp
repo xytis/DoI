@@ -16,7 +16,6 @@
  * =====================================================================================
  */
 #include "cBlock.h"
-#include "physics.h"
 
 namespace DoI
 {
@@ -62,13 +61,13 @@ namespace DoI
     }
 
     void cField::
-    attach_left(IBlock * left)
+    attach_left(iBlock * left)
     {
         m_left = left;
     }
 
     void cField::
-    attach_right(IBlock * right)
+    attach_right(iBlock * right)
     {
         m_right = right;
     }
@@ -120,12 +119,12 @@ namespace DoI
 
 
 
-    double  glue(const cConstants * C, cEnvironment * G, const cData & data, double particles, double free_space)
+    double  glue(cEnvironment * E, const cData & data, double particles, double free_space)
     {
    /*
         if (free_space<0)
             free_space = 0;
-        double d = C->c_k_glue * particles * free_space / (C->c_S * data.m_width);
+        double d = m_E->C()->c_k_glue * particles * free_space / (m_E->C()->c_S * data.m_width);
         if (d > free_space)
             d = free_space;
         if (d > particles)
@@ -137,7 +136,7 @@ namespace DoI
         return 0;
     }
 
-    double  unglue(const cConstants * C, cEnvironment * G, const cData & data)
+    double  unglue(cEnvironment * E, const cData & data)
     {
         return 0;
     }
@@ -146,25 +145,24 @@ namespace DoI
 
 
     cBlock::
-    cBlock(const cData & data, cConstants * C, cEnvironment * G):
+    cBlock(const cData & data, cEnvironment * E):
         m_data(data),
         m_current(0),
-        m_C(C),
-        m_G(G)
+        m_E(E)
     {
         //EMPTY
     }
 
-    IBlock * cBlock::
+    iBlock * cBlock::
     next()
     {
-        return reinterpret_cast<IBlock *>(m_next);
+        return reinterpret_cast<iBlock *>(m_next);
     }
 
-    IBlock * cBlock::
+    iBlock * cBlock::
     prev()
     {
-        return reinterpret_cast<IBlock *>(m_prev);
+        return reinterpret_cast<iBlock *>(m_prev);
     }
 
     cField * cBlock::
@@ -180,13 +178,13 @@ namespace DoI
     }
 
     void cBlock::
-    set_next(IBlock * next)
+    set_next(iBlock * next)
     {
         m_next = reinterpret_cast<cBlock *>(next);
     }
 
     void cBlock::
-    set_prev(IBlock * prev)
+    set_prev(iBlock * prev)
     {
         m_prev = reinterpret_cast<cBlock *>(prev);
     }
@@ -208,7 +206,7 @@ namespace DoI
     void cBlock::
     recombination()
     {
-        double pairs = recombine(m_C, m_G, m_data, "cBlock");
+        double pairs = physics::recombine(m_E, m_data, "cBlock");
         m_data.m_n -= pairs;
         m_data.m_p -= pairs;
     }
@@ -216,8 +214,8 @@ namespace DoI
     void cBlock::
     glue_unglue()
     {
-        double n = glue(m_C, m_G, m_data, m_data.m_n, m_data.m_n_capacity-m_data.m_n_stuck);
-        double p = glue(m_C, m_G, m_data, m_data.m_p, m_data.m_p_capacity-m_data.m_p_stuck);
+        double n = glue(m_E, m_data, m_data.m_n, m_data.m_n_capacity-m_data.m_n_stuck);
+        double p = glue(m_E, m_data, m_data.m_p, m_data.m_p_capacity-m_data.m_p_stuck);
         m_data.m_n -= n;
         m_data.m_n_stuck += n;
         m_data.m_p -= p;
@@ -240,7 +238,7 @@ namespace DoI
         //Laukas įtakojamas pusės laukelio. Taip padariau kad nesidubliuotų krūvininkai.
 
         //Čia el. lauko, kurį sukuria blokelis, skaičiavimas.
-        double dE = - m_C->c_k * m_C->c_q *    \
+        double dE = - m_E->C()->c_k * m_E->C()->c_q *    \
                     ((m_data.m_p + m_data.m_p_stuck) - \
                     (m_data.m_n + m_data.m_n_stuck));
 
@@ -262,13 +260,13 @@ namespace DoI
 
         double dn, dp;
         //Elektronai einantys á kairæ
-        dn = diffusion(m_data.m_n, prev()->read().m_n, m_C->c_n_D, m_C, m_G, m_data, "1");
+        dn = physics::diffusion(m_data.m_n, prev()->read().m_n, m_E->C()->c_n_D, m_E, m_data, "1");
         //Skylës einanèios á kairæ
-        dp = diffusion(m_data.m_p, prev()->read().m_p, m_C->c_p_D, m_C, m_G, m_data, "2");
+        dp = physics::diffusion(m_data.m_p, prev()->read().m_p, m_E->C()->c_p_D, m_E, m_data, "2");
         //Judėjimas dėl dreifo į kairę
-        dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "1");
+        dp += physics::drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_E->C()->c_p_miu, m_E, m_data, "1");
         //Elektronai juda į kairę kai laukas priešingas
-        dn += drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "2");
+        dn += physics::drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_E->C()->c_n_miu, m_E, m_data, "2");
 
         //Isimam daleles.
         m_data.m_n_buffer -= dn;
@@ -279,13 +277,13 @@ namespace DoI
         m_current += dp-dn; //Ji lokaliai gali būti ir neigiama.
 
         //Elektronai einantys á deðinæ
-        dn = diffusion(m_data.m_n, next()->read().m_n, m_C->c_n_D, m_C, m_G, m_data, "3");
+        dn = physics::diffusion(m_data.m_n, next()->read().m_n, m_E->C()->c_n_D, m_E, m_data, "3");
         //Skylës einanèios á deðinæ
-        dp = diffusion(m_data.m_p, next()->read().m_p, m_C->c_p_D, m_C, m_G, m_data, "4");
+        dp = physics::diffusion(m_data.m_p, next()->read().m_p, m_E->C()->c_p_D, m_E, m_data, "4");
         //Judėjimas dėl dreifo į dešinę
-        dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "3");
+        dn += physics::drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_E->C()->c_n_miu, m_E, m_data, "3");
         //Skylės juda į dešinę kai laukas priešingas
-        dp += drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "4");
+        dp += physics::drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_E->C()->c_p_miu, m_E, m_data, "4");
 
         //Isimam daleles.
         m_data.m_n_buffer -= dn;
@@ -345,30 +343,29 @@ namespace DoI
     /**cContact**/
 
     cContact::
-    cContact(eContactType type, const cData & data, cConstants * C, cEnvironment * G):
+    cContact(eContactType type, const cData & data, cEnvironment * E):
         m_type(type),
         m_data(data),
         m_current(0),
-        m_C(C),
-        m_G(G)
+        m_E(E)
     {
 
     }
 
-    IBlock * cContact::
+    iBlock * cContact::
     next()
     {
         if (m_type == LEFT)
-            return reinterpret_cast<IBlock *>(m_block);
+            return reinterpret_cast<iBlock *>(m_block);
         else
             return NULL;
     }
 
-    IBlock * cContact::
+    iBlock * cContact::
     prev()
     {
         if (m_type == RIGHT)
-            return reinterpret_cast<IBlock *>(m_block);
+            return reinterpret_cast<iBlock *>(m_block);
         else
             return NULL;
     }
@@ -386,7 +383,7 @@ namespace DoI
     }
 
     void cContact::
-    set_next(IBlock * next)
+    set_next(iBlock * next)
     {
         assert (m_type == LEFT);
         m_block = reinterpret_cast<cBlock *>(next);
@@ -394,7 +391,7 @@ namespace DoI
     }
 
     void cContact::
-    set_prev(IBlock * prev)
+    set_prev(iBlock * prev)
     {
         assert (m_type == RIGHT);
         m_block = reinterpret_cast<cBlock *>(prev);
@@ -418,7 +415,7 @@ namespace DoI
         //INJEKCIJA
         //Esant įtampai <= 0, injekcija NEVYKSTA. (tipo celiv atveju)
 
-        if (m_G->voltage() <= 0)
+        if (m_E->voltage() <= 0)
             return;
 
         double dc;
@@ -427,12 +424,12 @@ namespace DoI
         {
             //Imame lauką kontakto kairėj, verčiam jį pasidaryti 0.
             //Imame lauką, kuris buvo skaičiuotas iš dešinės į kairę.
-            dc = (m_E_prev->infE) / m_C->c_k / m_C->c_q;
+            dc = (m_E_prev->infE) / m_E->C()->c_k /m_E->C()->c_q;
             //Tikslas padaryti kad el. laukas būtų nulinis
 
             //m_E_prev->E = 0;
 
-            if (dc < m_C->c_MIN)
+            if (dc < m_E->C()->c_MIN)
             {
                 //Jei dalelių sk neigiamas ar mažesnis nei minimumas, tai...
                 dc = 0;
@@ -444,11 +441,11 @@ namespace DoI
         {
             //Imame lauką kontakto dešinėje, verčiam jį pasidaryti 0.
             //Imame lauką, kuris buvo skaičiuotas iš kairės į dešinę.
-            dc = (m_E_next->supE) / m_C->c_k / m_C->c_q;
+            dc = (m_E_next->supE) / m_E->C()->c_k / m_E->C()->c_q;
 
             //m_E_next->E = 0;
 
-            if (dc < m_C->c_MIN)
+            if (dc < m_E->C()->c_MIN)
             {
                 //Jei dalelių sk neigiamas ar mažesnis nei minimumas, tai...
                 dc = 0;
@@ -465,7 +462,7 @@ namespace DoI
         //Jei įtampa    +-    <0
         //              -+    >0
         // kai u = 0, nevyksta ekstrakcija.
-        if (m_G->voltage() < 0)
+        if (m_E->voltage() < 0)
         {
             if (m_type == LEFT)
             {
@@ -476,7 +473,7 @@ namespace DoI
                 m_data.m_p = 0;
             }
         }
-        else if (m_G->voltage() > 0)
+        else if (m_E->voltage() > 0)
         {
             if (m_type == LEFT)
             {
@@ -493,7 +490,7 @@ namespace DoI
     void cContact::
     recombination()
     {
-        double pairs = recombine(m_C, m_G, m_data, "cContact");
+        double pairs = physics::recombine(m_E, m_data, "cContact");
         m_data.m_n -= pairs;
         m_data.m_p -= pairs;
     }
@@ -501,8 +498,8 @@ namespace DoI
     void cContact::
     glue_unglue()
     {
-        double n = glue(m_C, m_G, m_data, m_data.m_n, m_data.m_n_capacity-m_data.m_n_stuck);
-        double p = glue(m_C, m_G, m_data, m_data.m_p, m_data.m_p_capacity-m_data.m_p_stuck);
+        double n = glue(m_E, m_data, m_data.m_n, m_data.m_n_capacity-m_data.m_n_stuck);
+        double p = glue(m_E, m_data, m_data.m_p, m_data.m_p_capacity-m_data.m_p_stuck);
         m_data.m_n -= n;
         m_data.m_n_stuck += n;
         m_data.m_p -= p;
@@ -513,7 +510,7 @@ namespace DoI
     relax()
     {
         //Čia rekombinacija ir krūvininkų prilipimas ir injekcija
-        switch (m_G->contacts())
+        switch (m_E->contacts())
         {
             case BLOCKING:
                 break;
@@ -540,7 +537,7 @@ namespace DoI
     field_create()
     {
         //Čia el. lauko skaičiavimas.
-        double dE = - m_C->c_k * m_C->c_q *    \
+        double dE = - m_E->C()->c_k * m_E->C()->c_q *    \
                     ((m_data.m_p + m_data.m_p_stuck) - \
                     (m_data.m_n + m_data.m_n_stuck));
 
@@ -566,22 +563,22 @@ namespace DoI
 
         double  dn, dp;
         //Elektronai einantys į kaimyną
-        dn = diffusion(m_data.m_n, m_block->read().m_n, m_C->c_n_D, m_C, m_G, m_data, "1");
+        dn = physics::diffusion(m_data.m_n, m_block->read().m_n, m_E->C()->c_n_D, m_E, m_data, "1");
         //Skylës einanèios į kaimyną
-        dp = diffusion(m_data.m_p, m_block->read().m_p, m_C->c_p_D, m_C, m_G, m_data, "2");
+        dp = physics::diffusion(m_data.m_p, m_block->read().m_p, m_E->C()->c_p_D, m_E, m_data, "2");
 
         //Dreifas pagal kontaktą:
         if (m_type == LEFT)
         {
             //Juda pasroviui elektronai
-            dn += drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "1");
-            dp += drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "2");
+            dn += physics::drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_E->C()->c_n_miu, m_E, m_data, "1");
+            dp += physics::drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_E->C()->c_p_miu, m_E, m_data, "2");
         }
         if (m_type == RIGHT)
         {
             //Juda pasroviui skylės
-            dn += drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_C->c_n_miu, m_C, m_G, m_data, "3");
-            dp += drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_C->c_p_miu, m_C, m_G, m_data, "4");
+            dn += physics::drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_E->C()->c_n_miu, m_E, m_data, "3");
+            dp += physics::drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_E->C()->c_p_miu, m_E, m_data, "4");
         }
 
         //Isimam daleles.

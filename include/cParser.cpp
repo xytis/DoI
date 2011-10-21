@@ -313,7 +313,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = recombinationConst(m_charge, m_mobility_n, m_mobility_p, m_epsilon, m_epsilon_0);
+            m_beta = physics::recombinationConst(m_charge, m_mobility_n, m_mobility_p, m_epsilon, m_epsilon_0);
             std::stringstream ss;
             ss << "Calculating beta from curently known values. Please check: " << m_beta;
             cLogger::warning(ss.str());
@@ -358,7 +358,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = driftConst(m_epsilon, m_epsilon_0, m_area);
+            m_beta = physics::driftConst(m_epsilon, m_epsilon_0, m_area);
             std::stringstream ss;
             ss << "Calculating drift constant from curently known values. Please check: " << m_drift;
             cLogger::warning(ss.str());
@@ -393,7 +393,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = diffusionConst(m_temperature, m_mobility_n, m_charge);
+            m_beta = physics::diffusionConst(m_temperature, m_mobility_n, m_charge);
             std::stringstream ss;
             ss << "Calculating diffusion N coeficient from curently known values. Please check: " << m_diffusion_n;
             cLogger::warning(ss.str());
@@ -413,7 +413,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = diffusionConst(m_temperature, m_mobility_p, m_charge);
+            m_beta = physics::diffusionConst(m_temperature, m_mobility_p, m_charge);
             std::stringstream ss;
             ss << "Calculating diffusion P coeficient from curently known values. Please check: " << m_diffusion_p;
             cLogger::warning(ss.str());

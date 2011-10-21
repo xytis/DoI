@@ -5,6 +5,7 @@
 
 namespace DoI
 {
+    /** Class for all classes to inherit from in this program */
     class cObject
     {
 

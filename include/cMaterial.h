@@ -46,7 +46,7 @@ namespace DoI
         double current;
     };
 
-    class IBlock;
+    class iBlock;
     class cField;
     class cEnvironment;
 
@@ -54,23 +54,25 @@ namespace DoI
     {
         private:
             //Pagrindiniai darbiniai masyvai
-            std::vector<IBlock *>  m_blockArray;
+            std::vector<iBlock *>  m_blockArray;
             std::vector<cField *>  m_fieldArray;
             //Pagalbinis duomenų masyvas, be link'ų
             std::vector<cData> m_backupArray;
 
+            //Aplinkos duomenų klasė
             cEnvironment * m_environment;
 
             //Laiko kintamieji
-            double m_time;
-            double m_backup_time;
+//            double m_time;
+//            double m_backup_time;
+            //Perkelti į cEnvironment
 
             //Pagrindinių masyvu inicijavimo f-ja
             //Sukuria link'us naudodamasi pagalbinėmis f-jos
             void init(const uint64_t &);
             //Pagalbinės init f-jos
-            void link(IBlock *, IBlock *);
-            void surround(cField *, IBlock *, cField *);
+            void link(iBlock *, iBlock *);
+            void surround(cField *, iBlock *, cField *);
 
             //Pagrindinio ciklo pagalbinės f-jos
             //Laikrodukas

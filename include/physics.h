@@ -16,14 +16,24 @@ namespace DoI
     class cConstants;
     class cEnvironment;
     // Formulaes
-/*
-    extern double drift(const double &, const double &, const double &,
-                 const cConstants *, const cGlobal *, const cData &, std::string);
-    extern double diffusion(const double &, const double &, const double &,
-                     const cConstants *, const cGlobal *, const cData &, std::string);
-    extern double recombine(const cConstants *, const cGlobal *, const cData &, std::string);
-    */
 
+    class physics
+    {
+        public:
+            static double drift(const double &, const double &, const double &,
+                         const cEnvironment *, const cData &, std::string);
+            static double diffusion(const double &, const double &, const double &,
+                             const cEnvironment *, const cData &, std::string);
+            static double recombine(const cEnvironment *, const cData &, std::string);
+
+            static double diffusionConst(double T, double miu, double q);
+            static double recombinationConst(double q, double n_miu, double p_miu, double eps, double eps0);
+            static double driftConst(double eps, double eps0, double S);
+            static double transitTime(cEnvironment & E);
+            static double currentMax(cEnvironment & E);
+    };
+
+/*
     static double diffusion(const double & interest,const double & neighbour, const double & D,
                       const cConstants * C, cEnvironment * G, const cData & data, std::string place)
     {
@@ -70,5 +80,6 @@ namespace DoI
 
         //return 0;
     }
+    */
 }
 #endif // PHYSICS_H_INCLUDED

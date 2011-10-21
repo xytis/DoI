@@ -37,13 +37,13 @@ namespace DoI
         return out;
     }
 
-    std::ostream & operator << (std::ostream & out, cGlobal & G)
+    std::ostream & operator << (std::ostream & out, cEnvironment & E)
     {
-        out << "Įtampa\t\t\t:\t" << G.U() << std::endl;
-        out << "Laiko žingsnis\t\t:\t" << G.dt() << std::endl;
-        out << "Storis\t\t\t:\t" << G.width() << std::endl;
+        out << "Įtampa\t\t\t:\t" << E.voltage() << std::endl;
+        out << "Laiko žingsnis\t\t:\t" << E.time_step() << std::endl;
+        out << "Storis\t\t\t:\t" << E.width() << std::endl;
         out << "Kontaktai\t\t:\t";
-        switch (G.contacts_type())
+        switch (E.contacts())
         {
             case (BLOCKING) : out << "blokuojantys"; break;
             case (INJECTING): out << "injektuojantys"; break;
@@ -52,49 +52,15 @@ namespace DoI
             default : out << "nenustatyti"; break;
         }
         out << std::endl;
-        out << "timeout\t\t\t:\t" << G.timeout() << std::endl;
-        out << "time_depth\t\t:\t" << G.time_depth() << std::endl;
-        out << "Padalinimų sk.\t\t:\t" << G.size() << std::endl;
-        out << "N talpa\t\t\t:\t" << G.n_cap() << std::endl;
-        out << "P talpa\t\t\t:\t" << G.p_cap() << std::endl;
+        out << "timeout\t\t\t:\t" << E.m_timeout << std::endl;
+        out << "time_depth\t\t:\t" << E.m_time_depth << std::endl;
+        out << "Padalinimų sk.\t\t:\t" << E.space_division() << std::endl;
+        out << "N talpa\t\t\t:\t" << E.capacity_n() << std::endl;
+        out << "P talpa\t\t\t:\t" << E.capacity_p() << std::endl;
         return out;
     }
 
 
 
-    double
-    transitTime(cEnvironment & E)
-    {
-        return 0.78*E.width()*E.width()/E.C()->c_n_miu/E.voltage();
-    }
 
-    double
-    currentMax(cEnvironment & E)
-    {
-        return 9.0/8.0*E.C()->c_eps*E.C()->c_eps0*(E.C()->c_n_miu +E.C()->c_p_miu)*E.voltage()*E.voltage()/E.width()/E.width()/E.width() * E.C()->c_S;
-    }
-
-    double
-    diffusionConst(double T, double miu, double q)
-    {
-        return (1.38e-23 * T * miu / q);
-    }
-
-    double
-    recombinationConst(double q, double n_miu, double p_miu, double eps, double eps0)
-    {
-        return q * (n_miu + p_miu) / eps /eps0; //Landþeveno rekombinacija
-    }
-
-    double
-    driftConst(double eps, double eps0, double S)
-    {
-        return (1/(eps * eps0 * S));
-    }
-
-    double
-    talpa (double eps, double eps0, double S, double d)
-    {
-        return eps*eps0*S/d;
-    }
 }

@@ -24,6 +24,7 @@
 
 namespace DoI
 {
+    /** Class to hold all parameters of space divided material */
     class cData
     {
         public:
@@ -38,10 +39,7 @@ namespace DoI
             double  m_n_buffer;     //incoming carriers
             double  m_p_buffer;
 
-            //double  m_E;            //electric field in block
             double  m_width;        //width of a block
-
-            //friend class IBlock;
 
             friend std::ostream & operator << (std::ostream & out, const cData & data)
             {
@@ -62,7 +60,6 @@ namespace DoI
                 return in;
             };
 
-        //public:
             cData() {};
             cData(double n, double p,
                 double n_stuck, double p_stuck,

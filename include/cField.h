@@ -7,15 +7,15 @@
 
 namespace DoI
 {
-    class IBlock;
+    class iBlock;
 
     class cField
     {
         private:
             cField * m_next;
             cField * m_prev;
-            IBlock * m_left;
-            IBlock * m_right;
+            iBlock * m_left;
+            iBlock * m_right;
         public:
             cField();
 
@@ -24,8 +24,8 @@ namespace DoI
 
             void set_next(cField *);
             void set_prev(cField *);
-            void attach_left(IBlock *);
-            void attach_right(IBlock *);
+            void attach_left(iBlock *);
+            void attach_right(iBlock *);
 
 
             friend std::ostream & operator << (std::ostream &, cField &);

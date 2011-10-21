@@ -32,19 +32,28 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="include/CExeptions.h" />
 		<Unit filename="include/cBlock.cpp" />
 		<Unit filename="include/cBlock.h" />
 		<Unit filename="include/cConstants.cpp" />
 		<Unit filename="include/cConstants.h" />
 		<Unit filename="include/cData.h" />
-		<Unit filename="include/cField.hpp" />
+		<Unit filename="include/cEnvironment.cpp" />
+		<Unit filename="include/cEnvironment.h" />
+		<Unit filename="include/cExeptions.h" />
+		<Unit filename="include/cField.h" />
+		<Unit filename="include/cLogger.cpp" />
+		<Unit filename="include/cLogger.h" />
 		<Unit filename="include/cMaterial.cpp" />
 		<Unit filename="include/cMaterial.h" />
+		<Unit filename="include/cParser.cpp" />
+		<Unit filename="include/cParser.h" />
+		<Unit filename="include/cPrinter.h" />
 		<Unit filename="include/cSimulation.cpp" />
-		<Unit filename="include/cSimulation.hpp" />
+		<Unit filename="include/cSimulation.h" />
 		<Unit filename="include/global.h" />
-		<Unit filename="include/tFunctors.hpp" />
+		<Unit filename="include/physics.cpp" />
+		<Unit filename="include/physics.h" />
+		<Unit filename="include/tFunctors.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

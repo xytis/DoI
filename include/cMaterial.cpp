@@ -34,7 +34,7 @@ namespace DoI
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
         //Šiuo atveju svarbu koks storio parametras duotas C.
-        IBlock * temp = new cContact(LEFT,
+        iBlock * temp = new cContact(LEFT,
                                      cData(0,
                                            0,
                                            0,
@@ -45,7 +45,6 @@ namespace DoI
                                            0,
                                            0,
                                            E->width()/E->space_division()),
-                                     E->C(),
                                      E);
         m_blockArray.push_back(temp);
 
@@ -63,7 +62,6 @@ namespace DoI
                                     0,
                                     0,
                                     E->width()/E->space_division()),
-                              E->C(),
                               E);
             m_blockArray.push_back(temp);
         }
@@ -82,7 +80,6 @@ namespace DoI
                                   0,
                                   0,
                                   E->width()/E->space_division()),
-                            E->C(),
                             E);
         m_blockArray.push_back(temp);
 
@@ -103,7 +100,7 @@ namespace DoI
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
 
-        IBlock * temp = new cContact(LEFT, first,C,G);
+        iBlock * temp = new cContact(LEFT, first,C,G);
         m_blockArray.push_back(temp);
 
         for (uint64_t i = 1; i < size-1; i++)
@@ -139,7 +136,7 @@ namespace DoI
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
 
-        IBlock * temp = new cContact(LEFT, all.at(0),C,G);
+        iBlock * temp = new cContact(LEFT, all.at(0),C,G);
         m_blockArray.push_back(temp);
 
         for (uint64_t i = 1; i < all.size()-1; i++)
@@ -197,14 +194,14 @@ namespace DoI
     }
 
     void cMaterial::
-    link (IBlock * left, IBlock * right)
+    link (iBlock * left, iBlock * right)
     {
         left->set_next(right);
         right->set_prev(left);
     }
 
     void cMaterial::
-    surround (cField * left, IBlock * block, cField * right)
+    surround (cField * left, iBlock * block, cField * right)
     {
         left->set_next(right);
         right->set_prev(left);
@@ -473,8 +470,8 @@ namespace DoI
         std::cout << std::endl;
 */
 
-        out << "Transit time: " << transitTime(*m_environment) << std::endl;
-        out << "Max Current: " << currentMax(*m_environment) << std::endl;
+        out << "Transit time: " << physics::transitTime(*m_environment) << std::endl;
+        out << "Max Current: " << physics::currentMax(*m_environment) << std::endl;
         out << "Other: " << std::endl;
         out << (*(m_environment->C())) << std::endl;
         out << std::endl;
@@ -577,7 +574,7 @@ namespace DoI
     check_link()
     {
         report("initial");
-        IBlock * cur = m_blockArray.at(0);
+        iBlock * cur = m_blockArray.at(0);
         for (uint64_t i = 1; i < m_environment->space_division(); i++)
         {
             assert(m_blockArray.at(i) == cur->next());
