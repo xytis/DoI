@@ -52,7 +52,6 @@ namespace DoI
         public:
             static cParserStack * instance();
             cParser * current;
-            cParser * last;
             void push(cParser *);
             cParser * pop();
         private:
@@ -71,15 +70,19 @@ namespace DoI
     class cParser
     {
         public:
-            cParser();
+            cParser(cParser *);
             bool include(std::stringstream & param);
             bool end(std::stringstream & param);
             bool close(std::stringstream & param);
             bool resume(std::stringstream & param);
             bool parse(const std::string & name);
             bool comment(std::string & word);
+
+            virtual void report(cParser * child, cObject * object) = 0;
+
             cObject * object();
         protected:
+            cParser * m_parent;
             bool parseLine(std::string & line);
             bool parseFile(std::istream & file);
             std::map<std::string, bool (cParser::*) (std::stringstream &)> m_actions;
@@ -94,8 +97,8 @@ namespace DoI
             bool simulation(std::stringstream & param);
     		bool environment(std::stringstream & param);
     		bool printer(std::stringstream & param);
-    		bool close(std::stringstream & param);
-    		bool resume(std::stringstream & param);
+    		bool end(std::stringstream & param);
+    		void report(cParser * child, cObject * object);
             ~cMainParser() {};
         protected:
         private:
@@ -109,8 +112,9 @@ namespace DoI
     class cEnvironmentParser : public cParser
     {
     	public:
-    		cEnvironmentParser();
-    		bool close(std::stringstream & param);
+    		cEnvironmentParser(cParser * parent);
+    		void report(cParser * child, cObject * object) {};
+    		bool end(std::stringstream & param);
     		///Constants
     		bool beta(std::stringstream & params);
             bool area(std::stringstream & params);
@@ -162,13 +166,16 @@ namespace DoI
 
     class cPrinterParser : public cParser
     {
-
+        public:
+            cPrinterParser(cParser * parent);
+            void report(cParser * child, cObject * object) {};
     };
 
     class cScenarioParser : public cParser
     {
-
-
+        public:
+            cScenarioParser(cParser * parent);
+            void report(cParser * child, cObject * object) {};
     };
 }
 #endif // CPARSER_H_INCLUDED

@@ -54,7 +54,7 @@ namespace DoI
     cParserStack * cParserStack::s_instance = 0;
 
     cParserStack::cParserStack():
-    current(NULL),last(NULL)
+    current(NULL)
     {
 
     }
@@ -68,12 +68,7 @@ namespace DoI
 
     cParser * cParserStack::pop()
     {
-        //TODO: Rethink this shit. How to avoid deletion of itself?
-        if (last)
-        {
-            delete last;
-        }
-        last = current;
+        cParser * last = current;
         m_stack.pop();
         current = m_stack.top();
         return last;
@@ -81,18 +76,13 @@ namespace DoI
 
     void cParserStack::push(cParser * p)
     {
-        if (last)
-        {
-            delete last;
-        }
-        last = current;
         current = p;
         m_stack.push(p);
     }
     /*
         cParser
     */
-    cParser::cParser():m_object(NULL)
+    cParser::cParser(cParser * parent):m_parent(parent), m_object(NULL)
     {
         cParserStack::instance()->push(reinterpret_cast<cParser *>(this));
         m_actions[PARSER_INCLUDE] = &cParser::include;
@@ -110,21 +100,11 @@ namespace DoI
 
     bool cParser::end(std::stringstream & params)
     {
-        cParserStack::instance()->current->close(params);
         cParserStack::instance()->pop();
-        cParserStack::instance()->current->resume(params);
-        return true;
-    }
-
-    bool cParser::close(std::stringstream & params)
-    {
-        //Nothing to do here.
-        return true;
-    }
-
-    bool cParser::resume(std::stringstream & params)
-    {
-        //Nothing to do here.
+        if (m_parent)
+        {
+            m_parent->report(reinterpret_cast<cParser *>(this), m_object);
+        }
         return true;
     }
 
@@ -174,7 +154,7 @@ namespace DoI
             //If line not understood, give warning:
             if (act == m_actions.end())
             {
-                cLogger::warning(std::string("Line ") + line + std::string(" parsing failed."));
+                cLogger::warning(std::string("Line ") + line + std::string(" not understood, ignoring."));
                 return false;
             }
             bool (cParser::*function) (std::stringstream &) = act->second;
@@ -205,10 +185,14 @@ namespace DoI
     /*
         cMainParser
     */
-    cMainParser::cMainParser()
+    cMainParser::cMainParser():cParser(NULL)
     {
+        //rewrite end sequence
+        m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::end);
+
         m_actions[MAINPARSER_SIMULATION] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::simulation);
         m_actions[MAINPARSER_ENVIRONMENT] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::environment);
+        m_actions[MAINPARSER_PRINTER] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::printer);
     }
 
     bool cMainParser::simulation(std::stringstream & params)
@@ -219,19 +203,19 @@ namespace DoI
 
     bool cMainParser::environment(std::stringstream & params)
     {
-        cEnvironmentParser * parser = new cEnvironmentParser();
+        cEnvironmentParser * parser = new cEnvironmentParser(this);
         m_last = MAINPARSER_ENVIRONMENT;
         return true;
     }
 
     bool cMainParser::printer(std::stringstream & params)
     {
-        cPrinterParser * parser = new cPrinterParser();
+        cPrinterParser * parser = new cPrinterParser(this);
         m_last = MAINPARSER_PRINTER;
         return true;
     }
 
-    bool cMainParser::close(std::stringstream & params)
+    bool cMainParser::end(std::stringstream & params)
     {
         if (m_real_object->validityCheck())
         {
@@ -244,37 +228,39 @@ namespace DoI
         }
     }
 
-    bool cMainParser::resume(std::stringstream & params)
+    void cMainParser::report(cParser * child, cObject * object)
     {
         //Lets find out what we called last time:
         if (m_last == MAINPARSER_ENVIRONMENT)
         {
-            m_environment = reinterpret_cast<cEnvironment *>(cParserStack::instance()->last->object());
+            m_environment = reinterpret_cast<cEnvironment *>(object);
         }
         if (m_last == MAINPARSER_PRINTER)
         {
-            m_printer = reinterpret_cast<cPrinter *>(cParserStack::instance()->last->object());
+            m_printer = reinterpret_cast<cPrinter *>(object);
         }
         /*
         if (m_last == MAINPARSER_MATERIAL)
         {
-            m_material = reinterpret_cast<cMaterial *>(cParserStack::instance()->last->object());
+            m_material = reinterpret_cast<cMaterial *>(object);
         }
         */
         /*
         if (m_last == MAINPARSER_PROCEDURE)
         {
-            m_procedure = reinterpret_cast<cProcedure *>(cParserStack::instance()->last->object());
+            m_procedure = reinterpret_cast<cProcedure *>(object);
         }
         */
-        return true;
     }
 
     /*
         cEnvironmentParser
     */
-    cEnvironmentParser::cEnvironmentParser()
+    cEnvironmentParser::cEnvironmentParser(cParser * parent):cParser(parent)
     {
+        //rewrite end sequence
+        m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::end);
+
         m_actions[ENVIRONMENTPARSER_CONSTANT_BETA] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::beta);
         m_actions[ENVIRONMENTPARSER_CONSTANT_AREA] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::area);
         m_actions[ENVIRONMENTPARSER_CONSTANT_MIN] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::min);
@@ -298,7 +284,7 @@ namespace DoI
 
     }
 
-    bool cEnvironmentParser::close(std::stringstream & params)
+    bool cEnvironmentParser::end(std::stringstream & params)
     {
         cConstants * constants = new cConstants(m_beta,
                                               m_area,
@@ -313,8 +299,8 @@ namespace DoI
                                               m_diffusion_n,
                                               m_diffusion_p,
                                               m_glue);
-
-         return (m_object = reinterpret_cast<cObject *>(new cEnvironment(constants, m_time_step, m_space_division)));
+        m_object = reinterpret_cast<cObject *>(new cEnvironment(constants, m_time_step, m_space_division, m_width, m_contacts, m_capacity_n, m_capacity_p));
+        return cParser::end(params);
     }
 
     bool cEnvironmentParser::beta(std::stringstream & params)
@@ -494,6 +480,14 @@ namespace DoI
     bool cEnvironmentParser::capacity_p(std::stringstream & params)
     {
         return params >> m_capacity_p;
+    }
+
+    /*
+    cPrinterParser
+    */
+    cPrinterParser::cPrinterParser(cParser * parent):cParser(parent)
+    {
+
     }
 
  }

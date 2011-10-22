@@ -20,7 +20,7 @@ namespace DoI
     class cEnvironment: public cObject
     {
         public:
-            cEnvironment(cConstants * constants, double time_step, uint64_t space_division);
+            cEnvironment(cConstants * constants, double time_step, uint64_t space_division, double width, CONTACTS_TYPE contacts, double capacity_n, double capacity_p);
             cConstants * C();
 
             double time_step();
