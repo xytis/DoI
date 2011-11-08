@@ -87,6 +87,7 @@ namespace DoI
         cParserStack::instance()->push(reinterpret_cast<cParser *>(this));
         m_actions[PARSER_INCLUDE] = &cParser::include;
         m_actions[PARSER_END] = &cParser::end;
+        m_actions[PARSER_MATH] = &cParser::math;
     }
 
     bool cParser::include(std::stringstream & params)
@@ -106,6 +107,11 @@ namespace DoI
             m_parent->report(reinterpret_cast<cParser *>(this), m_object);
         }
         return true;
+    }
+
+    bool cParser::math(std::stringstream & params)
+    {
+        return m_calculator.parse_stream(params);
     }
 
     bool cParser::parse(const std::string & filename)

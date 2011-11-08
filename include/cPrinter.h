@@ -24,6 +24,14 @@ namespace DoI
             virtual void Call() = 0;        // call using function
     };
 
+    /**
+        Printer: cLogCurrent
+        Type: LOG NUMBER
+        Mode: CURRENT
+        Flags: REWRITE
+      ?
+    */
+
     class cumulPrint : public cPrinter
     {
         private:

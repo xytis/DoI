@@ -12,9 +12,12 @@
 #include "global.h"
 
 #include "cSimulation.h"
+#include "cCalculator.h"
+#include "tFunctors.h"
 
 #define PARSER_INCLUDE "INCLUDE"
 #define PARSER_END "END"
+#define PARSER_MATH "%"
 
 #define MAINPARSER_SIMULATION "SIMULATION"
 #define MAINPARSER_ENVIRONMENT "ENVIRONMENT"
@@ -66,6 +69,7 @@ namespace DoI
     /** Class, which is used as an iterface to parse config files for
     diferent classes.
     Binds INCLUDE statement.
+    Binds % (calculator).
     */
     class cParser
     {
@@ -82,6 +86,7 @@ namespace DoI
 
             cObject * object();
         protected:
+            cCalculator m_calculator;
             cParser * m_parent;
             bool parseLine(std::string & line);
             bool parseFile(std::istream & file);
@@ -109,6 +114,9 @@ namespace DoI
 
     };
 
+    /**
+     * DONE
+     */
     class cEnvironmentParser : public cParser
     {
     	public:

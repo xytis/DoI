@@ -50,6 +50,8 @@
 		<Unit filename="include/cPrinter.h" />
 		<Unit filename="include/cSimulation.cpp" />
 		<Unit filename="include/cSimulation.h" />
+		<Unit filename="include/calculator.cpp" />
+		<Unit filename="include/calculator.h" />
 		<Unit filename="include/global.h" />
 		<Unit filename="include/physics.cpp" />
 		<Unit filename="include/physics.h" />

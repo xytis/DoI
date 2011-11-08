@@ -13,6 +13,32 @@ namespace DoI
             virtual double Call(double) = 0;       // call using function
     };
 
+    class calculatorFunction
+    {
+        private:
+            cCalculator * calc;
+            std::string name;
+        public:
+            calculatorFunction(std::string verbose_name, cCalculator * n_calc): calc(n_calc)
+            {
+                std::stringstream ss(verbose_name);
+                std::getline(ss, name, '(');    //Ignore parameter names.
+                name.append("()");   //Add parentheses.
+            };
+            double operator()(double x)
+            {
+                std::vector<double> params;
+                params.push_back(x);
+                return calc->call(name, params);
+            };
+            double Call(double x)
+            {
+                std::vector<double> params;
+                params.push_back(x);
+                return calc->call(name, params);
+            };
+    };
+
     class mathLine : public mathFunction
     {
         private:

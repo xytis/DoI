@@ -1,5 +1,16 @@
 SIMULATION
 
+#WORKING MATH
+# -1 + (2 - 3) * 4 / 6
+# f(x) = 2*x+18/3
+# a = 2
+# b = 3
+# g() = a/b + f(1)
+# exp(asin(sin(5^2)))
+
+#NOT WORKING MATH
+# p(x) = f(x) * 2
+
 ENVIRONMENT
 INCLUDE "config/const.txt"
 TIME_STEP 1e-9
@@ -12,36 +23,43 @@ END
 
 PRINTER
 INCLUDE "config/printer.txt"
+
+# <-- Stoped here.
+
 TYPE LOG 2
 #TYPE LINEAR 1000
 #TYPE TIMER 1e-10
 MODE CURRENT
 #MODE DUMP
+#Normavimas
+% t_tr = 12 / 5
+% j_0 = 164 / 2
+NORM X t_tr
+NORM Y j_0
 #WILDCARD ON
-#REWRITE ON
-FILENAME "replace.txt"
 #FILENAME "wildcard_*_test.txt"
 #FILENAME "wildcard_not_here.txt"
-END
-
-MATERIAL
-PARAMETER L_0 = 10
-PARAMETER alpha = 0.1
-FUNCTION f(x) = L_0 * exp(-x*alpha)
-FUNCTION g(x) = (1 + 2 * 3 - 4 / 5 )^2
-
-INITIAL f(x)
+REWRITE ON
+FILENAME "replace.txt"
 END
 
 #Will be documented (maybe)
 SCENARIO
+
+% L_0 = 10
+% alpha = 0.1
+% f(x) = L_0 * exp(-x*alpha)
+% g(x) = (1 + 2 * 3 - 4 / 5 )^2
+
+INITIAL f(x)
+
 #RUN name t_begin t_end other params
-PARAMETER A = 1e4
-FUNCTION transit_time() = 5*5*5
-FUNCTION end_time() = 5*transit_time()
-RUN CELIV 0 end_time() A
+% A = 1e4
+% transit_time = 5*5*5
+% end_time = 5*transit_time
+RUN CELIV 0 end_time A
 #RUN DOI
 #RUN EKRS
-#RUN STABLE end_time() end_time()
+#RUN STABLE end_time end_time
 
 END
