@@ -36,6 +36,7 @@ namespace DoI
             void contacts(CONTACTS_TYPE);
 
             double voltage();
+            void voltage(double);
 
             double capacity_n();
             double capacity_p();
@@ -54,6 +55,7 @@ namespace DoI
             uint64_t m_space_division;
             double m_width;
             CONTACTS_TYPE m_contacts;
+            double m_voltage;
             double m_capacity_n;
             double m_capacity_p;
 

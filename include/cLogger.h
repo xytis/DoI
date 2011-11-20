@@ -9,6 +9,7 @@ class cLogger
 	public:
         static void warning(std::string);
         static void error(std::string);
+        static void info(std::string);
 	protected:
 
 	private:

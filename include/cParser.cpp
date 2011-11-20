@@ -88,6 +88,7 @@ namespace DoI
         m_actions[PARSER_INCLUDE] = &cParser::include;
         m_actions[PARSER_END] = &cParser::end;
         m_actions[PARSER_MATH] = &cParser::math;
+        m_actions[PARSER_ECHO] = &cParser::echo;
     }
 
     bool cParser::include(std::stringstream & params)
@@ -111,7 +112,14 @@ namespace DoI
 
     bool cParser::math(std::stringstream & params)
     {
-        return m_calculator.parse_stream(params);
+        return (m_calculator.parse_stream(params) == 0);
+    }
+
+    bool cParser::echo(std::stringstream & params)
+    {
+        std::cout << params.str() << std::endl;
+        std::cout << m_calculator.calculate_stream(params) << std::endl;
+        return true;
     }
 
     bool cParser::parse(const std::string & filename)
@@ -191,7 +199,7 @@ namespace DoI
     /*
         cMainParser
     */
-    cMainParser::cMainParser():cParser(NULL)
+    cMainParser::cMainParser():cParser(NULL),m_environment(NULL),m_printer(NULL),m_material(NULL)
     {
         //rewrite end sequence
         m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::end);
@@ -199,11 +207,13 @@ namespace DoI
         m_actions[MAINPARSER_SIMULATION] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::simulation);
         m_actions[MAINPARSER_ENVIRONMENT] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::environment);
         m_actions[MAINPARSER_PRINTER] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::printer);
+        m_actions[MAINPARSER_MATERIAL] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::material);
+        m_actions[MAINPARSER_RUN] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMainParser::run);
+
     }
 
     bool cMainParser::simulation(std::stringstream & params)
     {
-        m_real_object = new cSimulation();
         return true;
     }
 
@@ -216,13 +226,40 @@ namespace DoI
 
     bool cMainParser::printer(std::stringstream & params)
     {
-        cPrinterParser * parser = new cPrinterParser(this);
+        cPrinterParser * parser = new cPrinterParser(this, m_material);
         m_last = MAINPARSER_PRINTER;
+        return true;
+    }
+
+    bool cMainParser::run(std::stringstream & params)
+    {
+        if (!m_todo)
+        {
+            m_todo = new std::queue<sOperation>;
+        }
+        std::string scheme, temp;
+        params >> scheme;
+        std::stringstream parsed;
+        while (params >> temp)
+        {
+            parsed << m_calculator.calculate_line(temp) << ' ';
+        }
+        sOperation t;
+        t.name = scheme;
+        t.params = parsed.str();
+        m_todo->push(t);
+    }
+
+    bool cMainParser::material(std::stringstream & params)
+    {
+        cMaterialParser * parser = new cMaterialParser(this, m_environment);
+        m_last = MAINPARSER_MATERIAL;
         return true;
     }
 
     bool cMainParser::end(std::stringstream & params)
     {
+        m_real_object = new cSimulation(m_environment, m_material, m_printer, m_todo);
         if (m_real_object->validityCheck())
         {
             m_object = reinterpret_cast<cObject *>(m_real_object);
@@ -240,17 +277,22 @@ namespace DoI
         if (m_last == MAINPARSER_ENVIRONMENT)
         {
             m_environment = reinterpret_cast<cEnvironment *>(object);
+            //m_real_object.set_environment(m_environment);
         }
         if (m_last == MAINPARSER_PRINTER)
         {
             m_printer = reinterpret_cast<cPrinter *>(object);
+            //m_real_object.set_printer(m_printer);
         }
-        /*
+
         if (m_last == MAINPARSER_MATERIAL)
         {
             m_material = reinterpret_cast<cMaterial *>(object);
+            if (m_printer)
+                m_printer->m_object = m_material;
+            //m_real_object.set_material(m_material);
         }
-        */
+
         /*
         if (m_last == MAINPARSER_PROCEDURE)
         {
@@ -491,9 +533,138 @@ namespace DoI
     /*
     cPrinterParser
     */
-    cPrinterParser::cPrinterParser(cParser * parent):cParser(parent)
+    cPrinterParser::cPrinterParser(cParser * parent, cMaterial * object):cParser(parent),m_test_object(object),m_filename(""),
+    m_norm_x(1), m_norm_y(1), m_type(NONE), m_mode(CURRENT), m_increment(1)
     {
+        m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cPrinterParser::end);
 
+
+        m_actions[PRINTERPARSER_TYPE] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cPrinterParser::type);
+        m_actions[PRINTERPARSER_MODE] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cPrinterParser::mode);
+        m_actions[PRINTERPARSER_NORM] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cPrinterParser::norm);
+        m_actions[PRINTERPARSER_FILENAME] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cPrinterParser::filename);
+
+
+    }
+
+    bool cPrinterParser::type(std::stringstream & params)
+    {
+        std::string name;
+        params >> name;
+        if (name == "NONE")
+        {
+            m_type = NONE;
+            return true;
+        }
+        if (name == "LOG")
+        {
+            m_type = LOG;
+            m_increment = m_calculator.calculate_stream(params);
+            return true;
+        }
+        if (name == "TIMER")
+        {
+            m_type = TIMER;
+            m_increment = m_calculator.calculate_stream(params);
+            return true;
+        }
+        return false;
+    }
+
+    bool cPrinterParser::mode(std::stringstream & params)
+    {
+        std::string name;
+        params >> name;
+        if (name == "CURRENT")
+        {
+            m_mode = CURRENT;
+            return true;
+        }
+        if (name == "DUMP")
+        {
+            m_mode = DUMP;
+            return true;
+        }
+        return false;
+    }
+
+    bool cPrinterParser::norm(std::stringstream & params)
+    {
+        std::string axis;
+        params >> axis;
+        if (axis == "X")
+        {
+            m_norm_x = m_calculator.calculate_stream(params);
+            return true;
+        }
+        if (axis == "Y")
+        {
+            m_norm_y = m_calculator.calculate_stream(params);
+            return true;
+        }
+        return false;
+    }
+
+    bool cPrinterParser::filename(std::stringstream & params)
+    {
+        std::string name;
+        params >> m_filename;
+        trimQuotes(m_filename);
+        return m_filename != "";
+    }
+
+    bool cPrinterParser::end(std::stringstream & params)
+    {
+        cPrinter * object;
+        switch (m_type)
+        {
+            case NONE:
+            {
+                cIterPrinter * temp = new cIterPrinter(m_filename, m_test_object, m_norm_x, m_norm_y, m_mode);
+                object = reinterpret_cast<cPrinter*>(temp);
+                break;
+            }
+            case LOG:
+            {
+                cLogPrinter * temp = new cLogPrinter(m_filename, m_test_object, m_increment, m_norm_x, m_norm_y, m_mode);
+                object = reinterpret_cast<cPrinter*>(temp);
+                break;
+            }
+            case TIMER:
+            {
+                cTimerPrinter * temp = new cTimerPrinter(m_filename, m_test_object, m_increment, m_norm_x, m_norm_y, m_mode);
+                object = reinterpret_cast<cPrinter*>(temp);
+                break;
+            }
+        }
+
+        m_object = reinterpret_cast<cObject *>(object);
+        return cParser::end(params);
+    }
+
+    /*
+    cMaterialParser
+    */
+    cMaterialParser::cMaterialParser(cParser * parent, cEnvironment * environment):cParser(parent)
+    {
+        m_real_object = new cMaterial(environment);
+        m_actions[MATERIALPARSER_INITIAL] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::initial);
+        m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::end);
+    }
+
+    bool cMaterialParser::initial(std::stringstream & params)
+    {
+        std::string function;
+        params >> function;
+        calculatorFunction * foo = new calculatorFunction(function, &m_calculator);
+        m_real_object->fill(reinterpret_cast<mathFunction *>(foo), reinterpret_cast<mathFunction *>(foo));
+        return true;
+    }
+
+    bool cMaterialParser::end(std::stringstream & params)
+    {
+        m_object = reinterpret_cast<cObject *>(m_real_object);
+        return cParser::end(params);
     }
 
  }

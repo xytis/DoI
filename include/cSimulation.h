@@ -9,15 +9,23 @@
 #include "tFunctors.h"
 #include "cPrinter.h"
 #include "cEnvironment.h"
+#include "cLogger.h"
 
 #include <map>
 #include <string>
 #include <iostream>
+#include <queue>
 
 namespace DoI {
     /** Main simulation executive class.
     Controls constant clases, output classes, parsing of scenario file.
     */
+    struct sOperation
+    {
+        std::string name;
+        std::string params;
+    };
+
     class cSimulation : public cObject {
 
         private:
@@ -27,10 +35,20 @@ namespace DoI {
             cMaterial * m_object;
             ///Printer for output
             cPrinter * m_printer;
+            ///Operation queue:
+            std::queue<sOperation> * m_operation_queue;
+            ///Operation map:
+            std::map<std::string, bool (cSimulation::*) (std::istream &)> m_operation_map;
+            ///Operations:
+            bool celiv(std::istream & params);
+            bool stable(std::istream & params);
+
+            void do_until(double);
+            void do_iter();
 
         public:
             ///Constructor which creates the object
-            cSimulation();
+            cSimulation(cEnvironment *, cMaterial *, cPrinter *, std::queue<sOperation> *);
             ///Main function, which controls the flow
             void run();
             ///Validation function, checks if run method is ok to run

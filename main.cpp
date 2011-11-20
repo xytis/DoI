@@ -22,7 +22,7 @@
 using namespace DoI;
 
 
-
+/**
 int main(int argc, char* argv[])
 {
     cCalculator calc;
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     std::cout << calc.call("g()", params) << std::endl;
     std::cout << calc.get("a") << std::endl;
 }
-
+*/
 int interactive_calc(int argc, char* argv[])
 {
     cCalculator calc;
@@ -53,7 +53,7 @@ int interactive_calc(int argc, char* argv[])
 	return calc.calculate();
 }
 
-/*
+
 int main(int argc, char * argv[])
 {
     cMainParser main_parser;
@@ -63,13 +63,13 @@ int main(int argc, char * argv[])
             std::string filename(argv[1]);
             main_parser.parse(filename);
             cSimulation * sim = reinterpret_cast<cSimulation *>(main_parser.object());
-            //sim->run();
+            sim->run();
         }
         else
         {
             main_parser.parse(std::string("scenario.txt"));
             cSimulation * sim = reinterpret_cast<cSimulation *>(main_parser.object());
-            //sim->run();
+            sim->run();
         }
     }
     catch (exception::FileMisingExeption & e)
@@ -90,4 +90,4 @@ int main(int argc, char * argv[])
     }
     return 0;
 }
-*/
+

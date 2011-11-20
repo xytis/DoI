@@ -99,7 +99,7 @@ namespace DoI
             void fill(mathFunction *, mathFunction *);
 
             //Pagrindinio ciklo žingsnis
-            void run();
+            bool run();
             //Dabartinės būsenos išvedimas į ekraną.
             void report(std::string name = "", bool hold = false);
 
@@ -114,7 +114,7 @@ namespace DoI
             //Parsigabeną visą duomenų masyvą iš formatuoto failo.
             void load(std::string);
             //Sumeta visą duomenų masyvą į formatuotą failą.
-            void dump(std::string);
+            void dump(std::ostream & out);
 
             //Vidinių parametrų rodymui:
             double current();

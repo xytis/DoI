@@ -2,6 +2,7 @@
 #define TFUNCTOR_HPP
 
 #include <cmath>
+#include "calculator.h"
 
 namespace DoI
 {
@@ -13,7 +14,7 @@ namespace DoI
             virtual double Call(double) = 0;       // call using function
     };
 
-    class calculatorFunction
+    class calculatorFunction : public mathFunction
     {
         private:
             cCalculator * calc;

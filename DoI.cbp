@@ -47,6 +47,7 @@
 		<Unit filename="include/cMaterial.h" />
 		<Unit filename="include/cParser.cpp" />
 		<Unit filename="include/cParser.h" />
+		<Unit filename="include/cPrinter.cpp" />
 		<Unit filename="include/cPrinter.h" />
 		<Unit filename="include/cSimulation.cpp" />
 		<Unit filename="include/cSimulation.h" />

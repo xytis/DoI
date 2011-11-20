@@ -113,7 +113,7 @@ namespace DoI
 
     std::ostream & operator << (std::ostream & out, cField & F)
     {
-        out << F.E << ' ' << F.supE << ' ' << F.infE << ' ' << F.dE;
+        out << F.E << '\t' << F.supE << '\t' << F.infE << '\t' << F.dE;
         return out;
     }
 

@@ -93,6 +93,7 @@ void cCalculator::set_input(std::istream * n_input)
     input = n_input;
 }
 
+/** Main loop, for debuging, or interactive calculator */
 int cCalculator::calculate()
 {
     while (*input) {
@@ -405,6 +406,28 @@ int cCalculator::parse_stream(std::istream & stream)
 	}
     set_input(temp);
 	return no_of_errors;
+
+}
+
+double cCalculator::calculate_line(std::string line)
+{
+    std::istringstream stream(line);
+    return calculate_stream(stream);
+}
+
+double cCalculator::calculate_stream(std::istream & stream)
+{
+    std::istream * temp = input;
+    set_input(&stream);
+    double last_result(0);
+    while (*input) {
+		get_token();
+		if (curr_tok == END) break;
+		if (curr_tok == PRINT) continue;
+		last_result = expr(false);    //Parse
+	}
+    set_input(temp);
+	return last_result;
 
 }
 

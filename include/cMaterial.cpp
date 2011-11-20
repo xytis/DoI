@@ -29,7 +29,7 @@ namespace DoI
     cMaterial(cEnvironment * E):
         m_environment(E)
     {
-        E->m_time = - E->time_step();
+        //E->m_time = - E->time_step();
         //Kuriam paraleliai ir el. lauko masyvą.
         cField * E_temp = new cField(); //Visas jungimas vyksta vėliau.
         m_fieldArray.push_back(E_temp);
@@ -359,15 +359,16 @@ namespace DoI
         }
     }
 
-    void cMaterial::
+    bool cMaterial::
     run()
     //This one makes things happen
     {
         try {
-            backup();   //Saves current state !!!THE BUFFER IS NOT SAVED (buffer moved to cData. Thus, it's saved)
+            backup();   //Saves current state
             clock_tick(); //Advances the clock
             flush();    //Flushes the buffered particles
             calc();     //Makes the calculations, fills the buffers
+            return true;
         }
         catch (exception::TimeIntervalTooLarge & e)
         {
@@ -375,6 +376,7 @@ namespace DoI
             std::cerr << e.what() << std::endl;
             std::cerr << "Changed to: " << m_environment->time_step() << std::endl;
             restore();
+            return false;
         }
         catch (exception::TimeIntervalTooSmall & e)
         {
@@ -382,6 +384,7 @@ namespace DoI
             std::cerr << e.what() << std::endl;
             std::cerr << "Changed to: " << m_environment->time_step() << std::endl;
             restore();
+            return false;
         }
     }
 
@@ -498,7 +501,7 @@ namespace DoI
         //Writing data
         for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
-            fout << m_blockArray.at(i)->read();
+            fout << m_blockArray.at(i)->read() << std::endl;
         }
         fout.close();
     }
@@ -553,19 +556,16 @@ namespace DoI
     }
 
     void cMaterial::
-    dump(std::string name)
+    dump(std::ostream & out)
     {
-        std::ofstream fout(name.c_str());
-        if (!fout)
-            throw exception::FileMisingExeption(name);
         //Writing time
-        fout << m_environment->m_time << std::endl;
+        //out << m_environment->m_time << std::endl;
         //Writing memory dump
         for (uint64_t i = 0; i < m_environment->space_division(); i++)
         {
-            fout << m_blockArray.at(i)->read();
+            out << m_blockArray.at(i)->read() << '\t' << *(m_fieldArray.at(i)) << std::endl;
         }
-        fout.close();
+        out.flush();
     }
 
     #ifdef DEBUG

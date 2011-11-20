@@ -3,12 +3,155 @@
 namespace DoI
 {
     cSimulation::
-    cSimulation():
-    m_environment(NULL),
-    m_object(NULL),
-    m_printer(NULL)
+    cSimulation(cEnvironment * environment,
+                cMaterial * material,
+                cPrinter * printer,
+                std::queue<sOperation> * todo):
+    m_environment(environment),
+    m_object(material),
+    m_printer(printer),
+    m_operation_queue(todo)
     {
+        m_operation_map["STABLE"]          = &cSimulation::stable;
+        m_operation_map["CELIV"]           = &cSimulation::celiv;
     }
+
+    void cSimulation::
+    run()
+    {
+        sOperation cur;
+        while (!m_operation_queue->empty())
+        {
+            cur = m_operation_queue->front();
+            std::map<std::string, bool (cSimulation::*) (std::istream &)>::iterator act;
+            act = m_operation_map.find(cur.name);
+            //If line not understood, give warning:
+            if (act == m_operation_map.end())
+            {
+                cLogger::error(std::string("Scenario line ") + cur.name + std::string(" not understood, ignoring."));
+            }
+            bool (cSimulation::*function) (std::istream &) = act->second;
+            std::stringstream params(cur.params);
+            if (!(*this.*function) (params))
+            {
+                cLogger::warning(std::string("Scenario line ") + cur.name + std::string(" executing failed."));
+                return;
+            }
+            m_operation_queue->pop();
+        }
+    }
+
+    bool cSimulation::
+    stable(std::istream & fin)
+    /**Funkcija atjungianti įtampą,
+    Kviečiama taip: STABLE laikas
+    */
+    {
+        m_environment->voltage(0.0);
+        double end_time;
+        fin >> end_time;
+        do_until(end_time);
+    }
+
+    bool cSimulation::
+    celiv(std::istream & fin)
+    /**Pagrindinė CELIV funkcija,
+    Kviečiama taip: CELIV pradinė_įtampa galinė_įtampa laikas
+    */
+    {
+        double s_voltage, e_voltage, end_time;
+        fin >> s_voltage >> e_voltage >> end_time;
+
+        statusFunction status(m_object->time(), end_time);
+
+        //Įtampos linija U = a+b*t;
+        mathFunction * foo = \
+            new mathPositiveLine( \
+                s_voltage - (s_voltage-e_voltage)/(m_object->time()-end_time)*m_object->time(), \
+                (s_voltage-e_voltage)/(m_object->time()-end_time) \
+            );
+
+        std::cout << "BEGIN" << std::endl;
+
+        double dt = m_environment->time_step();
+
+        while (m_object->time() < end_time)
+        {
+            status(m_object->time());
+            //Watching for the last step:
+            if (m_object->time() > end_time - m_environment->time_step())
+            {
+                //Decreasing the dt, to meet the time limit.
+                m_environment->time_step(end_time-m_object->time());
+            }
+
+            m_environment->voltage(foo->Call(m_object->time()));
+            do_iter();
+        }
+
+        //Making the last step:
+        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+        //Returning dt to starting value:
+        m_environment->time_step(dt);
+    }
+
+    //HELPERS
+
+    void cSimulation::
+    do_iter()
+    {
+        //Makes 1 iteration, reports current to given function.
+        if (m_object->run())
+            m_printer->Call();
+    }
+
+    void cSimulation::
+    do_until(double end_time)
+    {
+        statusFunction status(m_object->time(), end_time);
+
+        if (end_time < m_object->time())
+        {
+            std::cout << "E>END TIME PASSED" << std::endl;
+            return ;
+        }
+
+        std::cout << "BEGIN" << std::endl;
+
+        double dt = m_environment->time_step(); //Saving starting value
+
+        while (m_object->time() < end_time)
+        {
+            status(m_object->time());
+            //Watching for the last step:
+            if (m_object->time() > end_time - m_environment->time_step())
+            {
+                //Decreasing the dt, to meet the time limit.
+                m_environment->time_step(end_time-m_object->time());
+            }
+
+            do_iter();
+        }
+
+        //Making the last step:
+        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+        //Returning dt to starting value:
+        m_environment->time_step(dt);
+
+    }
+
+//    void cSimulation::
+//    run_until(std::ifstream & fin)
+//    {
+//        check_init();
+//
+//        double end_time;
+//        fin >>end_time;
+//
+//        do_until(end_time);
+//
+//    }
+
 /*
     void cSimulation::
     read_n_execute(std::string filename)
@@ -291,17 +434,7 @@ namespace DoI
 //
 //    }
 //
-//    void cSimulation::
-//    run_until(std::ifstream & fin)
-//    {
-//        check_init();
-//
-//        double end_time;
-//        fin >>end_time;
-//
-//        do_until(end_time);
-//
-//    }
+
 //
 //    void cSimulation::
 //    run_iter(std::ifstream & fin)
@@ -460,70 +593,7 @@ namespace DoI
 //        std::cout << ">>END ...death of all electrons..." << std::endl;
 //    }
 //
-//    //HELPERS
-//    void cSimulation::
-//    check_init()
-//    {
-//        if (!m_global)
-//        {
-//            throw exception::BadCommand("Global params not initialized.");
-//        }
-//        if (!m_constants)
-//        {
-//            throw exception::BadCommand("Constants not initialized.");
-//        }
-//        if (!m_object)
-//        {
-//            throw exception::BadCommand("Test Object not initialized.");
-//        }
-//        if (!m_current_output)
-//        {
-//            throw exception::BadCommand("Output file not initialized.");
-//        }
-//    }
-//
-//    void cSimulation::
-//    do_iter()
-//    {
-//        //Makes 1 iteration, reports current to given function.
-//        m_object->run();
-//        m_current_output->Call();
-//    }
-//
-//    void cSimulation::
-//    do_until(double end_time)
-//    {
-//        statusFunction status(m_object->time(), end_time);
-//
-//        if (end_time < m_object->time())
-//        {
-//            std::cout << "E>END TIME PASSED" << std::endl;
-//            return ;
-//        }
-//
-//        std::cout << "BEGIN" << std::endl;
-//
-//        double dt = m_global->dt(); //Saving starting value
-//
-//        while (m_object->time() < end_time)
-//        {
-//            status(m_object->time());
-//            //Watching for the last step:
-//            if (m_object->time() > end_time - m_global->dt())
-//            {
-//                //Decreasing the dt, to meet the time limit.
-//                m_global->s_dt(end_time-m_object->time());
-//            }
-//
-//            do_iter();
-//        }
-//
-//        //Making the last step:
-//        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
-//        //Returning dt to starting value:
-//        m_global->s_dt(dt);
-//
-//    }
+
 //
 //    bool cSimulation::
 //    check_and_discard_comment(std::string & label, std::istream & fin)

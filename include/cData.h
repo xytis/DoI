@@ -47,7 +47,7 @@ namespace DoI
                     << data.m_n_stuck << '\t' << data.m_p_stuck << '\t' \
                     << data.m_n_capacity << '\t' << data.m_p_capacity << '\t' \
                     << data.m_n_buffer << '\t' << data.m_p_buffer << '\t' \
-                    << data.m_width << '\n';
+                    << data.m_width;
                 return out;
             };
             friend std::istream & operator >> (std::istream & in, cData & data)

@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <map>
+#include <queue>
 #include <stack>
 
 #include "cLogger.h"
@@ -12,18 +13,19 @@
 #include "global.h"
 
 #include "cSimulation.h"
-#include "cCalculator.h"
+#include "calculator.h"
 #include "tFunctors.h"
 
 #define PARSER_INCLUDE "INCLUDE"
 #define PARSER_END "END"
 #define PARSER_MATH "%"
+#define PARSER_ECHO "ECHO"
 
 #define MAINPARSER_SIMULATION "SIMULATION"
 #define MAINPARSER_ENVIRONMENT "ENVIRONMENT"
 #define MAINPARSER_PRINTER "PRINTER"
 #define MAINPARSER_MATERIAL "MATERIAL"
-#define MAINPARSER_SCENARIO "SCENARIO"
+#define MAINPARSER_RUN "RUN"
 
 #define ENVIRONMENTPARSER_CONSTANT_BETA "beta"
 #define ENVIRONMENTPARSER_CONSTANT_AREA "S"
@@ -44,6 +46,13 @@
 #define ENVIRONMENTPARSER_CONTACTS "CONTACTS"
 #define ENVIRONMENTPARSER_CAPACITY_N "cap_n"
 #define ENVIRONMENTPARSER_CAPACITY_P "cap_p"
+
+#define MATERIALPARSER_INITIAL "INITIAL"
+
+#define PRINTERPARSER_TYPE "TYPE"
+#define PRINTERPARSER_MODE "MODE"
+#define PRINTERPARSER_NORM "NORM"
+#define PRINTERPARSER_FILENAME "FILENAME"
 
 namespace DoI
 {
@@ -77,6 +86,8 @@ namespace DoI
             cParser(cParser *);
             bool include(std::stringstream & param);
             bool end(std::stringstream & param);
+            bool math(std::stringstream & param);
+            bool echo(std::stringstream & param);
             bool close(std::stringstream & param);
             bool resume(std::stringstream & param);
             bool parse(const std::string & name);
@@ -101,7 +112,11 @@ namespace DoI
             cMainParser();
             bool simulation(std::stringstream & param);
     		bool environment(std::stringstream & param);
+    		bool material(std::stringstream & param);
     		bool printer(std::stringstream & param);
+
+    		bool run(std::stringstream & param);
+
     		bool end(std::stringstream & param);
     		void report(cParser * child, cObject * object);
             ~cMainParser() {};
@@ -109,6 +124,8 @@ namespace DoI
         private:
             cEnvironment * m_environment;
             cPrinter * m_printer;
+            cMaterial * m_material;
+            std::queue<sOperation> * m_todo;
             cSimulation * m_real_object;
             std::string m_last;
 
@@ -172,18 +189,51 @@ namespace DoI
 
     };
 
+
+    /**
+    DONE
+    */
     class cPrinterParser : public cParser
     {
         public:
-            cPrinterParser(cParser * parent);
+            cPrinterParser(cParser * parent, cMaterial * object);
             void report(cParser * child, cObject * object) {};
+
+            bool type(std::stringstream & params);
+            bool mode(std::stringstream & params);
+            bool norm(std::stringstream & params);
+            bool filename(std::stringstream & params);
+            bool end(std::stringstream & params);
+        private:
+            enum TYPE
+            {
+                NONE,
+                LOG,
+                TIMER
+            };
+
+            cMaterial * m_test_object;
+            TYPE m_type;
+            MODE m_mode;
+            double m_norm_x;
+            double m_norm_y;
+            std::string m_filename;
+            double m_increment;
     };
 
-    class cScenarioParser : public cParser
+    /**
+    DONE
+    */
+    class cMaterialParser : public cParser
     {
         public:
-            cScenarioParser(cParser * parent);
+            cMaterialParser(cParser * parent, cEnvironment *);
             void report(cParser * child, cObject * object) {};
+
+            bool initial(std::stringstream & params);
+            bool end(std::stringstream & params);
+        private:
+            cMaterial * m_real_object;
     };
 }
 #endif // CPARSER_H_INCLUDED

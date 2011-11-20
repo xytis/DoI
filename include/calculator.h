@@ -39,6 +39,9 @@ class cCalculator
 
         int parse_line(std::string line);
         int parse_stream(std::istream & stream);
+
+        double calculate_line(std::string line);
+        double calculate_stream(std::istream & stream);
     private:
         void init();
 
