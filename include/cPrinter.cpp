@@ -176,11 +176,16 @@ namespace DoI
 
     bool    cTimerPrinter::trigger()
     {
-        if (m_object->time() > m_timer)
+        if( m_object->time() > m_timer)
         {
             m_timer += m_increment;
             return true;
         }
         return false;
+    }
+
+    cPrinter::~cPrinter()
+    {
+
     }
 }

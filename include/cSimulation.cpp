@@ -13,6 +13,7 @@ namespace DoI
     m_operation_queue(todo)
     {
         m_operation_map["STABLE"]          = &cSimulation::stable;
+        m_operation_map["CELIV_A"]         = &cSimulation::celiv_a;
         m_operation_map["CELIV"]           = &cSimulation::celiv;
     }
 
@@ -86,6 +87,45 @@ namespace DoI
             }
 
             m_environment->voltage(foo->Call(m_object->time()));
+            do_iter();
+        }
+
+        //Making the last step:
+        std::cout << ">>ENDED AT: " << m_object->time() << std::endl;
+        //Returning dt to starting value:
+        m_environment->time_step(dt);
+    }
+
+    bool cSimulation::
+    celiv_a(std::istream & fin)
+    /**Antra CELIV funkcija,
+    Kviečiama taip: CELIV_A A laikas
+    */
+    {
+        double a, start_time, end_time;
+        fin >> a >> end_time;
+
+        statusFunction status(m_object->time(), end_time);
+
+        //Įtampos linija U = a+b*t;
+        mathFunction * foo = new mathPositiveLine( 0, a );
+        start_time = m_object->time();
+
+        std::cout << "BEGIN" << std::endl;
+
+        double dt = m_environment->time_step();
+
+        while (m_object->time() < end_time)
+        {
+            status(m_object->time());
+            //Watching for the last step:
+            if (m_object->time() > end_time - m_environment->time_step())
+            {
+                //Decreasing the dt, to meet the time limit.
+                m_environment->time_step(end_time-m_object->time());
+            }
+
+            m_environment->voltage(foo->Call(m_object->time()-start_time));
             do_iter();
         }
 

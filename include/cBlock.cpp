@@ -410,6 +410,13 @@ namespace DoI
     }
 
     void cContact::
+    escape()
+    {
+        m_data.m_n = 0;
+        m_data.m_p = 0;
+    }
+
+    void cContact::
     injection()
     {
         //INJEKCIJA
@@ -525,6 +532,21 @@ namespace DoI
             case NON_BLOCKING:
                 injection();
                 extraction();
+                break;
+            case ESCAPE_RIGHT:
+                if (m_type == RIGHT)
+                {
+                    escape();
+                }
+                break;
+            case ESCAPE_LEFT:
+                if (m_type == LEFT)
+                {
+                    escape();
+                }
+                break;
+            case ESCAPE:
+                escape();
                 break;
         }
         //rekombinacija irgi vyksta.

@@ -41,6 +41,7 @@ namespace DoI {
             std::map<std::string, bool (cSimulation::*) (std::istream &)> m_operation_map;
             ///Operations:
             bool celiv(std::istream & params);
+            bool celiv_a(std::istream & params);
             bool stable(std::istream & params);
 
             void do_until(double);

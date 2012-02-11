@@ -40,6 +40,7 @@
 #define ENVIRONMENTPARSER_CONSTANT_DIFFUSION_N "n_D"
 #define ENVIRONMENTPARSER_CONSTANT_DIFFUSION_P "p_D"
 #define ENVIRONMENTPARSER_CONSTANT_GLUE "k_glue"
+#define ENVIRONMENTPARSER_TIME_OFFSET "TIME_OFFSET"
 #define ENVIRONMENTPARSER_TIME_STEP "TIME_STEP"
 #define ENVIRONMENTPARSER_SPACE_DIVISION "SPACE_DIVISION"
 #define ENVIRONMENTPARSER_WIDTH "WIDTH"
@@ -156,6 +157,7 @@ namespace DoI
             bool glue(std::stringstream & params);
             ///Global
             bool time_step(std::stringstream & params);
+            bool time_offset(std::stringstream & params);
             bool space_division(std::stringstream & params);
             bool width(std::stringstream & params);
             bool contacts(std::stringstream & params);
@@ -181,6 +183,7 @@ namespace DoI
             double m_glue;
             ///Global
             double m_time_step;
+            double m_time_offset;
             uint64_t m_space_division;
             double m_width;
             CONTACTS_TYPE m_contacts;

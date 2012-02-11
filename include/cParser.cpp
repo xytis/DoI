@@ -304,7 +304,7 @@ namespace DoI
     /*
         cEnvironmentParser
     */
-    cEnvironmentParser::cEnvironmentParser(cParser * parent):cParser(parent)
+    cEnvironmentParser::cEnvironmentParser(cParser * parent):cParser(parent),m_time_offset(0)
     {
         //rewrite end sequence
         m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::end);
@@ -324,6 +324,7 @@ namespace DoI
         m_actions[ENVIRONMENTPARSER_CONSTANT_GLUE] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::glue);
 
         m_actions[ENVIRONMENTPARSER_TIME_STEP] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::time_step);
+        m_actions[ENVIRONMENTPARSER_TIME_OFFSET] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::time_offset);
         m_actions[ENVIRONMENTPARSER_SPACE_DIVISION] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::space_division);
         m_actions[ENVIRONMENTPARSER_WIDTH] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::width);
         m_actions[ENVIRONMENTPARSER_CONTACTS] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::contacts);
@@ -347,7 +348,7 @@ namespace DoI
                                               m_diffusion_n,
                                               m_diffusion_p,
                                               m_glue);
-        m_object = reinterpret_cast<cObject *>(new cEnvironment(constants, m_time_step, m_space_division, m_width, m_contacts, m_capacity_n, m_capacity_p));
+        m_object = reinterpret_cast<cObject *>(new cEnvironment(constants, m_time_step, m_space_division, m_width, m_contacts, m_capacity_n, m_capacity_p, m_time_offset));
         return cParser::end(params);
     }
 
@@ -482,6 +483,10 @@ namespace DoI
         return params >> m_time_step;
     }
 
+    bool cEnvironmentParser::time_offset(std::stringstream & params)
+    {
+        return params >> m_time_offset;
+    }
 
     bool cEnvironmentParser::space_division(std::stringstream & params)
     {
@@ -515,6 +520,21 @@ namespace DoI
         if (verbal == "NON_BLOCKING")
         {
             m_contacts = NON_BLOCKING;
+            return true;
+        }
+        if (verbal == "ESCAPE_LEFT")
+        {
+            m_contacts = ESCAPE_LEFT;
+            return true;
+        }
+        if (verbal == "ESCAPE_RIGHT")
+        {
+            m_contacts = ESCAPE_RIGHT;
+            return true;
+        }
+        if (verbal == "ESCAPE")
+        {
+            m_contacts = ESCAPE;
             return true;
         }
         return false;

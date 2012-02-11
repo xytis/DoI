@@ -14,13 +14,16 @@ namespace DoI
         BLOCKING  = 0,
         INJECTING = 1,
         EXTRACTING = 2,
-        NON_BLOCKING = 3    //NON_BLOCKING = INJECTING+EXTRACTING
+        NON_BLOCKING = 3,    //NON_BLOCKING = INJECTING+EXTRACTING
+        ESCAPE_LEFT = 4,
+        ESCAPE_RIGHT = 8,
+        ESCAPE = 12 //ESCAPE = LEFT + RIGHT
     };
 
     class cEnvironment: public cObject
     {
         public:
-            cEnvironment(cConstants * constants, double time_step, uint64_t space_division, double width, CONTACTS_TYPE contacts, double capacity_n, double capacity_p);
+            cEnvironment(cConstants * constants, double time_step, uint64_t space_division, double width, CONTACTS_TYPE contacts, double capacity_n, double capacity_p, double time_offset);
             cConstants * C();
 
             double time_step();

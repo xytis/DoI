@@ -18,9 +18,9 @@
 #include "cEnvironment.h"
 namespace DoI
 {
-    cEnvironment::cEnvironment(cConstants * constants, double time_step, uint64_t space_division, double width, CONTACTS_TYPE contacts, double capacity_n, double capacity_p):
+    cEnvironment::cEnvironment(cConstants * constants, double time_step, uint64_t space_division, double width, CONTACTS_TYPE contacts, double capacity_n, double capacity_p, double time_offset):
     m_constants(constants), m_time_step(time_step), m_space_division(space_division), m_width(width), m_contacts(contacts), m_capacity_n(capacity_n), m_capacity_p(capacity_p),
-    m_time(0), m_backup_time(0), m_voltage(0)
+    m_time(time_offset), m_backup_time(0), m_voltage(0)
     {
 
     }

@@ -116,6 +116,7 @@ namespace DoI
             cEnvironment * m_E;
 
             void injection();
+            void escape();
             void extraction();
             void recombination();
             void glue_unglue();
