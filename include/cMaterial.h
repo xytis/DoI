@@ -118,6 +118,8 @@ namespace DoI
 
             //Vidinių parametrų rodymui:
             double current();
+            double drift_current();
+            double diff_current();
             double time();
 
             #ifdef DEBUG

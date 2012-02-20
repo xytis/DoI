@@ -341,6 +341,30 @@ namespace DoI
         return c*m_environment->C()->c_q/m_environment->time_step()/m_environment->space_division();
     }
 
+    double cMaterial::
+    drift_current ()
+    {
+        double c = 0;
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
+        {
+            //Srovė teigiama jei n-> ir <-p.
+            c += m_blockArray.at(i)->drift_current();
+        }
+        return c*m_environment->C()->c_q/m_environment->time_step()/m_environment->space_division();
+    }
+
+    double cMaterial::
+    diff_current ()
+    {
+        double c = 0;
+        for (uint64_t i = 0; i < m_environment->space_division(); i++)
+        {
+            //Srovė teigiama jei n-> ir <-p.
+            c += m_blockArray.at(i)->diff_current();
+        }
+        return c*m_environment->C()->c_q/m_environment->time_step()/m_environment->space_division();
+    }
+
     void cMaterial::
     fill(mathFunction * f_n, mathFunction * f_p)
     {
@@ -484,7 +508,7 @@ namespace DoI
     void cMaterial::
     fcurrent(std::ostream & out, double x_norm, double y_norm)
     {
-        out << m_environment->m_time/x_norm << '\t' << current()/y_norm << '\t' << m_environment->time_step() << std::endl;
+        out << m_environment->m_time/x_norm << '\t' << current()/y_norm << '\t' << m_environment->time_step() << '\t' << drift_current()/y_norm << '\t' << diff_current()/y_norm << std::endl;
     }
 
 

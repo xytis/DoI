@@ -256,6 +256,8 @@ namespace DoI
     {
         //Čia kumuliuojama srovė.
         m_current = 0;
+        m_diff_current = 0;
+        m_drift_current = 0;
         //Iš čia siunčiami krūvininkai kaimynams.
 
         double dn, dp;
@@ -264,6 +266,7 @@ namespace DoI
         //Skylës einanèios á kairæ
         dp = physics::diffusion(m_data.m_p, prev()->read().m_p, m_E->C()->c_p_D, m_E, m_data, "2");
         //Judėjimas dėl dreifo į kairę
+        m_diff_current += dp-dn;
         dp += physics::drift(m_data.m_p, (m_E_prev->E + m_E_next->E)/2, m_E->C()->c_p_miu, m_E, m_data, "1");
         //Elektronai juda į kairę kai laukas priešingas
         dn += physics::drift(m_data.m_n, -(m_E_prev->E + m_E_next->E)/2, m_E->C()->c_n_miu, m_E, m_data, "2");
@@ -281,6 +284,7 @@ namespace DoI
         //Skylës einanèios á deðinæ
         dp = physics::diffusion(m_data.m_p, next()->read().m_p, m_E->C()->c_p_D, m_E, m_data, "4");
         //Judėjimas dėl dreifo į dešinę
+        m_diff_current += dn-dp;
         dn += physics::drift(m_data.m_n, (m_E_prev->E + m_E_next->E)/2, m_E->C()->c_n_miu, m_E, m_data, "3");
         //Skylės juda į dešinę kai laukas priešingas
         dp += physics::drift(m_data.m_p, -(m_E_prev->E + m_E_next->E)/2, m_E->C()->c_p_miu, m_E, m_data, "4");
@@ -292,6 +296,7 @@ namespace DoI
         next()->receive(dn,dp);
         //srovė kuri sukuriama iš šio bloko:
         m_current += dn-dp; //Ji lokaliai gali būti ir neigiama.
+        m_drift_current = m_current - m_diff_current;
 
         return ;
     }
@@ -338,6 +343,18 @@ namespace DoI
     current()
     {
         return m_current;
+    }
+
+    const double cBlock::
+    diff_current()
+    {
+        return m_diff_current;
+    }
+
+    const double cBlock::
+    drift_current()
+    {
+        return m_drift_current;
     }
 
     /**cContact**/
@@ -582,12 +599,23 @@ namespace DoI
     emit()
     {
         m_current = 0;
+        m_diff_current = 0;
+        m_drift_current = 0;
 
         double  dn, dp;
         //Elektronai einantys į kaimyną
         dn = physics::diffusion(m_data.m_n, m_block->read().m_n, m_E->C()->c_n_D, m_E, m_data, "1");
         //Skylës einanèios į kaimyną
         dp = physics::diffusion(m_data.m_p, m_block->read().m_p, m_E->C()->c_p_D, m_E, m_data, "2");
+
+        if (m_type == LEFT)
+        {
+            m_diff_current+=dn-dp;
+        }
+        if (m_type == RIGHT)
+        {
+            m_diff_current+=dp-dn;
+        }
 
         //Dreifas pagal kontaktą:
         if (m_type == LEFT)
@@ -617,6 +645,7 @@ namespace DoI
         {
             m_current+=dp-dn;
         }
+        m_drift_current = m_current - m_diff_current;
 
         return ;
     }
@@ -661,5 +690,17 @@ namespace DoI
     current()
     {
         return m_current;
+    }
+
+    const double cContact::
+    diff_current()
+    {
+        return m_diff_current;
+    }
+
+    const double cContact::
+    drift_current()
+    {
+        return m_drift_current;
     }
 }

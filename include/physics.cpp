@@ -39,7 +39,7 @@ namespace DoI
             dc = 0;
         return dc;
 
-        return 0; //No diff
+        //return 0; //No diff
     }
 
     double physics::drift(const double & interest, const double & field, const double & miu,

@@ -57,6 +57,8 @@ namespace DoI
             virtual const cData &       write(const cData &) = 0;
             //virtual const eStatus       check() = 0;
             virtual const double        current() = 0;
+            virtual const double       drift_current() = 0;
+            virtual const double       diff_current() = 0;
 
     };
 
@@ -70,6 +72,8 @@ namespace DoI
             cData    m_data;
 
             double m_current;
+            double  m_diff_current;
+            double  m_drift_current;
 
             cEnvironment * m_E;
 
@@ -95,6 +99,8 @@ namespace DoI
             virtual const cData &       write(const cData &);
             //virtual const eStatus       check();
             virtual const double       current();
+            virtual const double       drift_current();
+            virtual const double       diff_current();
     };
 
     enum eContactType
@@ -112,6 +118,8 @@ namespace DoI
             const eContactType m_type;
             cData    m_data;
             double  m_current;
+            double  m_diff_current;
+            double  m_drift_current;
 
             cEnvironment * m_E;
 
@@ -140,6 +148,8 @@ namespace DoI
             virtual const cData &       write(const cData &);
             //virtual const eStatus       check();
             virtual const double       current();
+            virtual const double       drift_current();
+            virtual const double       diff_current();
     };
 
 }
