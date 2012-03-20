@@ -54,7 +54,7 @@ namespace DoI
             dc = 0;
         return dc;
 
-        //return 0;   //no drift
+        return 0;   //no drift
     }
 
     double physics::recombine(cEnvironment * E, const cData & data, std::string place)
@@ -71,7 +71,7 @@ namespace DoI
         }
         return pairs;
 
-        //return 0;
+        return 0;
     }
 
     double physics::transitTime(cEnvironment & E)

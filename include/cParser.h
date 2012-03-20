@@ -28,6 +28,7 @@
 #define MAINPARSER_RUN "RUN"
 
 #define ENVIRONMENTPARSER_CONSTANT_BETA "beta"
+#define ENVIRONMENTPARSER_CONSTANT_BETA_FACTOR "beta_factor"
 #define ENVIRONMENTPARSER_CONSTANT_AREA "S"
 #define ENVIRONMENTPARSER_CONSTANT_MIN "MIN"
 #define ENVIRONMENTPARSER_CONSTANT_CHARGE "q"
@@ -49,6 +50,7 @@
 #define ENVIRONMENTPARSER_CAPACITY_P "cap_p"
 
 #define MATERIALPARSER_INITIAL "INITIAL"
+#define MATERIALPARSER_DIRAC "DIRAC"
 
 #define PRINTERPARSER_TYPE "TYPE"
 #define PRINTERPARSER_MODE "MODE"
@@ -143,6 +145,7 @@ namespace DoI
     		bool end(std::stringstream & param);
     		///Constants
     		bool beta(std::stringstream & params);
+    		bool beta_factor(std::stringstream & params);
             bool area(std::stringstream & params);
             bool min(std::stringstream & params);
             bool charge(std::stringstream & params);
@@ -169,6 +172,7 @@ namespace DoI
     	private:
             ///Constants
             double m_beta;
+            double m_beta_factor;
             double m_area;
             double m_min;
             double m_charge;
@@ -234,6 +238,7 @@ namespace DoI
             void report(cParser * child, cObject * object) {};
 
             bool initial(std::stringstream & params);
+            bool dirac_initial(std::stringstream & params);
             bool end(std::stringstream & params);
         private:
             cMaterial * m_real_object;

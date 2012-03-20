@@ -40,6 +40,19 @@ namespace DoI
             };
     };
 
+    class diracFunction: public mathFunction
+    {
+        private:
+            double value;
+            double coordinate;
+            bool trigered;
+        public:
+            diracFunction(double n_value, double n_coordinate):value(n_value), coordinate(n_coordinate), trigered(false) {};
+            //No srsly. WTF? =]
+            double operator()(double x) {return trigered ? 0 : (x >= coordinate ? (trigered = true, value): 0);};
+            double Call(double x) {return trigered ? 0 : (x >= coordinate ? (trigered = true, value): 0);};
+    };
+
     class mathLine : public mathFunction
     {
         private:

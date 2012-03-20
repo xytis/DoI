@@ -115,6 +115,8 @@ cCalculator::Token_value cCalculator::get_token()
 	} while (ch!='\n' && isspace(ch));
 
 	switch (ch) {
+    case ',':
+        return curr_tok=END;
 	case ';':
 	case '\n':
 		return curr_tok=PRINT;

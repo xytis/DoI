@@ -304,12 +304,13 @@ namespace DoI
     /*
         cEnvironmentParser
     */
-    cEnvironmentParser::cEnvironmentParser(cParser * parent):cParser(parent),m_time_offset(0)
+    cEnvironmentParser::cEnvironmentParser(cParser * parent):cParser(parent),m_time_offset(0), m_beta_factor(1)
     {
         //rewrite end sequence
         m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::end);
 
         m_actions[ENVIRONMENTPARSER_CONSTANT_BETA] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::beta);
+        m_actions[ENVIRONMENTPARSER_CONSTANT_BETA_FACTOR] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::beta_factor);
         m_actions[ENVIRONMENTPARSER_CONSTANT_AREA] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::area);
         m_actions[ENVIRONMENTPARSER_CONSTANT_MIN] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::min);
         m_actions[ENVIRONMENTPARSER_CONSTANT_CHARGE] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cEnvironmentParser::charge);
@@ -358,7 +359,7 @@ namespace DoI
         params >> temp;
         if (inlineTrimSpaces(temp) == "none")
         {
-            m_beta = physics::recombinationConst(m_charge, m_mobility_n, m_mobility_p, m_epsilon, m_epsilon_0);
+            m_beta = physics::recombinationConst(m_charge, m_mobility_n, m_mobility_p, m_epsilon, m_epsilon_0) * m_beta_factor;
             std::stringstream ss;
             ss << "Calculating beta from curently known values. Please check: " << m_beta;
             cLogger::warning(ss.str());
@@ -370,6 +371,12 @@ namespace DoI
             ss << temp;
             return ss >> m_beta;
         }
+    }
+
+    bool cEnvironmentParser::beta_factor(std::stringstream & params)
+    {
+        params >> m_beta_factor;
+        return true;
     }
 
     bool cEnvironmentParser::area(std::stringstream & params)
@@ -668,8 +675,9 @@ namespace DoI
     cMaterialParser::cMaterialParser(cParser * parent, cEnvironment * environment):cParser(parent)
     {
         m_real_object = new cMaterial(environment);
-        m_actions[MATERIALPARSER_INITIAL] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::initial);
-        m_actions[PARSER_END] = reinterpret_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::end);
+        m_actions[MATERIALPARSER_INITIAL] = static_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::initial);
+        m_actions[MATERIALPARSER_DIRAC] = static_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::dirac_initial);
+        m_actions[PARSER_END] = static_cast<bool (cParser::*) (std::stringstream &)>(&cMaterialParser::end);
     }
 
     bool cMaterialParser::initial(std::stringstream & params)
@@ -677,7 +685,17 @@ namespace DoI
         std::string function;
         params >> function;
         calculatorFunction * foo = new calculatorFunction(function, &m_calculator);
-        m_real_object->fill(reinterpret_cast<mathFunction *>(foo), reinterpret_cast<mathFunction *>(foo));
+        m_real_object->fill(dynamic_cast<mathFunction *>(foo), dynamic_cast<mathFunction *>(foo));
+        return true;
+    }
+
+    bool cMaterialParser::dirac_initial(std::stringstream & params)
+    {
+        double coordinate, value;
+        params >> value >> coordinate;
+        diracFunction * delta_p = new diracFunction(value, coordinate);
+        diracFunction * delta_n = new diracFunction(value, coordinate);
+        m_real_object->fill(dynamic_cast<mathFunction *>(delta_n), dynamic_cast<mathFunction *>(delta_p));
         return true;
     }
 
